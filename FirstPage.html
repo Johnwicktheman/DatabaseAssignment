@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="background: rgb(23, 71, 32); display: flex; flex-direction: column; justify-content: space-between; height:100vh">
+        <div style="background: lightblue; width: 100%; height: 50%;display: flex; flex-direction: column;">
+            <div style="background: rgb(97, 189, 11); justify-content: center; text-align: center; padding-top: 50px;">
+                <p>Hiiiiiiiii welcome</p>
+            </div>
+            <div style="background: rgb(11, 55, 189); justify-content: center; gap: 20%; text-align: center; padding-top: 60px; padding-bottom: 1px; display: flex; flex-direction: row; ">
+                <div style="background: rgb(38, 200, 178); padding-bottom: 20px; ">
+                    
+                    <img src="tree.png" style="width: 200px; height: 200px;">
+                </div>
+                <div style="background: rgb(38, 200, 178); padding-bottom: 20px;">
+                    
+                    <img src="tree.png" style="width: 200px; height: 200px;">
+                </div>
+
+            </div>
+            
+        </div>
+        <div style="background: rgb(78, 112, 123); width: 100%;height: 50%;padding-top: 40px;" >
+            <div style="justify-content: center;text-align: center; ">
+                <p> Your info</p>
+                <form style="display: flex; text-align: left; flex-direction: column; background-color: rgb(65, 226, 149); gap: 10px; border: 3px; border-color: black; border-style: solid; border-radius: 20px; margin-right: 30%; margin-left: 30%; font-size: 24px;">
+                    <div style="padding-top: 10px; padding-left: 10px; display: flex; flex-direction: row;">
+                      
+                        <label for="name"  style=" width: 120px;">Full Name:</label>
+                      
+                        <input type="text" id="username" name="username"><br>
+                        
+                        
+                    </div>
+                    <div style="padding-top: 10px;padding-left: 10px; display: flex; flex-direction: row;" >
+                        
+                        <label for="username" style=" width: 120px;">Username:</label>
+                        
+                        <input type="text" id="name" name="name" placeholder="Enter your full name"required><br>
+                       
+                         
+                    </div>
+                    <div style="padding-top: 10px; padding-left: 10px; display: flex; flex-direction: row;">
+                        
+                        <label for="password" style="width: 120px;">Password:</label>
+                       
+                       
+                        <input type="password" id="password" name="password" minlength="6" required><br>
+                        
+                        
+                        
+                    </div>
+                    <div style="padding-top: 10px; padding-left: 10px; display: flex; flex-direction: row;">
+                        <label for="email" style="width: 120px;">Email:</label>
+                        <input type="email" id="email" name="email" required><br>
+                       
+
+                    </div>
+                    <div style="padding-top: 10px; padding-left: 10px; display: flex; flex-direction: row; ">
+                        <label for="age" style="width: 120px;">Age:</label>
+                        <input type="number" id="age" name="age" min="1" max="100" style="flex: 1;"><br>
+
+                    </div>
+
+                    
+                    
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
