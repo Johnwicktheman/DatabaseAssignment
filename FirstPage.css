@@ -1,0 +1,105 @@
+body{
+    margin: 0px; background-color: #10253b;
+    background-image: linear-gradient(rgba(16, 37, 59, 0.8), rgba(16, 37, 59, 0.8)),url('Assets/NottImage2.png');
+    background-size: cover;
+     background-repeat: no-repeat; 
+     background-position: center center; 
+     min-height: 100vh ;
+}
+
+.HeaderBar{
+    background-color: rgb(255, 255, 255);
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.HeaderImage{
+    background-color: rgb(255, 255, 255);
+}
+
+.HeaderTitle{
+    margin-right: 5%; margin-left: 40px;
+}
+
+.HeaderTitle p{
+    font-size: 30px;
+}
+
+.MainContent{
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    flex-wrap: wrap;
+}
+
+.InternText{
+    font-size: 8vw; 
+    color: white; 
+    margin-left: 40px;
+}
+
+.InputBox{
+    background-color: white; 
+    width: 550px; height: 500px ; 
+    margin-right: 60px; 
+    border: 4px solid silver; 
+    border-radius: 30px; 
+    margin-top: 40px;
+}
+
+.LogInText{
+    background-color: rgb(255, 255, 255); 
+    margin: 10px 30px;
+}
+
+.InputFormBox{
+    background-color: rgb(255, 255, 255); 
+    margin: -10px 40px; 
+    display: flex; 
+    flex-direction: column;
+
+}
+
+.InputForm{
+    display: flex; 
+    flex-direction: column; 
+    row-gap: 30px;
+}
+
+.Inputs{
+    font-size: 25px; 
+    border-radius: 1px; 
+    border: 3px solid #C0C0C0; 
+    width: 350px; 
+    height: 40px; 
+    padding-left: 6px;
+}
+
+.InputRemember{
+     vertical-align:middle;
+     width: 18px; 
+     height: 18px; 
+     cursor: pointer;
+}
+
+.LabelRemember{
+    vertical-align:middle;
+    font-weight: bold; 
+    font-size: 21px; 
+    cursor: pointer;
+}
+
+.ContinueButton{
+    margin-top:20px;
+    margin-left:200px;
+    background-color: #10253b;
+    font-weight: bold; 
+    color: white;
+    font-size: 20px; 
+    cursor: pointer;
+    text-align: center; 
+    height: 40px;
+}
