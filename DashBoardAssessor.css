@@ -37,7 +37,7 @@ body{
 }
 
 .WelcomeText{
-
+    font-size: 40px;
 }
 
 .Options{
@@ -45,6 +45,39 @@ body{
     flex-direction: row;
     align-items: center;
     flex-wrap: wrap;
+    gap: 250px;
+}
+
+.OptionsCard{
+    background-color: rgb(255, 255, 255); 
+    width: 20vw; 
+    height: 50vh; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    border: 3px; 
+    border-color: #10253b; 
+    border-radius: 3px; 
+    border-width: 7px; 
+    border-style: solid; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 10px;
+}
+
+.OptionIcon{
+    width: 120px; 
+    height: auto;
+}
+
+.OptionTitle{
+    font-size: 50px; 
+    text-align: center; 
+    margin-top:-1px ;
+}
+
+.OptionButton{
+    margin-top:-1px; 
 }
 
 .navToggle {
