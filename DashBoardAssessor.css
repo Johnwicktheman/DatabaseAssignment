@@ -1,0 +1,110 @@
+body{
+    margin: 0px; background-color: #ffffff;
+    
+     background-repeat: no-repeat; 
+     background-position: center center; 
+     min-height: 100vh ;
+}
+
+.HeaderBar{
+    background-color: #10253b;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.HeaderImage{
+    background-color: #10253b;
+}
+
+.HeaderTitle{
+    margin-right: 5%; margin-left: 40px;
+    color: white;
+}
+
+.HeaderTitle p{
+    font-size: 30px;
+}
+
+.MainContent{
+    display: flex; 
+    justify-content: space-between; 
+    flex-direction: column;
+    align-items: center; 
+    flex-wrap: wrap;
+}
+
+.WelcomeText{
+
+}
+
+.Options{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.navToggle {
+  display: none;
+}
+
+.sidebar {
+  position: fixed;
+  right: -250px;
+  width: 250px;
+  height: 100%;
+  background: #333;
+  transition: all 0.3s ease;
+  z-index: 100;
+ 
+}
+
+.navToggle:checked ~ .sidebar {
+  right: 0;
+}
+
+
+.navToggle:checked ~ .content {
+  margin-right: 250px;
+  margin-left: 0px;
+}
+
+
+.sidebar ul { list-style: none; padding: 20px; }
+.sidebar a { color: white; text-decoration: none; display: block; padding: 10px; }
+.navToggleLabel { cursor: pointer; font-size: 20px; background: #10253b; padding: 10px; display: inline-block; }
+
+
+.overlay {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5); 
+    z-index: 95;      
+    display: none;   
+    cursor: default;
+}
+
+
+#navToggle:checked ~ .overlay {
+    display: block;
+}
+
+.SideBarContent{
+    font-size: 40px;
+    
+}
+
+.ContinueButton{
+   
+    background-color: #10253b;
+    font-weight: bold; 
+    color: white;
+    font-size: 20px; 
+    cursor: pointer;
+    text-align: center; 
+    height: 40px;
+}
