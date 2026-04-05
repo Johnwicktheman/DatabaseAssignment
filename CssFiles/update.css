@@ -1,0 +1,218 @@
+body{
+    margin: 0px; background-color: #ffffff;
+    
+     background-repeat: no-repeat; 
+     background-position: center center; 
+     min-height: 100vh ;
+}
+.HeaderBar{
+    background-color: #10253b;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.HeaderImage{
+    background-color: #10253b;
+}
+
+.HeaderTitle{
+    margin-right: 5%; margin-left: 40px;
+    color: white;
+}
+
+.HeaderTitle p{
+    font-size: 30px;
+}
+
+
+.Options{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 250px;
+}
+
+.OptionsCard{
+    background-color: rgb(255, 255, 255); 
+    width: 20vw; 
+    height: 50vh; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    border: 3px; 
+    border-color: #10253b; 
+    border-radius: 3px; 
+    border-width: 7px; 
+    border-style: solid; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 10px;
+}
+
+.OptionIcon{
+    width: 120px; 
+    height: auto;
+}
+
+.OptionTitle{
+    font-size: 50px; 
+    text-align: center; 
+    margin-top:-1px ;
+}
+
+.OptionButton{
+    margin-top:-1px; 
+}
+
+.navToggle {
+  display: none;
+}
+
+.sidebar {
+  position: fixed;
+  right: -250px;
+  width: 250px;
+  height: 100%;
+  background: #333;
+  transition: all 0.3s ease;
+  z-index: 100;
+ 
+}
+
+.navToggle:checked ~ .sidebar {
+  right: 0;
+}
+
+
+.navToggle:checked ~ .content {
+  margin-right: 250px;
+  margin-left: 0px;
+}
+
+
+.sidebar ul { list-style: none; padding: 20px; }
+.sidebar a { color: white; text-decoration: none; display: block; padding: 10px; }
+.navToggleLabel { cursor: pointer; font-size: 20px; background: #10253b; padding: 10px; display: inline-block; }
+
+
+.overlay {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5); 
+    z-index: 95;      
+    display: none;   
+    cursor: default;
+}
+
+
+#navToggle:checked ~ .overlay {
+    display: block;
+}
+
+.SideBarContent{
+    font-size: 40px;
+    
+}
+
+
+
+
+
+.MainWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Keeps it near the top but centered */
+    min-height: calc(100vh - 80px); /* Adjusts for header height */
+    padding: 40px 20px;
+    background-color: #f4f7f6;
+}
+
+/* The actual white card */
+.FormCard {
+    background-color: white;
+    width: 100%;
+    max-width: 650px;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.FormHeader h2 {
+    color: #10253b;
+    margin-bottom: 5px;
+}
+
+/* Section styling */
+.InputSection {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.InputSection h3 {
+    font-size: 14px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+/* Field alignment */
+.field {
+    margin-bottom: 15px;
+}
+
+.field label {
+    display: block;
+    font-weight: bold;
+    font-size: 13px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.field input, .field select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; /* Prevents input from overflowing the card */
+}
+
+/* Two-column rows */
+.row {
+    display: flex;
+    gap: 20px;
+}
+
+.row .field {
+    flex: 1;
+}
+
+/* Action Buttons */
+.FormActions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.Btn-Submit {
+    background-color: #10253b;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.Btn-Cancel {
+    text-decoration: none;
+    color: #b22222;
+    font-weight: bold;
+}
