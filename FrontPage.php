@@ -1,0 +1,85 @@
+<?php
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
+session_start();
+include 'connection.php';
+include 'ExecutePStatement.php';
+
+
+
+//Because we have three tables need to check so need three if statements
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    //Check Admin
+    $sqlAdmin = "SELECT AdminAccount_id as id, Username FROM adminaccountlist WHERE Username = ? AND Password = ?";
+    $resAdmin = executePreparedStatement($sqlAdmin, [$username, $password]);
+
+    if ($resAdmin->num_rows > 0) {
+        $row = $resAdmin->fetch_assoc();
+        
+        //Use the php Session function to store info
+        $_SESSION['user_id']   = $row['id'];
+        $_SESSION['username']  = $row['Username'];
+        $_SESSION['user_role'] = 'admin';
+        
+        header("Location: AdminDashboard.php");
+        exit;
+    }
+    // Check Assessor
+    $sqlAssessor = "SELECT AssessorAccountID, Username, AssesorType FROM assesoraccountlist WHERE Username = ? AND Password = ?";
+    $resAssessor = executePreparedStatement($sqlAssessor, [$username, $password]);
+
+    if ($resAssessor->num_rows > 0) {
+        $row = $resAssessor->fetch_assoc();
+        
+        $_SESSION['user_id']   = $row['AssessorAccountID'];
+        $_SESSION['username']  = $row['Username'];
+        $_SESSION['user_role'] = strtolower($row['AssesorType']); // 'lecturer' or 'supervisor'
+        
+        header("Location: AdminDashboard.php");
+        exit;
+    }
+
+    //Check Student
+    $sqlStudent = "SELECT StudentAccountID, Username FROM studentaccountlist WHERE Username = ? AND Password = ?";
+    $resStudent = executePreparedStatement($sqlStudent, [$username, $password]);
+
+    if ($resStudent->num_rows > 0) {
+        $row = $resStudent->fetch_assoc();
+        
+        $_SESSION['user_id']   = $row['StudentAccountID'];
+        $_SESSION['username']  = $row['Username'];
+        $_SESSION['user_role'] = 'student';
+        
+        header("Location: AdminDashboard.php");
+        exit;
+    }
+
+    //If nothing matched
+    $error = "Invalid username or password.";
+}
+   
+?>
+
+<!-- http://localhost/Coursework3test/FrontPage.php -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Hi<p>
+    
+    <form action="FrontPage.php" method ="post">
+        <input type="text" name="username"  placeholder="Enter Username... " required></br>
+        <input type="password"  name="password" placeholder="Enter Password... " required></br>
+        <input type="submit" value="Submit"></br>
+    </form>    
+</body>
+</html>
