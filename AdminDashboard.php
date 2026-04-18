@@ -32,6 +32,6 @@ $role = $_SESSION['user_role'];
     <ul>
 
         <li><a href="Databases/AssessorDatabase.php">Assessor Database</a></li>
-        <li><a href="Databases/AssessorDatabase.php">Student Database</a></li>
+        <li><a href="Databases/StudentDatabase.php">Student Database</a></li>
 </body>
 </html>
