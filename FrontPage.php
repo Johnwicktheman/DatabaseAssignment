@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //Use the php Session function to store info
         $_SESSION['user_id']   = $row['id'];
         $_SESSION['username']  = $row['Username'];
-        $_SESSION['user_role'] = 'admin';
+        $_SESSION['user_role'] = 'Admin';
         
         header("Location: AdminDashboard.php");
         exit;
@@ -37,9 +37,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         $_SESSION['user_id']   = $row['AssessorAccountID'];
         $_SESSION['username']  = $row['Username'];
-        $_SESSION['user_role'] = strtolower($row['AssesorType']); // 'lecturer' or 'supervisor'
+        $_SESSION['user_role'] = $row['AssesorType']; // 'Lecturer' or 'Supervisor'
         
-        header("Location: AdminDashboard.php");
+        header("Location: AssessorDashboard.php");
         exit;
     }
 

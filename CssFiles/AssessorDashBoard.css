@@ -1,0 +1,125 @@
+body { font-family: "Bricolage Grotesque", sans-serif; padding: 20px; }
+
+            /*https://www.w3schools.com/howto/howto_js_sidenav.asp*/
+
+body{
+    background-color: #f0f1f5 ;
+}
+
+nav{
+    height: 100%;
+    width:200px;
+    position: fixed;
+    top:0;
+    left:0;
+    background-color: #154c4b;
+    overflow-x: hidden;
+    padding:20px;
+}
+
+nav p{
+    font-weight: bold;
+    color: #8bc1c0  ;
+    padding-bottom: 10px;
+}
+
+nav hr{
+    margin-bottom: 30px;
+    color: #aaa9a9;
+    margin-left: 0px;
+}
+
+nav a {
+    padding: 10px 10px 10px ;
+    text-decoration: none;
+    font-size: 15px;
+    color: #aaa9a9;
+    display: block;
+    transition: 0.3s;
+    align-items: left;
+    font-weight:bold;
+    margin-bottom:0px
+}
+
+nav a:hover{
+    background-color: #219e75;
+    color: #f0f1f5;
+    padding:12px;
+                
+}
+
+.main{
+    margin-left:250px;
+}
+
+.main hr{
+    color:#aaa9a9;
+}
+
+ #title{
+    color: #aaa9a9;
+    font-size:30px;
+    padding-bottom:8px;
+}
+
+header {
+    font-size:50px;
+    color:#154c4b;
+    padding-top:10px;
+}
+
+#subtitle{
+    color: #aaa9a9;
+}
+
+.container{
+    display:flex;
+}
+
+.box{
+    background-color: white;
+    box-shadow: black;
+    text-align: center;
+    margin-top:30px;
+    margin-right:100px;
+    width:300px;
+    padding:20px 20px 20px;
+    border-radius: 40px;
+    box-shadow: 15px 15px 20px grey;
+    transition: 0.3s ease;
+}
+
+.box:hover{
+    transform: translateY(-10px);
+    box-shadow: 15px 25px 30px rgba(0,0,0,0.2);
+}
+
+.fa-user{
+    font-size:50px;
+}
+
+.box h1{
+    padding-bottom: 1px;
+}
+
+.box p{
+    color:#aaa9a9;
+}
+
+.box button{
+    background-color: #154c4b;
+    color: white;
+    font-family: "Bricolage Grotesque";
+    font-size:20px;
+    font-weight:bold;
+    width:250px;
+    height:50px;
+    border-radius: 30px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.box button:hover{
+    background-color: #219e75;
+                
+}

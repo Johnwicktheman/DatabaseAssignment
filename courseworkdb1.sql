@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 18, 2026 at 06:07 AM
+-- Generation Time: Apr 16, 2026 at 11:22 AM
 -- Server version: 5.7.24
 -- PHP Version: 8.3.1
 
@@ -61,9 +61,9 @@ CREATE TABLE `assesoraccountlist` (
 --
 
 INSERT INTO `assesoraccountlist` (`AssessorAccountID`, `Password`, `Username`, `AdminAccountID`, `AssesorType`) VALUES
-(3, '2132', 'dsad', 1, 'Lecturer'),
-(4, '12345', 'JackBlack', 1, 'Lecturer'),
-(6, '12345', 'JamesBagewl', 1, 'Lecturer');
+(1, '12345', 'Faysal67', 1, 'Lecturer'),
+(2, '12345', 'Faysul67Supervisor', 1, 'Supervisor'),
+(3, '2132', 'dsad', 1, 'Lecturer');
 
 -- --------------------------------------------------------
 
@@ -75,16 +75,16 @@ CREATE TABLE `assessmentrecords` (
   `AssessmentCode` int(11) NOT NULL,
   `StudentID` int(11) NOT NULL,
   `AssesorType` enum('Lecturer','Supervisor') NOT NULL,
-  `Feedback` varchar(300) DEFAULT NULL,
-  `understand_project` float DEFAULT NULL,
-  `health_and_safety` float DEFAULT NULL,
-  `connectivity` float DEFAULT NULL,
-  `presentation` float DEFAULT NULL,
-  `clarity` float DEFAULT NULL,
-  `activities` float DEFAULT NULL,
-  `project_management` float DEFAULT NULL,
-  `time_management` float DEFAULT NULL,
-  `Internship_Score` int(11) DEFAULT NULL
+  `Feedback` varchar(300) NOT NULL,
+  `understand_project` float NOT NULL,
+  `health_and_safety` float NOT NULL,
+  `connectivity` float NOT NULL,
+  `presentation` float NOT NULL,
+  `clarity` float NOT NULL,
+  `activities` float NOT NULL,
+  `project_management` float NOT NULL,
+  `time_management` float NOT NULL,
+  `Internship_Score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -98,13 +98,6 @@ CREATE TABLE `companynamelist` (
   `CompanyName` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `companynamelist`
---
-
-INSERT INTO `companynamelist` (`CompanyInt`, `CompanyName`) VALUES
-(1, 'Google');
-
 -- --------------------------------------------------------
 
 --
@@ -117,13 +110,6 @@ CREATE TABLE `internship` (
   `Role` varchar(100) NOT NULL,
   `Months_duration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `internship`
---
-
-INSERT INTO `internship` (`InternshipCode`, `CompanyINT`, `Role`, `Months_duration`) VALUES
-('MPU3302', 1, 'Tech Engineer', 1);
 
 -- --------------------------------------------------------
 
@@ -143,13 +129,11 @@ CREATE TABLE `studentaccountlist` (
 --
 
 INSERT INTO `studentaccountlist` (`StudentAccountID`, `Password`, `Username`, `AdminAccountID`) VALUES
-(1, '123456', 'MichealJackson2', 1),
+(1, '123456', 'MichealJackson', 1),
+(6, '12345', 'JamesBag', 1),
 (7, '12345', 'Boom', 1),
 (8, '12345', 'abca', 1),
-(9, '12345', 'zzzz', 1),
-(10, '12345', '20705238', 1),
-(11, '12345', 'Boom1', 1),
-(12, '12345', 'JackBlack21', 1);
+(9, '12345', 'zzzz', 1);
 
 -- --------------------------------------------------------
 
@@ -158,7 +142,6 @@ INSERT INTO `studentaccountlist` (`StudentAccountID`, `Password`, `Username`, `A
 --
 
 CREATE TABLE `studentprofile` (
-  `StudentProfileID` int(11) NOT NULL,
   `StudentAccountID` int(11) NOT NULL,
   `FirstName` varchar(100) NOT NULL,
   `LastName` varchar(100) NOT NULL,
@@ -168,14 +151,6 @@ CREATE TABLE `studentprofile` (
   `AssesorAccountIDLect` int(11) DEFAULT NULL,
   `AssesorAccountIDSuper` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `studentprofile`
---
-
-INSERT INTO `studentprofile` (`StudentProfileID`, `StudentAccountID`, `FirstName`, `LastName`, `ProgrammeCode`, `YearOfStudy`, `InternshipCode`, `AssesorAccountIDLect`, `AssesorAccountIDSuper`) VALUES
-(3, 1, 'sadsa', 'dsadsa', 'dsadsa', 1, 'MPU3302', 4, NULL),
-(5, 12, 'dsad', 'dsad', 'sada', 1, 'MPU3302', 3, NULL);
 
 --
 -- Indexes for dumped tables
@@ -229,7 +204,7 @@ ALTER TABLE `studentaccountlist`
 -- Indexes for table `studentprofile`
 --
 ALTER TABLE `studentprofile`
-  ADD PRIMARY KEY (`StudentProfileID`),
+  ADD UNIQUE KEY `FirstName` (`FirstName`,`LastName`),
   ADD KEY `StudentAccountID` (`StudentAccountID`),
   ADD KEY `studentprofile_ibfk_3` (`AssesorAccountIDLect`),
   ADD KEY `AssesorAccountIDSuper` (`AssesorAccountIDSuper`),
@@ -249,31 +224,25 @@ ALTER TABLE `adminaccountlist`
 -- AUTO_INCREMENT for table `assesoraccountlist`
 --
 ALTER TABLE `assesoraccountlist`
-  MODIFY `AssessorAccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `AssessorAccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `assessmentrecords`
 --
 ALTER TABLE `assessmentrecords`
-  MODIFY `AssessmentCode` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `AssessmentCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `companynamelist`
 --
 ALTER TABLE `companynamelist`
-  MODIFY `CompanyInt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `CompanyInt` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `studentaccountlist`
 --
 ALTER TABLE `studentaccountlist`
-  MODIFY `StudentAccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT for table `studentprofile`
---
-ALTER TABLE `studentprofile`
-  MODIFY `StudentProfileID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `StudentAccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables

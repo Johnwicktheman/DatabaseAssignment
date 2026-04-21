@@ -7,7 +7,7 @@ include '../Connection.php';
 include '../ExecutePStatement.php';
 
 //see if they are loggged in and if they are admin or not
-if (!isset($_SESSION['username']) || $_SESSION['user_role'] !== 'admin') {
+if (!isset($_SESSION['username']) || $_SESSION['user_role'] !== 'Admin') {
     header("Location: ../FrontPage.php"); 
     exit();
 }
@@ -22,6 +22,11 @@ if (!$studentID) {
 $fetchSql = "SELECT studentaccountlist.Username, studentaccountlist.Password, studentprofile.* FROM studentaccountlist 
              JOIN studentprofile ON studentaccountlist.StudentAccountID = studentprofile.StudentAccountID 
              WHERE studentaccountlist.StudentAccountID = ?";
+
+/*$fetchSql = "SELECT studentaccountlist.Username, studentaccountlist.Password, studentprofile.* FROM studentaccountlist, studentprofile 
+            WHERE studentaccountlist.StudentAccountID = studentprofile.StudentAccountID 
+            AND studentaccountlist.StudentAccountID = ?*/
+
 
 $fetchResult = executePreparedStatement($fetchSql, [$studentID]);
 

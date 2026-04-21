@@ -3,11 +3,12 @@ session_start();
 include 'Connection.php';
 include 'ExecutePStatement.php';
 
-//see if they are loggged in and if they are admin or not
-if (!isset($_SESSION['username']) || $_SESSION['user_role'] !== 'Admin') {
+//see if they are loggged in and if they are Assessor or not
+if (!isset($_SESSION['username']) || ($_SESSION['user_role'] !== 'Supervisor' && $_SESSION['user_role'] !== 'Lecturer')) {
     header("Location: ../FrontPage.php"); 
     exit();
 }
+
 
 $current_user = $_SESSION['username'];
 $role = $_SESSION['user_role'];
@@ -43,9 +44,9 @@ $role = $_SESSION['user_role'];
             <div class="box">
                 <i class="fa-solid fa-user"></i>
                 <h1>
-                    Manage Assessors
+                    Manage Students Records
                 </h1>
-                <button onclick="window.location.href='Databases/AssessorDatabase.php'">Continue</button>
+                <button onclick="window.location.href='AssessorDashboard/StudentDatabaseAss.php'">Continue</button>
             </div>
 
             <div class="box">

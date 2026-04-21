@@ -7,7 +7,7 @@ include '../Connection.php';
 include '../ExecutePStatement.php';
 
 //see if they are loggged in and if they are admin or not
-if (!isset($_SESSION['username']) || $_SESSION['user_role'] !== 'admin') {
+if (!isset($_SESSION['username']) || $_SESSION['user_role'] !== 'Admin') {
     header("Location: ../FrontPage.php"); 
     exit();
 }
