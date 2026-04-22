@@ -21,12 +21,6 @@ $role = $_SESSION['user_role'];
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
-    <!-- Font import -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CssFiles/AssessorDashBoard.css">
     <title>Document</title>
@@ -44,8 +38,9 @@ $role = $_SESSION['user_role'];
         <div id="title">Dashboard</div>
         <hr>
         <header>Welcome Back, <?php echo $current_user. "!" ?> </header>
+        <header>You are logged in as <?php echo $role; ?>.</header>
         <br>
-        <div id="subtitle">You are logged in as <?php echo $role; ?>.</div>
+        <div id="subtitle">manage your students internship blah blah blah</div>
 
         <div class ="container">
             <div class="box">

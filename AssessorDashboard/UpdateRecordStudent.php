@@ -35,6 +35,8 @@ if (!$currentData) {
     exit();
 }
 
+
+
 $sqlStudent = "SELECT FirstName, LastName FROM studentprofile WHERE StudentAccountID = ?";
 $ResultStudent = executePreparedStatement($sqlStudent, [$targetStudentID]);
 $student = $ResultStudent->fetch_assoc();
@@ -87,14 +89,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h3>Grades (Scale 1-10)</h3>
         
         <div class="form-group">
-            <div class="slider-container>
-                <label>Understanding of Project:</label>
-                <input type="number" name="u_project" min="0" max="10" value="<?php echo $currentData['understand_project']; ?>" required>
-            </div>
+            <label>Understanding of Project:</label>
+            <input type="number" name="u_project" min="0" max="10" value="<?php echo $currentData['understand_project']; ?>" required>
         </div>
-
-        
-
 
         <div class="form-group">
             <label>Health and Safety:</label>
