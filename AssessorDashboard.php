@@ -2,12 +2,14 @@
 session_start();
 include 'Connection.php';
 include 'ExecutePStatement.php';
+include 'AllFunctions.php';
 
+checkAccess(['Lecturer', 'Supervisor']);
 //see if they are loggged in and if they are Assessor or not
-if (!isset($_SESSION['username']) || ($_SESSION['user_role'] !== 'Supervisor' && $_SESSION['user_role'] !== 'Lecturer')) {
-    header("Location: ../FrontPage.php"); 
-    exit();
-}
+// if (!isset($_SESSION['username']) || ($_SESSION['user_role'] !== 'Supervisor' && $_SESSION['user_role'] !== 'Lecturer')) {
+//     header("Location: ../FrontPage.php"); 
+//     exit();
+// }
 
 
 $current_user = $_SESSION['username'];
@@ -34,8 +36,8 @@ $role = $_SESSION['user_role'];
         <p>ASSESSOR PANEL</p>
         <hr>
         <a href="#">Dashboard</a><br>
-        <a href="#">Dashboard</a><br>
-        <a href="#">Dashboard</a>
+        <a href="Dashboard.php">Dashboard</a><br>
+        <a href="Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
     </nav>
 
     <div class = "main">

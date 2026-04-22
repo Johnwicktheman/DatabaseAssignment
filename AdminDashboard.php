@@ -2,12 +2,9 @@
 session_start();
 include 'Connection.php';
 include 'ExecutePStatement.php';
+include 'AllFunctions.php';
 
-//see if they are loggged in and if they are admin or not
-if (!isset($_SESSION['username']) || $_SESSION['user_role'] !== 'Admin') {
-    header("Location: ../FrontPage.php"); 
-    exit();
-}
+checkAccess('Admin');
 
 $current_user = $_SESSION['username'];
 $role = $_SESSION['user_role'];
@@ -27,8 +24,9 @@ $role = $_SESSION['user_role'];
         <p>ASSESSOR PANEL</p>
         <hr>
         <a href="#">Dashboard</a><br>
-        <a href="#">Dashboard</a><br>
-        <a href="#">Dashboard</a>
+        <a href="Dashboard.php">Dashboard</a><br>
+        <a href="Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+</nav>
     </nav>
 
     <div class = "main">
@@ -45,7 +43,7 @@ $role = $_SESSION['user_role'];
                 <h1>
                     Manage Assessors
                 </h1>
-                <button onclick="window.location.href='Databases/AssessorDatabase.php'">Continue</button>
+                <button onclick="window.location.href='AdminDashboard/Databases/AssessorDatabase.php'">Continue</button>
             </div>
 
             <div class="box">
@@ -53,7 +51,7 @@ $role = $_SESSION['user_role'];
                 <h1>
                     Manage Students
                 </h1>
-                <button onclick="window.location.href='Databases/StudentDatabase.php'">Continue</button>
+                <button onclick="window.location.href='AdminDashboard/Databases/StudentDatabase.php'">Continue</button>
             </div>
         </div>
     </div>

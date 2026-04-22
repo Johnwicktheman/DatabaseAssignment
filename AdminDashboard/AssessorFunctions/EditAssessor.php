@@ -3,14 +3,13 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 session_start();
-include '../Connection.php';
-include '../ExecutePStatement.php';
+include '../../Connection.php';
+include '../../ExecutePStatement.php';
+include '../../AllFunctions.php';
 
 //see if they are loggged in and if they are admin or not
-if (!isset($_SESSION['username']) || $_SESSION['user_role'] !== 'Admin') {
-    header("Location: ../FrontPage.php"); 
-    exit();
-}
+checkAccess('Admin');
+
 //error text
 $error = null;
 //After they press submit button what happens
@@ -20,15 +19,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pass = $_POST['password'];
 
 
-    //check same username but different id
-    $checkSql = "SELECT * FROM assesoraccountlist WHERE Username = ? AND AssessorAccountID != ?";
-    $checkName = executePreparedStatement($checkSql, [$user, $id]);
-    echo "Found rows: " . $checkName->num_rows;
+    //check all table for names make sur eno duplicate username for accounts
+    $resAssessor = executePreparedStatement("SELECT Username FROM assesoraccountlist WHERE Username = ? AND AssessorAccountID != ?", [$user, $id]);
+    $resStudent = executePreparedStatement("SELECT Username FROM studentaccountlist WHERE Username = ?", [$user]);
+    $resAdmin = executePreparedStatement("SELECT Username FROM adminaccountlist WHERE Username = ?", [$user]);
 
-    if ($checkName->num_rows > 0) {
-
-        $error = "Username already exists. Please choose a different one."; 
+    //Check if any of them found a match
+    if ($resAssessor->num_rows > 0) {
+        $error = "Username is already taken by another Assessor.";
+    } else if ($resStudent->num_rows > 0) {
+        $error = "Username is already taken by a Student.";
+    } else if ($resAdmin->num_rows > 0) {
+        $error = "Username is already taken by an Admin.";
     }
+
 
     if ($error) {
         //If there is error show error msg below

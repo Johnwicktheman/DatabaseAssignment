@@ -3,14 +3,13 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 session_start();
-include '../Connection.php';
-include '../ExecutePStatement.php';
+include '../../Connection.php';
+include '../../ExecutePStatement.php';
+include '../../AllFunctions.php';
 
 //see if they are loggged in and if they are admin or not
-if (!isset($_SESSION['username']) || $_SESSION['user_role'] !== 'Admin') {
-    header("Location: ../FrontPage.php"); 
-    exit();
-}
+checkAccess('Admin');
+
 
 $studentID = $_GET['id'] ?? $_POST['id'] ?? null;
 
@@ -69,12 +68,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lectID = ($lectID === "NULL") ? null : $lectID;
     $superID = ($superID === "NULL") ? null : $superID;
 
-    //cannot have same username for studentaccount
-    $checkSql = "SELECT * FROM studentaccountlist WHERE Username = ? AND StudentAccountID != ?";
-    $checkRes = executePreparedStatement($checkSql, [$user, $studentID]);
 
-    if ($checkRes->num_rows > 0) {
-        $error = "Username already exists. Please choose a different one."; 
+    //Check username across all tables because we seperated them
+    $resAssessor = executePreparedStatement("SELECT Username FROM assesoraccountlist WHERE Username = ?", [$user]);
+    $resStudent = executePreparedStatement("SELECT Username FROM studentaccountlist WHERE Username = ? AND StudentAccountID != ?", [$user, $studentID]);
+    $resAdmin = executePreparedStatement("SELECT Username FROM adminaccountlist WHERE Username = ?", [$user]);
+    // Check if any of them found a match
+    if ($resAssessor->num_rows > 0) {
+        $error = "Username is already taken by another Assessor.";
+    } else if ($resStudent->num_rows > 0) {
+        $error = "Username is already taken by a Student.";
+    } else if ($resAdmin->num_rows > 0) {
+        $error = "Username is already taken by an Admin.";
     } else {
         //if ok continue insert student account list
         $adminID = $_SESSION['user_id'];

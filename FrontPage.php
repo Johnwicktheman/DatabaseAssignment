@@ -52,9 +52,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         $_SESSION['user_id']   = $row['StudentAccountID'];
         $_SESSION['username']  = $row['Username'];
-        $_SESSION['user_role'] = 'student';
+        $_SESSION['user_role'] = 'Student';
         
-        header("Location: AdminDashboard.php");
+        header("Location: StudentDashboard.php");
         exit;
     }
 

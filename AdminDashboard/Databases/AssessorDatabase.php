@@ -3,14 +3,13 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 session_start();
-include '../Connection.php';
-include '../ExecutePStatement.php';
+include '../../Connection.php';
+include '../../ExecutePStatement.php';
+include '../../AllFunctions.php';
 
 //see if they are loggged in and if they are admin or not
-if (!isset($_SESSION['username']) || $_SESSION['user_role'] !== 'Admin') {
-    header("Location: ../FrontPage.php"); 
-    exit();
-}
+checkAccess('Admin');
+
 
 $AssessorList = "SELECT * FROM assesoraccountlist";
 $AssessorResult = executePreparedStatement($AssessorList, []);
@@ -26,7 +25,7 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
     <link rel="stylesheet" href="CssFiles/AssessorDashBoard.css">
 </head>
 <body>
-    <p><a href="../AdminDashboard.php">Back to Dashboard</a></p>
+    <p><a href="../../AdminDashboard.php">Back to Dashboard</a></p>
     <p><a href="../AssessorFunctions/AddAssessor.php">Add New Assessor</a></p>
     <table>
         <tr>

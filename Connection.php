@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
-$username = "root";      // ← make sure this is correct
-$password = "root";          // ← XAMPP default is empty, WAMP is empty too
+$username = "root"; 
+$password = "root"; 
 $database = "courseworkdb";
 
 $conn = new mysqli($servername, $username, $password, $database);
