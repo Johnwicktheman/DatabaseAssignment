@@ -27,6 +27,17 @@ $studentList = "SELECT sp.StudentAccountID, sp.FirstName, sp.LastName, ar.Assess
 
 $studentResult = executePreparedStatement($studentList, [$assessorType, $assessorID]);
 
+//check if user wants to delete first
+if (isset($_GET['delete_id'])) {
+    $deleteID = $_GET['delete_id'];
+    
+    $sqlDelete = "DELETE FROM assessmentrecords WHERE StudentID = ? AND AssesorType = ?";
+    executePreparedStatement($sqlDelete, [$deleteID, $assessorType]);
+    
+    echo "<script>alert('Record Deleted Successfully!'); window.location.href='StudentDatabaseAss.php';</script>";
+    exit();
+}
+
 $targetStudentID = isset($_GET['id']) ? $_GET['id'] : null;
 
 $currentData = null;
@@ -57,7 +68,6 @@ if ($targetStudentID) {
         exit();
     }
 }
-
 
 //after submit what happens
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -169,6 +179,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-weight: bold;
             margin-right: 15px;
             transition: color 0.3s;
+        }
+
+        .delete-btn {
+            color: #e74c3c;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .delete-btn:hover {
+            color: #c0392b;
+            text-decoration: underline;
+            cursor: pointer;
         }
 
         tr a{
@@ -449,7 +472,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         echo "<td>";
                             if ($AssessmentCodeID) {
-                                // RECORD EXISTS: Disable Create, Enable Update
+                                // record found, can only update and delete
                                 echo "<span style='color: #ccc; cursor: not-allowed; margin-right: 15px;' title='Record already exists'>
                                         <i class='fas fa-plus-circle'></i> Create
                                     </span>";
@@ -458,12 +481,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <i class='fas fa-edit'></i> Update
                                     </a>";
 
-                                echo "<a href='../StudentFunctions/DeleteStudent.php?id=" . $row['StudentAccountID'] . "' class='delete-btn'>
+                                echo "<a href='#' onclick='confirmDelete(" . $id . ")' class='delete-btn'>
                                         <i class='fas fa-delete-left'></i> Delete
                                     </a>";
 
                             } else {
-                                // NO RECORD: Enable Create, Disable Update
+                                // no record found, can only create
                                 echo "<a href='StudentDatabaseAss.php?id=" . $id . "&mode=create' class='open-btn'>
                                         <i class='fas fa-plus-circle'></i> Create
                                     </a>";
@@ -648,6 +671,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             document.getElementById("modal").classList.add("open");
         }
     }
+
+    function confirmDelete(studentID){
+        if (confirm("Are you sure you want to delete this assessment record? This action cannot be undone.")) {
+        window.location.href = "StudentDatabaseAss.php?delete_id=" + studentID;
+        }
+    }
+
 
     </script>
 </body>
