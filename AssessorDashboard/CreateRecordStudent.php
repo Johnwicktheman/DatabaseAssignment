@@ -40,8 +40,19 @@ if ($resCheck->num_rows > 0) {
 
 
 
-//This is to just get name of student
-$sqlStudent = "SELECT FirstName, LastName FROM studentprofile WHERE StudentAccountID = ?";
+//This is to just get name of student and internship details for display
+$sqlStudent = "SELECT prof.FirstName, prof.LastName, intern.Role, intern.Months_duration, intern.Description, comp.CompanyName 
+               FROM studentprofile prof
+               LEFT JOIN internship intern ON prof.StudentAccountID = intern.StudentAccountID
+               LEFT JOIN companynamelist comp ON intern.CompanyINT = comp.CompanyInt
+               WHERE prof.StudentAccountID = ?";
+
+$ResultStudent = executePreparedStatement($sqlStudent, [$targetStudentID]);
+$student = $ResultStudent->fetch_assoc();
+
+if (!$student) {
+    die("Error: Student profile not found.");
+}
 $ResultStudent = executePreparedStatement($sqlStudent, [$targetStudentID]);
 $student = $ResultStudent->fetch_assoc();
 
@@ -87,6 +98,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <h2>Create Assessment for: <?php echo $student['FirstName'] . " " . $student['LastName']; ?></h2>
+    <div style="background-color: #f9f9f9; border: 1px solid #ddd; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+        <h3>Student Internship Context</h3>
+        <p><strong>Company:</strong> <?php echo htmlspecialchars($student['CompanyName'] ?? 'N/A'); ?></p>
+        <p><strong>Role:</strong> <?php echo htmlspecialchars($student['Role'] ?? 'N/A'); ?></p>
+        <p><strong>Duration:</strong> <?php echo htmlspecialchars($student['Months_duration'] ?? '0'); ?> Months</p>
+        <p><strong>Tasks/Description:</strong><br>
+            <?php echo (htmlspecialchars($student['Description'] ?? 'No description provided.')); ?>
+        </p>
+    </div>
+
+    <hr>
     <p>Role: <strong><?php echo $assessorType; ?></strong></p>
     <hr>
 

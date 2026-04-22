@@ -7,23 +7,18 @@ include '../../Connection.php';
 include '../../ExecutePStatement.php';
 include '../../AllFunctions.php';
 
-//see if they are loggged in and if they are admin or not
 checkAccess('Admin');
 
-//Get all lecturer and supervisor for dropdown list
+// Get all lecturers for dropdown
 $lecturerSql = "SELECT AssessorAccountID, Username FROM assesoraccountlist WHERE AssesorType = ?";
 $lecturers = executePreparedStatement($lecturerSql, ['Lecturer']);
 
-// Fetch all Supervisors
+// Fetch all Supervisors for dropdown
 $supervisorSql = "SELECT AssessorAccountID, Username FROM assesoraccountlist WHERE AssesorType = ?";
 $supervisors = executePreparedStatement($supervisorSql, ['Supervisor']);
 
-$internshipSql = "SELECT InternshipCode FROM internship";
-$internships = executePreparedStatement($internshipSql, []);
-
-//error text
 $error = null;
-//After they press submit button what happens
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $user = $_POST['username'];
@@ -33,79 +28,80 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lname = $_POST['lastname'];
     $programme = $_POST['programme'];
     $year = $_POST['year'];
-    $internCode = $_POST['InternshipCode'];
-    $lectID = $_POST['lecturer'];
-    $superID = $_POST['supervisor'];
+    
+    // Internship Details
+    $companyID = $_POST['company_id'];
+    $role = $_POST['role'];
+    $duration = $_POST['duration'];
+    $description = $_POST['description'];
 
-    //if NULL change it into "NULL" string for sql
-    $internCode = ($internCode === "NULL") ? null : $internCode;
-    $lectID = ($lectID === "NULL") ? null : $lectID;
-    $superID = ($superID === "NULL") ? null : $superID;
+    $lectID = ($_POST['lecturer'] === "NULL") ? null : $_POST['lecturer'];
+    $superID = ($_POST['supervisor'] === "NULL") ? null : $_POST['supervisor'];
 
-    //Check username across all tables because we seperated them
+    // Username Availability Check
     $resAssessor = executePreparedStatement("SELECT Username FROM assesoraccountlist WHERE Username = ?", [$user]);
-    $resStudent = executePreparedStatement("SELECT Username FROM studentaccountlist WHERE Username = ?", [$user]);
-    $resAdmin = executePreparedStatement("SELECT Username FROM adminaccountlist WHERE Username = ?", [$user]);
+    $resStudent  = executePreparedStatement("SELECT Username FROM studentaccountlist WHERE Username = ?", [$user]);
+    $resAdmin    = executePreparedStatement("SELECT Username FROM adminaccountlist WHERE Username = ?", [$user]);
 
-    // Check if any of them found a match
+    // Determine the specific error message
     if ($resAssessor->num_rows > 0) {
-        $error = "Username is already taken by another Assessor.";
+        $error = "Username is already taken by an Assessor (Lecturer/Supervisor).";
     } else if ($resStudent->num_rows > 0) {
-        $error = "Username is already taken by a Student.";
+        $error = "Username is already taken by another Student.";
     } else if ($resAdmin->num_rows > 0) {
         $error = "Username is already taken by an Admin.";
-    }
-    else {
-        //if ok continue insert student account list
-        $adminID = $_SESSION['user_id'];
-        $insertAccSql = "INSERT INTO studentaccountlist (Username, Password, AdminAccountID) VALUES (?, ?, ?)";
-        $insertAccRes = executePreparedStatement($insertAccSql, [$user, $pass, $AdminID]);
+    } else {
+        $conn->begin_transaction();
 
-        if ($insertAccRes) {
-            //if ok get ID of this new account to put it inside student profile
-            //insert_id is primary key and auto increment
+        try {
+            //Insert student account to get the StudentAccountID
+            $insertAccSql = "INSERT INTO studentaccountlist (Username, Password, AdminAccountID) VALUES (?, ?, ?)";
+            executePreparedStatement($insertAccSql, [$user, $pass, $AdminID]);
             $newStudentID = $conn->insert_id;
 
-            //insert into student profile
+            //Insert student profile
             $insertProfSql = "INSERT INTO studentprofile 
-                (StudentAccountID, FirstName, LastName, ProgrammeCode, YearOfStudy, InternshipCode, AssesorAccountIDLect, AssesorAccountIDSuper) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                (StudentAccountID, FirstName, LastName, ProgrammeCode, YearOfStudy, AssesorAccountIDLect, AssesorAccountIDSuper) 
+                VALUES (?, ?, ?, ?, ?, ?, ?)";
             
-            $insertProfRes = executePreparedStatement($insertProfSql, [
-                $newStudentID, $fname, $lname, $programme, $year, $internCode, $lectID, $superID
+            executePreparedStatement($insertProfSql, [
+                $newStudentID, $fname, $lname, $programme, $year, $lectID, $superID
             ]);
 
-            if ($insertProfRes) {
-                header("Location: ../Databases/StudentDatabase.php");
-                exit();
-            } else {
-                $error = "Account created, but profile failed to save.";
-            }
+            //Create internship record using the StudentAccountID as the link
+            $insertInternSql = "INSERT INTO internship (StudentAccountID, CompanyINT, Role, Months_duration, Description) VALUES (?, ?, ?, ?, ?)";
+            executePreparedStatement($insertInternSql, [$newStudentID, $companyID, $role, $duration, $description]);
+
+            $conn->commit();
+            header("Location: ../Databases/StudentDatabase.php?msg=success");
+            exit();
+
+        } catch (Exception $e) {
+            $conn->rollback();
+            $error = "Failed to create record: " . $e->getMessage();
         }
     }
 }
-
-
-
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Add New Student</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; line-height: 1.6; }
+        .error { color: red; font-weight: bold; }
+        label { display: inline-block; width: 180px; }
+        hr { margin: 20px 0; }
+    </style>
 </head>
 <body>
-    <?php 
-        if ($error !=null){
-            echo $error;
-        }
-    ?>
+    <h2>Register New Student</h2>
+    <?php if ($error) echo "<p class='error'>$error</p>"; ?>
     
-    <p>Add New Assessor</p>
-   <form action="" method="post">
-        <h3>Login Credentials</h3>
+    <form action="" method="post">
+        <h3>1. Login Credentials</h3>
         <label>Username:</label>
         <input type="text" name="username" required><br><br>
         
@@ -113,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="password" name="password" required><br><br>
 
         <hr>
-        <h3>Student Profile</h3>
+        <h3>2. Student Profile</h3>
         <label>First Name:</label>
         <input type="text" name="firstname" required><br><br>
 
@@ -126,43 +122,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label>Year of Study:</label>
         <input type="number" name="year" min="1" max="4" required><br><br>
 
-
-
-        <label for="Internship">Assign Internship:</label>
-        <select name="InternshipCode" id="internship">
-            <option value="NULL">-- No Internship Assigned --</option>
-            <?php while($internship = $internships->fetch_assoc()): ?>
-                <option value="<?php echo $internship['InternshipCode']; ?>">
-                    <?php echo $internship['InternshipCode']; ?>
-                </option>
-            <?php endwhile; ?>
-        </select>
-
         <label for="lecturer">Assign Lecturer:</label>
         <select name="lecturer" id="lecturer">
             <option value="NULL">-- No Lecturer Assigned --</option>
-            <?php while($lect = $lecturers->fetch_assoc()): ?>
-                <option value="<?php echo $lect['AssessorAccountID']; ?>">
-                    <?php echo $lect['Username']; ?>
-                </option>
+            <?php while($l = $lecturers->fetch_assoc()): ?>
+                <option value="<?php echo $l['AssessorAccountID']; ?>"><?php echo htmlspecialchars($l['Username']); ?></option>
             <?php endwhile; ?>
-        </select>
-
-        <br><br>
+        </select><br><br>
 
         <label for="supervisor">Assign Supervisor:</label>
         <select name="supervisor" id="supervisor">
             <option value="NULL">-- No Supervisor Assigned --</option>
-            <?php while($super = $supervisors->fetch_assoc()): ?>
-                <option value="<?php echo $super['AssessorAccountID']; ?>">
-                    <?php echo $super['Username']; ?>
-                </option>
+            <?php while($s = $supervisors->fetch_assoc()): ?>
+                <option value="<?php echo $s['AssessorAccountID']; ?>"><?php echo htmlspecialchars($s['Username']); ?></option>
             <?php endwhile; ?>
         </select>
-        
 
-        <label>Submit</label>
-        <input type="submit" value="Add Student">
+        <hr>
+        <h3>3. Internship Information</h3>
+        <label>Company:</label>
+        <select name="company_id" required>
+            <option value="">-- Select Company --</option>
+            <?php
+            $compRes = $conn->query("SELECT * FROM companynamelist");
+            while($comp = $compRes->fetch_assoc()) {
+                echo "<option value='".$comp['CompanyInt']."'>".htmlspecialchars($comp['CompanyName'])."</option>";
+            }
+            ?>
+        </select><br><br>
+
+        <label>Role:</label>
+        <input type="text" name="role" placeholder="e.g. Software Intern" required><br><br>
+
+        <label>Duration (Months):</label>
+        <input type="number" name="duration" min="1" required><br><br>
+
+        <label style="vertical-align: top;">Description:</label>
+        <textarea name="description" rows="4" cols="40" placeholder="Briefly describe the internship tasks..."></textarea>
+        <br><br>
+                
+        <button type="submit" style="padding: 10px 20px;">Add Student & Internship</button>
         <a href="../Databases/StudentDatabase.php">Cancel</a>
     </form>
 </body>

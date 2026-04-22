@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 22, 2026 at 04:03 PM
+-- Generation Time: Apr 22, 2026 at 03:48 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.3.1
 
@@ -124,20 +124,12 @@ INSERT INTO `companynamelist` (`CompanyInt`, `CompanyName`) VALUES
 --
 
 CREATE TABLE `internship` (
-  `InternshipID` int(11) NOT NULL,
   `StudentAccountID` int(11) NOT NULL,
   `CompanyINT` int(11) NOT NULL,
   `Role` varchar(100) NOT NULL,
   `Months_duration` int(11) NOT NULL,
   `Description` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `internship`
---
-
-INSERT INTO `internship` (`InternshipID`, `StudentAccountID`, `CompanyINT`, `Role`, `Months_duration`, `Description`) VALUES
-(1, 17, 1, 'dsadsa', 2, 'dsadsadsaddsadsad');
 
 -- --------------------------------------------------------
 
@@ -158,8 +150,7 @@ CREATE TABLE `studentaccountlist` (
 
 INSERT INTO `studentaccountlist` (`StudentAccountID`, `Password`, `Username`, `AdminAccountID`) VALUES
 (1, '123456', 'MichealJackson2', 1),
-(12, '12345', 'JackBlack21', 1),
-(17, '12345', 'fasdwad', 1);
+(12, '12345', 'JackBlack21', 1);
 
 -- --------------------------------------------------------
 
@@ -184,8 +175,7 @@ CREATE TABLE `studentprofile` (
 
 INSERT INTO `studentprofile` (`StudentProfileID`, `StudentAccountID`, `FirstName`, `LastName`, `ProgrammeCode`, `YearOfStudy`, `AssesorAccountIDLect`, `AssesorAccountIDSuper`) VALUES
 (3, 1, 'Jicken', 'Jockey', 'dsadsa', 1, 4, 8),
-(5, 12, 'James', 'Bonded', 'sada', 1, 7, 8),
-(7, 17, 'dsadsad', 'sadsadas', 'dsadsa', 2, 3, 9);
+(5, 12, 'James', 'Bonded', 'sada', 1, 7, 8);
 
 --
 -- Indexes for dumped tables
@@ -223,7 +213,6 @@ ALTER TABLE `companynamelist`
 -- Indexes for table `internship`
 --
 ALTER TABLE `internship`
-  ADD PRIMARY KEY (`InternshipID`),
   ADD KEY `internship_ibfk_1` (`CompanyINT`),
   ADD KEY `internship_ibfk_2` (`StudentAccountID`);
 
@@ -273,22 +262,16 @@ ALTER TABLE `companynamelist`
   MODIFY `CompanyInt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `internship`
---
-ALTER TABLE `internship`
-  MODIFY `InternshipID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
 -- AUTO_INCREMENT for table `studentaccountlist`
 --
 ALTER TABLE `studentaccountlist`
-  MODIFY `StudentAccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `StudentAccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `studentprofile`
 --
 ALTER TABLE `studentprofile`
-  MODIFY `StudentProfileID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `StudentProfileID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables
