@@ -42,13 +42,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lectID = ($lectID === "NULL") ? null : $lectID;
     $superID = ($superID === "NULL") ? null : $superID;
 
-    //cannot have same username for studentaccount
-    $checkSql = "SELECT * FROM studentaccountlist WHERE Username = ?";
-    $checkRes = executePreparedStatement($checkSql, [$user]);
+    //Check username across all tables because we seperated them
+    $resAssessor = executePreparedStatement("SELECT Username FROM assesoraccountlist WHERE Username = ?", [$user]);
+    $resStudent = executePreparedStatement("SELECT Username FROM studentaccountlist WHERE Username = ?", [$user]);
+    $resAdmin = executePreparedStatement("SELECT Username FROM adminaccountlist WHERE Username = ?", [$user]);
 
-    if ($checkRes->num_rows > 0) {
-        $error = "Username already exists. Please choose a different one."; 
-    } else {
+    // Check if any of them found a match
+    if ($resAssessor->num_rows > 0) {
+        $error = "Username is already taken by another Assessor.";
+    } else if ($resStudent->num_rows > 0) {
+        $error = "Username is already taken by a Student.";
+    } else if ($resAdmin->num_rows > 0) {
+        $error = "Username is already taken by an Admin.";
+    }
+    else {
         //if ok continue insert student account list
         $adminID = $_SESSION['user_id'];
         $insertAccSql = "INSERT INTO studentaccountlist (Username, Password, AdminAccountID) VALUES (?, ?, ?)";

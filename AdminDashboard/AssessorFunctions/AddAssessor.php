@@ -22,14 +22,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $type = $_POST['type'];
 
 
-    //check same username but different id
-    $checkSql = "SELECT * FROM assesoraccountlist WHERE Username = ?";
-    $checkName = executePreparedStatement($checkSql, [$user]);
-    echo "Found rows: " . $checkName->num_rows;
+    //check assessor table
+    $resAssessor = executePreparedStatement("SELECT Username FROM assesoraccountlist WHERE Username = ? ", [$user]);
+    $resStudent = executePreparedStatement("SELECT Username FROM studentaccountlist WHERE Username = ?", [$user]);
+    $resAdmin = executePreparedStatement("SELECT Username FROM adminaccountlist WHERE Username = ?", [$user]);
 
-    if ($checkName->num_rows > 0) {
-
-        $error = "Username already exists. Please choose a different one."; 
+    // Check if any of them found a match
+    if ($resAssessor->num_rows > 0) {
+        $error = "Username is already taken by another Assessor.";
+    } else if ($resStudent->num_rows > 0) {
+        $error = "Username is already taken by a Student.";
+    } else if ($resAdmin->num_rows > 0) {
+        $error = "Username is already taken by an Admin.";
     }
 
     if ($error) {
