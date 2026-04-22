@@ -3,15 +3,12 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 session_start();
-include '../Connection.php';
-include '../ExecutePStatement.php';
+include '../../Connection.php';
+include '../../ExecutePStatement.php';
+include '../../AllFunctions.php';
 
 //see if they are loggged in and if they are admin or not
-if (!isset($_SESSION['username']) || $_SESSION['user_role'] !== 'Admin') {
-    header("Location: ../FrontPage.php"); 
-    exit();
-}
-
+checkAccess('Admin');
 
 //Get all lecturer and supervisor for dropdown list
 $lecturerSql = "SELECT AssessorAccountID, Username FROM assesoraccountlist WHERE AssesorType = ?";

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 21, 2026 at 02:38 PM
+-- Generation Time: Apr 18, 2026 at 06:07 AM
 -- Server version: 5.7.24
 -- PHP Version: 8.3.1
 
@@ -63,8 +63,7 @@ CREATE TABLE `assesoraccountlist` (
 INSERT INTO `assesoraccountlist` (`AssessorAccountID`, `Password`, `Username`, `AdminAccountID`, `AssesorType`) VALUES
 (3, '2132', 'dsad', 1, 'Lecturer'),
 (4, '12345', 'JackBlack', 1, 'Lecturer'),
-(6, '12345', 'JamesBagewl', 1, 'Lecturer'),
-(7, '12345', 'HueWeiFengLect', 1, 'Lecturer');
+(6, '12345', 'JamesBagewl', 1, 'Lecturer');
 
 -- --------------------------------------------------------
 
@@ -87,14 +86,6 @@ CREATE TABLE `assessmentrecords` (
   `time_management` float DEFAULT NULL,
   `Internship_Score` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `assessmentrecords`
---
-
-INSERT INTO `assessmentrecords` (`AssessmentCode`, `StudentID`, `AssesorType`, `Feedback`, `understand_project`, `health_and_safety`, `connectivity`, `presentation`, `clarity`, `activities`, `project_management`, `time_management`, `Internship_Score`) VALUES
-(1, 1, 'Lecturer', 'chicken jockeyyy', 1, 9, 4, 2, 1, 2, 3, 4, 26),
-(2, 12, 'Lecturer', '1', 1, 1, 1, 1, 10, 1, 1, 1, 17);
 
 -- --------------------------------------------------------
 
@@ -153,6 +144,11 @@ CREATE TABLE `studentaccountlist` (
 
 INSERT INTO `studentaccountlist` (`StudentAccountID`, `Password`, `Username`, `AdminAccountID`) VALUES
 (1, '123456', 'MichealJackson2', 1),
+(7, '12345', 'Boom', 1),
+(8, '12345', 'abca', 1),
+(9, '12345', 'zzzz', 1),
+(10, '12345', '20705238', 1),
+(11, '12345', 'Boom1', 1),
 (12, '12345', 'JackBlack21', 1);
 
 -- --------------------------------------------------------
@@ -178,8 +174,8 @@ CREATE TABLE `studentprofile` (
 --
 
 INSERT INTO `studentprofile` (`StudentProfileID`, `StudentAccountID`, `FirstName`, `LastName`, `ProgrammeCode`, `YearOfStudy`, `InternshipCode`, `AssesorAccountIDLect`, `AssesorAccountIDSuper`) VALUES
-(3, 1, 'Jicken', 'Jockey', 'dsadsa', 1, 'MPU3302', 7, NULL),
-(5, 12, 'James', 'Bonded', 'sada', 1, 'MPU3302', 7, NULL);
+(3, 1, 'sadsa', 'dsadsa', 'dsadsa', 1, 'MPU3302', 4, NULL),
+(5, 12, 'dsad', 'dsad', 'sada', 1, 'MPU3302', 3, NULL);
 
 --
 -- Indexes for dumped tables
@@ -253,13 +249,13 @@ ALTER TABLE `adminaccountlist`
 -- AUTO_INCREMENT for table `assesoraccountlist`
 --
 ALTER TABLE `assesoraccountlist`
-  MODIFY `AssessorAccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `AssessorAccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `assessmentrecords`
 --
 ALTER TABLE `assessmentrecords`
-  MODIFY `AssessmentCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `AssessmentCode` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `companynamelist`
