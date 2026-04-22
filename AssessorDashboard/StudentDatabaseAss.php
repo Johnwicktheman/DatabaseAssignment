@@ -38,14 +38,24 @@ if ($targetStudentID) {
     $resCurrent = executePreparedStatement($sqlCurrent, [$targetStudentID, $assessorType]);
     $currentData = $resCurrent->fetch_assoc();
 
-    if (!$currentData) {
-        header("Location: StudentDatabaseAss.php");
-        exit();
-    }
-
     $sqlStudent = "SELECT FirstName, LastName FROM studentprofile WHERE StudentAccountID = ?";
     $ResultStudent = executePreparedStatement($sqlStudent, [$targetStudentID]);
     $student = $ResultStudent->fetch_assoc();
+
+    $mode = isset($_GET['mode']) ? $_GET['mode'] : 'update';
+
+    //Just in case user somehow enter create when they already have a record, or update when they don't have a record
+    if ($mode === 'update' && !$currentData) {
+        // Trying to update a non-existent record
+        echo "<script>alert('No record found to update. Please create one first.'); window.location.href='StudentDatabaseAss.php';</script>";
+        exit();
+    }
+    
+    if ($mode === 'create' && $currentData) {
+        // Trying to create a record that already exists
+        echo "<script>alert('Record already exists for this student.'); window.location.href='StudentDatabaseAss.php';</script>";
+        exit();
+    }
 }
 
 
@@ -65,16 +75,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $totalScore = $u_project + $h_safety + $connectivity + $presentation + $clarity + $activities + $p_manage + $t_manage;
     $totalScore = (int)round($totalScore);
 
-    $sqlInsert = "UPDATE assessmentrecords 
-        SET Feedback = ?, understand_project = ?, health_and_safety = ?, connectivity = ?, presentation = ?, clarity = ?, activities = ?, project_management = ?, time_management = ?, Internship_Score = ?
-        WHERE StudentID = ? AND AssesorType = ?";
-    
-    $params = [
-        $feedback, $u_project, $h_safety, $connectivity, $presentation, $clarity, $activities, $p_manage, $t_manage, $totalScore,
-        $targetStudentID, $assessorType,
-    ];
+    // Check if record exists to determine action
+    $checkSql = "SELECT AssessmentCode FROM assessmentrecords WHERE StudentID = ? AND AssesorType = ?";
+    $checkRes = executePreparedStatement($checkSql, [$targetStudentID, $assessorType]);
 
-    executePreparedStatement($sqlInsert, $params);
+    if ($checkRes->num_rows > 0) {//update 
+        $sql = "UPDATE assessmentrecords SET Feedback=?, understand_project=?, health_and_safety=?, connectivity=?, presentation=?, clarity=?, activities=?, project_management=?, time_management=?, Internship_Score=? WHERE StudentID=? AND AssesorType=?";
+        $params = [$feedback, $u_project, $h_safety, $connectivity, $presentation, $clarity, $activities, $p_manage, $t_manage, $totalScore, $targetStudentID, $assessorType];
+    } 
+    else {//create
+        $sql = "INSERT INTO assessmentrecords (Feedback, understand_project, health_and_safety, connectivity, presentation, clarity, activities, project_management, time_management, Internship_Score, StudentID, AssesorType) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        $params = [$feedback, $u_project, $h_safety, $connectivity, $presentation, $clarity, $activities, $p_manage, $t_manage, $totalScore, $targetStudentID, $assessorType];
+    }
+
+    executePreparedStatement($sql, $params);
     
     echo "<script>alert('Record Updated Successfully!'); window.location.href='StudentDatabaseAss.php';</script>";
 }
@@ -89,9 +103,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>        
-        .main {
-            margin-left: 250px; /* Offset for the sidebar */
-        }
 
         nav a{
             margin-bottom:20px;
@@ -232,14 +243,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: #555;
         }
 
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .form-group input{
+            margin-left:20px;
+            border-radius:10px;
+            width: 40px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: inherit;
+            text-align: center;
+        }
+
+        
+
+        /* THIS IS FOR SLIDERS */
+
+
         /* Container for slider and value readout */
+        /*
         .slider-container {
             align-items: center;
             gap: 15px;
             max-width: 250px;
         }
 
-        /* The actual slider track */
         .slider {
             width: 100%;
             height: 8px;
@@ -249,14 +283,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             transition: 1s;
         }
 
-        /* The slider handle (Thumb) - Chrome, Safari, Edge */
         .slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #154c4b; /* Your primary teal */
+            background: #154c4b; 
             cursor: pointer;
             border: 2px solid white;
             box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
@@ -264,18 +297,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .slider:hover::-webkit-slider-thumb {
-            background: #219e75; /* Your hover teal */
+            background: #219e75;
             transform: scale(1.1);
         }
 
-        /* The slider handle (Thumb) - Firefox */
         .slider::-moz-range-thumb {
             -webkit-appearance: none;
             appearance: none;
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #154c4b; /* Your primary teal */
+            background: #154c4b; 
             cursor: pointer;
             border: 2px solid white;
             box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
@@ -283,8 +315,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .slider:hover::-moz-range-thumb {
-            background: #219e75; /* Your hover teal */
+            background: #219e75;
             transform: scale(1.1);
+        }
+        */
+
+        /* THIS IS FOR INPUT BOXES */
+
+        ./* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+        display:flex;
+        -webkit-appearance: none;
+        margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+        -moz-appearance: textfield;
         }
 
         /* Style for the number display next to slider */
@@ -399,10 +447,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             echo "<td><b style='color: gray;'>No Score</b></td>";
                         }
 
-                        echo "<td>
-                            <a href='CreateRecordStudent.php?id=" . $id . "' ><i class='fas fa-plus-circle'></i>Create Record</a> 
-                            <a href='?id=" . $id . "' class='open-btn'><i class='fas fa-edit'></i>Update</a>
-                        </td>";
+                        echo "<td>";
+                            if ($AssessmentCodeID) {
+                                // RECORD EXISTS: Disable Create, Enable Update
+                                echo "<span style='color: #ccc; cursor: not-allowed; margin-right: 15px;' title='Record already exists'>
+                                        <i class='fas fa-plus-circle'></i> Create
+                                    </span>";
+
+                                echo "<a href='StudentDatabaseAss.php?id=" . $id . "&mode=update' class='open-btn'>
+                                        <i class='fas fa-edit'></i> Update
+                                    </a>";
+
+                                echo "<a href='../StudentFunctions/DeleteStudent.php?id=" . $row['StudentAccountID'] . "' class='delete-btn'>
+                                        <i class='fas fa-delete-left'></i> Delete
+                                    </a>";
+
+                            } else {
+                                // NO RECORD: Enable Create, Disable Update
+                                echo "<a href='StudentDatabaseAss.php?id=" . $id . "&mode=create' class='open-btn'>
+                                        <i class='fas fa-plus-circle'></i> Create
+                                    </a>";
+                                echo "<span style='color: #ccc; cursor: not-allowed; margin-right: 15px;' title='Create a record first'>
+                                        <i class='fas fa-edit'></i> Update
+                                    </span>";
+
+                                echo "<span style='color: #ccc; cursor: not-allowed; margin-right: 15px;' title='Create a record first'>
+                                        <i class='fas fa-delete-left'></i> Delete
+                                    </span>";
+                            }
+
+                        echo "</td>";
                         echo "</tr>";
                     }
                 ?>
@@ -410,9 +484,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div id="modal">
         <div id="modal-inner">
-        <h1>Update Assessment for: <?php echo $student['FirstName'] . " " . $student['LastName']; ?></h1>
+        <h1><?php echo (isset($_GET['mode']) && $_GET['mode'] == 'create') ? 'Create' : 'Update'; ?> Assessment for: <?php echo $student['FirstName'] . " " . $student['LastName']; ?></h1>
     <p>Role: <strong><?php echo $assessorType; ?></strong></p>
     <hr>
+    <!--
         <form method="POST">            
             <div class="form-collection1">
                 <h1>Grades (Scale 0-10)</h1>
@@ -488,6 +563,77 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="button-container">
                     <button type="submit" class="submit-btn">Update Assessment</button>
+                    <a href="StudentDatabaseAss.php" class="btn-cancel">Cancel</a>
+                </div>
+            </div>
+        -->
+            <form method="POST">            
+            <div class="form-collection1">
+                <h1>Grades (Scale 0-10)</h1>
+                <div class="form-group">
+                    <label>Understanding of Project:</label><br>
+                    <div class = "input-container">
+                        <input type="number" step="any" name="u_project" class="input" min="0" max="10" value="<?php echo $currentData ? $currentData['understand_project'] : '0'; ?>" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Health and Safety:</label><br>
+                    <div class = "input-container">
+                        <input type="number" step="any" name="h_safety" class="input" min="0" max="10" value="<?php echo $currentData ? $currentData['health_and_safety'] : '0'; ?>" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Connectivity:</label><br>
+                    <div class = "input-container">
+                        <input type="number" step="any" name="connectivity" class="input" min="0" max="10" value="<?php echo $currentData ? $currentData['connectivity'] : '0'; ?>" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Presentation:</label><br>
+                    <div class = "input-container">
+                        <input type="number" step="any" name="presentation" class="input" min="0" max="10" oninput="this.nextElementSibling.value = this.value"  value="<?php echo $currentData ? $currentData['presentation'] : '0'; ?>" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Clarity:</label><br>
+                    <div class = "input-container">
+                        <input type="number" step="any" name="clarity" class="input" min="0" max="10" oninput="this.nextElementSibling.value = this.value"  value="<?php echo $currentData ? $currentData['clarity'] : '0'; ?>" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Activities:</label><br>
+                    <div class = "input-container">
+                        <input type="number" step="any" name="activities" class="input" min="0" max="10" oninput="this.nextElementSibling.value = this.value"  value="<?php echo $currentData ? $currentData['activities'] : '0'; ?>" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Project Management:</label><br>
+                    <div class = "input-container">
+                        <input type="number" step="any" name="p_manage" class="input" min="0" max="10" oninput="this.nextElementSibling.value = this.value"  value="<?php echo $currentData ? $currentData['project_management'] : '0'; ?>" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Time Management:</label><br>
+                    <div class = "input-container">
+                        <input type="number" step="any" name="t_manage" class="input" min="0" max="10" oninput="this.nextElementSibling.value = this.value"  value="<?php echo $currentData ? $currentData['time_management'] : '0'; ?>" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-collection2">
+                <div class="form-group2">
+                    <h1>General Feedback:</h1><br>
+                    <textarea name="feedback" placeholder="Enter comments here..." required><?php echo $currentData ? $currentData['Feedback'] : ''; ?></textarea>            
+                </div>
+                <div class="button-container">
+                    <button type="submit" class="submit-btn"><?php echo (isset($_GET['mode']) && $_GET['mode'] == 'create') ? 'Create' : 'Update'; ?> Assessment</button>
                     <a href="StudentDatabaseAss.php" class="btn-cancel">Cancel</a>
                 </div>
             </div>

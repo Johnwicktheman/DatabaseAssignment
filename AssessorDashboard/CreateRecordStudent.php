@@ -5,8 +5,12 @@ error_reporting(E_ALL);
 session_start();
 include '../Connection.php';
 include '../ExecutePStatement.php';
-include '../AllFunctions.php';
-checkAccess(['Lecturer', 'Supervisor']);
+
+//see if they are loggged in and if they are admin or not
+if (!isset($_SESSION['username']) || ($_SESSION['user_role'] !== 'Supervisor' && $_SESSION['user_role'] !== 'Lecturer')) {
+    header("Location: ../FrontPage.php"); 
+    exit();
+}
 
 //Get current Role and ID currenlty confirmed to be lecturer or supervisor
 $assessorID = $_SESSION['user_id'];
