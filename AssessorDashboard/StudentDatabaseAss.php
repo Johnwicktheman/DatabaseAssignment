@@ -110,7 +110,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
 
     <link rel="stylesheet" href="../CssFiles/AssessorDashBoard.css">
+    <link rel="stylesheet" href="../CssFiles/TableStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
+
+    <!-- Font import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>        
 
@@ -149,29 +156,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             cursor:pointer;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background-color: white;
-            border-radius: 15px;
-            overflow: hidden; /* Ensures border-radius works on table */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        th, td {
-            text-align: left;
-            padding: 15px 20px;
-            border-bottom: 1px solid #eee;
-        }
-
-        th {
-            background-color: #f8f9fa;
-            color: #154c4b;
-            font-size: 14px;
-            letter-spacing: 1px;
-            font-weight: 900;
-        }
         
         .action-links a {
             text-decoration: none;

@@ -59,9 +59,9 @@ $role = $_SESSION['user_role'];
             <div class="box">
                 <i class="fa-solid fa-user"></i>
                 <h1>
-                    Manage Students
+                    View Students Database
                 </h1>
-                <button onclick="window.location.href='Databases/StudentDatabase.php'">Continue</button>
+                <button onclick="window.location.href='AssessorDashboard/ViewStudentDatabase.php'">Continue</button>
             </div>
         </div>
     </div>
