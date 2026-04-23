@@ -35,9 +35,10 @@ $role = $_SESSION['user_role'];
      <nav>
         <p>ASSESSOR PANEL</p>
         <hr>
-        <a href="#">Dashboard</a><br>
         <a href="Dashboard.php">Dashboard</a><br>
-        <a href="Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+        <a href="AssessorDashboard/StudentDatabaseAss.php">Assessment Records</a><br>
+        <a href="AssessorDashboard/ViewStudentDatabase.php">Student Database</a><br>
+        <a href="../Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
     </nav>
 
     <div class = "main">

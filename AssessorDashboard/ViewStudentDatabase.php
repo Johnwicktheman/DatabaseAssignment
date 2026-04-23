@@ -27,7 +27,7 @@ if ($filtervalue !== '') {
     $searchTerm = "%" . $filtervalue . "%";
     $studentsList = "SELECT sp.StudentProfileID, sp.StudentAccountID, sp.FirstName, sp.LastName, sp.YearOfStudy, intern.Role, comp.CompanyName 
                     FROM studentprofile sp
-                    LEFT JOIN internship intern ON sp.InternshipCode = intern.InternshipCode
+                    LEFT JOIN internship intern ON sp.StudentAccountID = intern.StudentAccountID
                     LEFT JOIN companynamelist comp ON intern.CompanyINT = comp.CompanyInt 
                     WHERE sp.StudentAccountID LIKE ? 
                     OR sp.FirstName LIKE ? 
@@ -40,7 +40,7 @@ if ($filtervalue !== '') {
     // Default Mode: Show all students (or whatever logic you prefer)
     $studentsList = "SELECT sp.StudentProfileID, sp.StudentAccountID, sp.FirstName, sp.LastName, sp.YearOfStudy, intern.Role, comp.CompanyName 
                     FROM studentprofile sp
-                    LEFT JOIN internship intern ON sp.InternshipCode = intern.InternshipCode
+                    LEFT JOIN internship intern ON sp.StudentAccountID = intern.StudentAccountID
                     LEFT JOIN companynamelist comp ON intern.CompanyINT = comp.CompanyInt";
     $studentResult = executePreparedStatement($studentsList, []);
 }
@@ -80,9 +80,10 @@ if ($filtervalue !== '') {
         <nav>
             <p>ASSESSOR PANEL</p>
             <hr>
-            <a href="#">Dashboard</a><br>
             <a href="../AssessorDashboard.php">Dashboard</a><br>
-            <a href="Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+            <a href="StudentDatabaseAss.php">Assessment Records</a><br>
+            <a href="#">Student Database</a><br>
+            <a href="../Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
         </nav>
 
         <div class="main">

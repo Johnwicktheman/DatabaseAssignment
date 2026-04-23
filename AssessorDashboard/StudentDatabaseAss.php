@@ -402,10 +402,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <nav>
         <p>ASSESSOR PANEL</p>
         <hr>
-        <a onclick="window.location.href='../AssessorDashboard.php'">Dashboard</a>
-        <a href="#">Assessments</a>
-        <a href="#">Students</a>
-        <a href="#">Settings</a>
+        <a href="../AssessorDashboard.php">Dashboard</a><br>
+        <a href="StudentDatabaseAss.php">Assessment Records</a><br>
+        <a href="#">Student Database</a><br>
+        <a href="../Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
     </nav>
 
     <div class="main">
@@ -658,7 +658,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     function confirmDelete(studentID){
         if (confirm("Are you sure you want to delete this assessment record? This action cannot be undone.")) {
-        window.location.href = "StudentDatabaseAss.php?delete_id=" + studentID;
+            window.location.href = "StudentDatabaseAss.php?delete_id=" + studentID;
         }
     }
 
