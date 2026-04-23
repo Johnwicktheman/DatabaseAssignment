@@ -1,30 +1,13 @@
-<?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-session_start();
-include '../../Connection.php';
-include '../../ExecutePStatement.php';
-include '../../AllFunctions.php';
-
-//see if they are loggged in and if they are admin or not
-checkAccess('Admin');
-
-
-$studentList = "SELECT * FROM studentaccountlist";
-$studentResult = executePreparedStatement($studentList, []);
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Student Accounts</title>
+    <!-- <link rel="stylesheet" href="user_management.css"> -->
 
-    <link rel="stylesheet" href="../../CssFiles/AssessorDashBoard.css">
-    <link rel="stylesheet" href="../../CssFiles/TableStyle.css">
+    <link rel="stylesheet" href="../CssFiles/AssessorDashBoard.css">
+    <link rel="stylesheet" href="../CssFiles/TableStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
 
     <!-- Font import -->
@@ -220,7 +203,7 @@ $studentResult = executePreparedStatement($studentList, []);
 
         <div class="page-header">
             <h1> Student Accounts </h1>
-            <a href="../StudentFunctions/AddStudent.php" class="btn btn-primary">Add Student</a>
+            <button class="btn btn-primary" onclick="window.location.href='AddStudent.php?id=<?php echo $row['StudentAccountID'] ?>'">+ Add Student</button>
         </div>
 
 
@@ -236,35 +219,12 @@ $studentResult = executePreparedStatement($studentList, []);
                     <tr>
                         <th> Student ID</th>
                         <th> Full Name</th>
-                        <th> Admin ID</th>
+                        <th> Email</th>
                         <th> Role</th>
                         <th> Action</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <?php
-                        while ($row = $studentResult->fetch_assoc()) {
-                            $id       = $row['StudentAccountID'];
-                            $user     = $row['Username'];
-                            $adminID  = $row['AdminAccountID'];
-
-                            echo "<tr>";
-                            echo "<td>" . $id . "</td>";
-                            echo "<td>" . $user . "</td>";
-                            echo "<td>" . $adminID . "</td>";
-                            //let id = current student row id
-
-                            //Hardcoded Role (Because student accounts are all students)
-                            echo "<td> Student </td>";
-
-                            //Combined Action Column
-                            echo "<td>
-                                <a href='../StudentFunctions/UpdateStudent.php?id=" . $id . "'><i class='fa-solid fa-pen-to-square'></i> Edit</a>
-                                <a href='../StudentFunctions/DeleteStudent.php?id=" . $id . "' class='delete-btn' onclick=\"return confirm('Are you sure?')\"><i class='fa-solid fa-trash'></i> Delete</a>
-                                </td>";
-                            echo "</tr>";
-                        }
-                    ?>
                     <!-- Insert the rows here through PHP--> 
 
                 </tbody>

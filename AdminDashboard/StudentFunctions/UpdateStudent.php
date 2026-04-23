@@ -108,94 +108,370 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <title>Update Student Record</title>
     <style>
-        body { font-family: sans-serif; line-height: 1.6; padding: 20px; }
-        .form-section { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
-        .error { color: red; font-weight: bold; }
-        label { display: inline-block; width: 150px; margin-bottom: 10px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f5f7;
+            color: #333;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .page-title {
+            font-size: 42px;
+            color: #0f4f4f;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+
+        .form-card {
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: #0f4f4f;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e5e5e5;
+            padding-bottom: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input,
+        select,
+        textarea {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: 0.2s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #0f4f4f;
+            box-shadow: 0 0 0 3px rgba(15, 79, 79, 0.15);
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .error {
+            background: #ffe5e5;
+            color: #c62828;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: #1e7c45;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #166437;
+        }
+
+        .btn-secondary {
+            background-color: #dcdcdc;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background-color: #c7c7c7;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <h2>Update Student: <?php echo htmlspecialchars($studentData['FirstName'] . " " . $studentData['LastName']); ?></h2>
+<div class="container">
+
+    <h1 class="page-title">
+        Update Student: 
+        <?php echo htmlspecialchars($studentData['FirstName'] . " " . $studentData['LastName']); ?>
+    </h1>
+
+    <p class="subtitle">
+        Edit student account and internship information.
+    </p>
 
     <?php if ($error): ?>
-        <p class="error"><?php echo $error; ?></p>
+        <div class="error"><?php echo $error; ?></div>
     <?php endif; ?>
 
-    <form action="" method="post">
-        <input type="hidden" name="id" value="<?php echo $studentID; ?>">
+    <div class="form-card">
 
-        <div class="form-section">
-            <h3>1. Login Credentials</h3>
-            <label>Username:</label>
-            <input type="text" name="username" value="<?php echo htmlspecialchars($studentData['Username']); ?>" required><br>
-            
-            <label>Password:</label>
-            <input type="password" name="password" value="<?php echo htmlspecialchars($studentData['Password']); ?>" required>
-        </div>
+        <form action="" method="post">
 
-        <div class="form-section">
-            <h3>2. Student Profile</h3>
-            <label>First Name:</label>
-            <input type="text" name="firstname" value="<?php echo htmlspecialchars($studentData['FirstName']); ?>" required><br>
+            <input type="hidden" name="id" value="<?php echo $studentID; ?>">
 
-            <label>Last Name:</label>
-            <input type="text" name="lastname" value="<?php echo htmlspecialchars($studentData['LastName']); ?>" required><br>
+            <!-- Login Credentials -->
+            <h2 class="section-title">1. Login Credentials</h2>
 
-            <label>Programme:</label>
-            <input type="text" name="programme" value="<?php echo htmlspecialchars($studentData['ProgrammeCode']); ?>" required><br>
+            <div class="form-grid">
 
-            <label>Year of Study:</label>
-            <input type="number" name="year" value="<?php echo htmlspecialchars($studentData['YearOfStudy']); ?>" min="1" max="4" required><br>
+                <div class="form-group">
+                    <label>Username</label>
 
-            <label>Lecturer:</label>
-            <select name="lecturer">
-                <option value="NULL">-- Unassigned --</option>
-                <?php while($l = $lecturers->fetch_assoc()): ?>
-                    <option value="<?php echo $l['AssessorAccountID']; ?>" <?php if($studentData['AssesorAccountIDLect'] == $l['AssessorAccountID']) echo 'selected'; ?>>
-                        <?php echo htmlspecialchars($l['Username']); ?>
-                    </option>
-                <?php endwhile; ?>
-            </select><br>
+                    <input 
+                        type="text" 
+                        name="username"
+                        value="<?php echo htmlspecialchars($studentData['Username']); ?>" 
+                        required
+                    >
+                </div>
 
-            <label>Supervisor:</label>
-            <select name="supervisor">
-                <option value="NULL">-- Unassigned --</option>
-                <?php while($s = $supervisors->fetch_assoc()): ?>
-                    <option value="<?php echo $s['AssessorAccountID']; ?>" <?php if($studentData['AssesorAccountIDSuper'] == $s['AssessorAccountID']) echo 'selected'; ?>>
-                        <?php echo htmlspecialchars($s['Username']); ?>
-                    </option>
-                <?php endwhile; ?>
-            </select>
-        </div>
+                <div class="form-group">
+                    <label>Password</label>
 
-        <div class="form-section">
-            <h3>3. Internship Details</h3>
-            <label>Company:</label>
-            <select name="company_id" required>
-                <option value="">-- Select Company --</option>
-                <?php while($c = $companies->fetch_assoc()): ?>
-                    <option value="<?php echo $c['CompanyInt']; ?>" <?php if($studentData['CompanyINT'] == $c['CompanyInt']) echo 'selected'; ?>>
-                        <?php echo htmlspecialchars($c['CompanyName']); ?>
-                    </option>
-                <?php endwhile; ?>
-            </select><br>
+                    <input 
+                        type="password"
+                        name="password"
+                        value="<?php echo htmlspecialchars($studentData['Password']); ?>"
+                        required
+                    >
+                </div>
 
-            <label>Role:</label>
-            <input type="text" name="role" value="<?php echo htmlspecialchars($studentData['Role'] ?? ''); ?>" required><br>
+            </div>
 
-            <label>Duration (Months):</label>
-            <input type="number" name="duration" value="<?php echo htmlspecialchars($studentData['Months_duration'] ?? ''); ?>" required><br>
 
-            <label style="vertical-align: top;">Description:</label>
-            <textarea name="description" rows="4" cols="40"><?php echo htmlspecialchars($studentData['Description'] ?? ''); ?></textarea>
-        </div>
+            <!-- Student Profile -->
+            <h2 class="section-title">2. Student Profile</h2>
 
-        <div style="margin-top: 20px;">
-            <button type="submit" style="padding: 10px 20px; cursor: pointer;">Save All Changes</button>
-            <a href="../Databases/StudentDatabase.php" style="margin-left: 10px;">Cancel</a>
-        </div>
-    </form>
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>First Name</label>
+
+                    <input 
+                        type="text"
+                        name="firstname"
+                        value="<?php echo htmlspecialchars($studentData['FirstName']); ?>"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Last Name</label>
+
+                    <input 
+                        type="text"
+                        name="lastname"
+                        value="<?php echo htmlspecialchars($studentData['LastName']); ?>"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Programme</label>
+
+                    <input 
+                        type="text"
+                        name="programme"
+                        value="<?php echo htmlspecialchars($studentData['ProgrammeCode']); ?>"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Year of Study</label>
+
+                    <input 
+                        type="number"
+                        name="year"
+                        value="<?php echo htmlspecialchars($studentData['YearOfStudy']); ?>"
+                        min="1"
+                        max="4"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Lecturer</label>
+
+                    <select name="lecturer">
+
+                        <option value="NULL">-- Unassigned --</option>
+
+                        <?php while($l = $lecturers->fetch_assoc()): ?>
+                            <option 
+                                value="<?php echo $l['AssessorAccountID']; ?>"
+                                <?php if($studentData['AssesorAccountIDLect'] == $l['AssessorAccountID']) echo 'selected'; ?>
+                            >
+                                <?php echo htmlspecialchars($l['Username']); ?>
+                            </option>
+                        <?php endwhile; ?>
+
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Supervisor</label>
+
+                    <select name="supervisor">
+
+                        <option value="NULL">-- Unassigned --</option>
+
+                        <?php while($s = $supervisors->fetch_assoc()): ?>
+                            <option 
+                                value="<?php echo $s['AssessorAccountID']; ?>"
+                                <?php if($studentData['AssesorAccountIDSuper'] == $s['AssessorAccountID']) echo 'selected'; ?>
+                            >
+                                <?php echo htmlspecialchars($s['Username']); ?>
+                            </option>
+                        <?php endwhile; ?>
+
+                    </select>
+                </div>
+
+            </div>
+
+
+            <!-- Internship Details -->
+            <h2 class="section-title">3. Internship Details</h2>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Company</label>
+
+                    <select name="company_id" required>
+
+                        <option value="">-- Select Company --</option>
+
+                        <?php while($c = $companies->fetch_assoc()): ?>
+                            <option 
+                                value="<?php echo $c['CompanyInt']; ?>"
+                                <?php if($studentData['CompanyINT'] == $c['CompanyInt']) echo 'selected'; ?>
+                            >
+                                <?php echo htmlspecialchars($c['CompanyName']); ?>
+                            </option>
+                        <?php endwhile; ?>
+
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Role</label>
+
+                    <input 
+                        type="text"
+                        name="role"
+                        value="<?php echo htmlspecialchars($studentData['Role'] ?? ''); ?>"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label>Duration (Months)</label>
+
+                    <input 
+                        type="number"
+                        name="duration"
+                        value="<?php echo htmlspecialchars($studentData['Months_duration'] ?? ''); ?>"
+                        required
+                    >
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Description</label>
+
+                    <textarea 
+                        name="description"
+                        rows="5"
+                    ><?php echo htmlspecialchars($studentData['Description'] ?? ''); ?></textarea>
+                </div>
+
+            </div>
+
+
+            <div class="button-group">
+
+                <button type="submit" class="btn btn-primary">
+                    Save All Changes
+                </button>
+
+                <a href="../Databases/StudentDatabase.php" class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
 
 </body>
 </html>

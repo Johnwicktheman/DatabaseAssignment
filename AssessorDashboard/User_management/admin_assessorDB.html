@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Assessor Accounts </title>
+    <link rel="stylesheet" href="user_management.css">
+</head>
+<body>
+
+    <!-- Sidebar-->
+    <aside class="sidebar">
+        <h2>Admin Panel</h2>
+        <nav>
+        <a href="admin_dashboard.php">Dashboard</a>
+        <a href="StudentDatabase.php" class="active">Student Accounts</a>
+        <a href="assessor_accounts.php">Assessor Accounts</a>
+        <a href="internship_management.php">Internship Management</a>
+        <a href="results.php">Result Viewing</a>
+        </nav>
+        <a href="logout.php" class="logout">Logout</a>
+    </aside>
+    
+    <main class = "main">
+
+        <div class="page-header">
+            <h1> User Management </h1>
+            <button class="btn btn-primary" onclick="openModal('add')">+ Add Assessor</button>
+        </div>
+
+
+        <!-- Search -->
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search by name or Assessor ID..." oninput="filterTable()" />
+        </div>
+
+        <!-- Table -->
+         <div class="table-wrapper">
+            <table id="userTable">
+                <thead>
+                    <tr>
+                        <th> Assesor ID</th>
+                        <th> Full Name</th>
+                        <th> Email</th>
+                        <th> Role</th>
+                        <th> Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- Insert the rows here through PHP--> 
+
+                </tbody>
+            </table>
+         </div>
+
+    </main>
+
+    <!-- Add / Edit Modal -->
+     <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h2 id="modalTitle"> Add Assessor </h2>
+
+            <!-- WF Made changes here -->
+            <div class="form-group">
+                <label for="mAssessorID"> Assessor ID </label>
+                <input type="text" id="mAssessorID" placeholder="e.g Assessor12345" />
+
+                <label for="mName"> Full Name</label>
+                <input type="text" id="mName" placeholder="Full name"/>
+
+                <label for="mEmail"> Email </label>
+                <input type="email" id="mEmail" placeholder="assessor@example.com">
+
+
+                <label for="mRole"> Role </label>
+                <select id="mRole">
+                    <option value="Lecturer"> Lecturer</option>
+                    <option value="Supervisor"> Supervisor</option>
+                </select>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeModal()"> Cancel </button>
+                <button class="btn btn-primary" onclick="saveUser()"> Save </button>
+            </div>
+            
+        </div>
+     </div>
+
+     <script src="studentDB_try"> </script>
+
+</body>
+</html>

@@ -90,79 +90,305 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <title>Add New Student</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; line-height: 1.6; }
-        .error { color: red; font-weight: bold; }
-        label { display: inline-block; width: 180px; }
-        hr { margin: 20px 0; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f5f7;
+            color: #333;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .page-title {
+            font-size: 42px;
+            color: #0f4f4f;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+
+        .form-card {
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: #0f4f4f;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e5e5e5;
+            padding-bottom: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 35px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input,
+        select,
+        textarea {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: 0.2s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #0f4f4f;
+            box-shadow: 0 0 0 3px rgba(15, 79, 79, 0.15);
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .error {
+            background: #ffe5e5;
+            color: #c62828;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: #1e7c45;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #166437;
+        }
+
+        .btn-secondary {
+            background-color: #dcdcdc;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background-color: #c7c7c7;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+        }
     </style>
 </head>
 <body>
-    <h2>Register New Student</h2>
-    <?php if ($error) echo "<p class='error'>$error</p>"; ?>
-    
-    <form action="" method="post">
-        <h3>1. Login Credentials</h3>
-        <label>Username:</label>
-        <input type="text" name="username" required><br><br>
-        
-        <label>Password:</label>
-        <input type="password" name="password" required><br><br>
 
-        <hr>
-        <h3>2. Student Profile</h3>
-        <label>First Name:</label>
-        <input type="text" name="firstname" required><br><br>
+<div class="container">
 
-        <label>Last Name:</label>
-        <input type="text" name="lastname" required><br><br>
+    <h1 class="page-title">Add New Student</h1>
+    <p class="subtitle">Create a new student account and internship record.</p>
 
-        <label>Programme Code:</label>
-        <input type="text" name="programme" placeholder="e.g. CS101" required><br><br>
+    <?php if ($error) echo "<div class='error'>$error</div>"; ?>
 
-        <label>Year of Study:</label>
-        <input type="number" name="year" min="1" max="4" required><br><br>
+    <div class="form-card">
 
-        <label for="lecturer">Assign Lecturer:</label>
-        <select name="lecturer" id="lecturer">
-            <option value="NULL">-- No Lecturer Assigned --</option>
-            <?php while($l = $lecturers->fetch_assoc()): ?>
-                <option value="<?php echo $l['AssessorAccountID']; ?>"><?php echo htmlspecialchars($l['Username']); ?></option>
-            <?php endwhile; ?>
-        </select><br><br>
+        <form action="" method="post">
 
-        <label for="supervisor">Assign Supervisor:</label>
-        <select name="supervisor" id="supervisor">
-            <option value="NULL">-- No Supervisor Assigned --</option>
-            <?php while($s = $supervisors->fetch_assoc()): ?>
-                <option value="<?php echo $s['AssessorAccountID']; ?>"><?php echo htmlspecialchars($s['Username']); ?></option>
-            <?php endwhile; ?>
-        </select>
+            <!-- Login Credentials -->
+            <h2 class="section-title">1. Login Credentials</h2>
 
-        <hr>
-        <h3>3. Internship Information</h3>
-        <label>Company:</label>
-        <select name="company_id" required>
-            <option value="">-- Select Company --</option>
-            <?php
-            $compRes = $conn->query("SELECT * FROM companynamelist");
-            while($comp = $compRes->fetch_assoc()) {
-                echo "<option value='".$comp['CompanyInt']."'>".htmlspecialchars($comp['CompanyName'])."</option>";
-            }
-            ?>
-        </select><br><br>
+            <div class="form-grid">
 
-        <label>Role:</label>
-        <input type="text" name="role" placeholder="e.g. Software Intern" required><br><br>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" required>
+                </div>
 
-        <label>Duration (Months):</label>
-        <input type="number" name="duration" min="1" required><br><br>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" required>
+                </div>
 
-        <label style="vertical-align: top;">Description:</label>
-        <textarea name="description" rows="4" cols="40" placeholder="Briefly describe the internship tasks..."></textarea>
-        <br><br>
-                
-        <button type="submit" style="padding: 10px 20px;">Add Student & Internship</button>
-        <a href="../Databases/StudentDatabase.php">Cancel</a>
-    </form>
+            </div>
+
+
+            <!-- Student Profile -->
+            <h2 class="section-title">2. Student Profile</h2>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" name="firstname" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" name="lastname" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Programme Code</label>
+                    <input type="text" name="programme" placeholder="e.g. CS101" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Year of Study</label>
+                    <input type="number" name="year" min="1" max="4" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Assign Lecturer</label>
+                    <select name="lecturer">
+
+                        <option value="NULL">-- No Lecturer Assigned --</option>
+
+                        <?php while($l = $lecturers->fetch_assoc()): ?>
+                            <option value="<?php echo $l['AssessorAccountID']; ?>">
+                                <?php echo htmlspecialchars($l['Username']); ?>
+                            </option>
+                        <?php endwhile; ?>
+
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Assign Supervisor</label>
+
+                    <select name="supervisor">
+
+                        <option value="NULL">-- No Supervisor Assigned --</option>
+
+                        <?php while($s = $supervisors->fetch_assoc()): ?>
+                            <option value="<?php echo $s['AssessorAccountID']; ?>">
+                                <?php echo htmlspecialchars($s['Username']); ?>
+                            </option>
+                        <?php endwhile; ?>
+
+                    </select>
+                </div>
+
+            </div>
+
+
+            <!-- Internship Information -->
+            <h2 class="section-title">3. Internship Information</h2>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Company</label>
+
+                    <select name="company_id" required>
+
+                        <option value="">-- Select Company --</option>
+
+                        <?php
+                        $compRes = $conn->query("SELECT * FROM companynamelist");
+
+                        while($comp = $compRes->fetch_assoc()) {
+                            echo "<option value='".$comp['CompanyInt']."'>"
+                                . htmlspecialchars($comp['CompanyName']) .
+                                "</option>";
+                        }
+                        ?>
+
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Role</label>
+                    <input type="text" name="role" placeholder="e.g. Software Intern" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Duration (Months)</label>
+                    <input type="number" name="duration" min="1" required>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Description</label>
+
+                    <textarea 
+                        name="description"
+                        rows="5"
+                        placeholder="Briefly describe the internship tasks..."
+                    ></textarea>
+                </div>
+
+            </div>
+
+
+            <div class="button-group">
+
+                <button type="submit" class="btn btn-primary">
+                    Add Student
+                </button>
+
+                <a href="../Databases/StudentDatabase.php" class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
 </body>
 </html>
