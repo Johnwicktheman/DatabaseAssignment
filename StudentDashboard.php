@@ -16,6 +16,11 @@ $SeeResultsSuper = executePreparedStatement($sqlSuper, [$_SESSION['user_id']]);
 $superGrade = $SeeResultsSuper->fetch_assoc();
 
 
+$lectScoreNum = isset($lectGrade['Internship_Score']) ? (int)$lectGrade['Internship_Score'] : 0;
+$superScoreNum = isset($superGrade['Internship_Score']) ? (int)$superGrade['Internship_Score'] : 0;
+$totalScore = $lectScoreNum + $superScoreNum;
+
+
 $current_user = $_SESSION['username'];
 $role = $_SESSION['user_role'];
 
@@ -64,6 +69,19 @@ $role = $_SESSION['user_role'];
                     <p>Feedback: <?php echo $superGrade['Feedback']; ?></p>
                 <?php else: ?>
                     <p>Pending supervisor evaluation.</p>
+                <?php endif; ?>
+            </div>
+            <div class="box total-box">
+                <h1>Total Internship Score</h1>
+                <?php if ($lectGrade || $superGrade): ?>
+                    <p style="font-size: 24px; margin: 10px 0;"><strong><?php echo $totalScore; ?> / 160</strong></p>
+                    
+                    <?php if (!$lectGrade || !$superGrade): ?>
+                        <p style="font-size: 14px; color: #ccc;"><em>*Score is currently partial. Waiting on final evaluation.</em></p>
+                    <?php endif; ?>
+
+                <?php else: ?>
+                    <p>No evaluations have been submitted yet.</p>
                 <?php endif; ?>
             </div>
         </div>

@@ -21,11 +21,15 @@ if (!$studentID) {
 //Get data for prefill form
 $fetchSql = "SELECT acc.Username, acc.Password, prof.*, 
                     intern.CompanyINT, intern.Role, intern.Months_duration, intern.Description,
-                    comp.CompanyName
+                    comp.CompanyName,
+                    ar_lect.Internship_Score AS LectScore,
+                    ar_super.Internship_Score AS SuperScore
              FROM studentaccountlist acc
              JOIN studentprofile prof ON acc.StudentAccountID = prof.StudentAccountID 
              LEFT JOIN internship intern ON acc.StudentAccountID = intern.StudentAccountID
              LEFT JOIN companynamelist comp ON intern.CompanyINT = comp.CompanyInt
+             LEFT JOIN assessmentrecords ar_lect ON acc.StudentAccountID = ar_lect.StudentID AND ar_lect.AssesorType = 'Lecturer'
+             LEFT JOIN assessmentrecords ar_super ON acc.StudentAccountID = ar_super.StudentID AND ar_super.AssesorType = 'Supervisor'
              WHERE acc.StudentAccountID = ?";
 
 $fetchResult = executePreparedStatement($fetchSql, [$studentID]);
@@ -54,6 +58,7 @@ $error = null;
 <body>
 
     <h2>View Student: <?php echo htmlspecialchars($studentData['FirstName'] . " " . $studentData['LastName']); ?></h2>
+    <a href="../Databases/StudentDatabase.php">Back to Student Database</a>
     <div style="background-color: #f9f9f9; border: 1px solid #ddd; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
         <h3>Login Information</h3>
         <p><strong>Username:</strong> <?php echo htmlspecialchars($studentData['Username']); ?></p>
@@ -73,6 +78,27 @@ $error = null;
         <p><strong>Role:</strong> <?php echo htmlspecialchars($studentData['Role'] ?? 'N/A'); ?></p>
         <p><strong>Duration (months):</strong> <?php echo htmlspecialchars($studentData['Months_duration'] ?? 'N/A'); ?></p>
         <p><strong>Description:</strong> <?php echo nl2br(htmlspecialchars($studentData['Description'] ?? 'N/A')); ?></p>
+    </div>
+    <div  style="background-color: #f9f9f9; border: 1px solid #ddd; padding: 15px; border-radius: 5px;">
+        <h3>Assessment Scores</h3>
+        <p><strong>Lecturer Score:</strong> 
+            <?php 
+                if (isset($studentData['LectScore'])) {
+                    echo "<b>" . $studentData['LectScore'] . " / 100</b>";
+                } else {
+                    echo "<span>Not Graded Yet</span>";
+                }
+            ?>
+        </p>
+        <p><strong>Supervisor Score:</strong> 
+            <?php 
+                if (isset($studentData['SuperScore'])) {
+                    echo "<b>" . $studentData['SuperScore'] . " / 100</b>";
+                } else {
+                    echo "<span>Not Graded Yet</span>";
+                }
+            ?>
+        </p>
     </div>
 
 
