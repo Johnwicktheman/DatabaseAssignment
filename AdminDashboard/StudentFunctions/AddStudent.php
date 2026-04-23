@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Username Availability Check
     $resAssessor = executePreparedStatement("SELECT Username FROM assesoraccountlist WHERE Username = ?", [$user]);
-    $resStudent  = executePreparedStatement("SELECT Username FROM studentaccountlist WHERE Username = ? ", [$user, $currentUserID]); // Assuming 3 is the UserTypeID for students
+    $resStudent  = executePreparedStatement("SELECT Username FROM studentaccountlist WHERE Username = ? ", [$user]); // Assuming 3 is the UserTypeID for students
     $resAdmin    = executePreparedStatement("SELECT Username FROM adminaccountlist WHERE Username = ?", [$user]);
 
     // Determine the specific error message
