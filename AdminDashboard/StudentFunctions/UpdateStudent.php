@@ -54,10 +54,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $superID = ($_POST['supervisor'] === "NULL") ? null : $_POST['supervisor'];
 
     //Internship Details
-    $companyID = $_POST['company_id'];
-    $role = $_POST['role'];
-    $duration = $_POST['duration'];
-    $description = $_POST['description'];
+    $companyID = empty($_POST['company_id']) ? null : $_POST['company_id'];
+    $role = empty($_POST['role']) ? null : $_POST['role'];
+    $duration = empty($_POST['duration']) ? null : $_POST['duration'];
+    $description = empty($_POST['description']) ? null : $_POST['description'];
 
     //Username check
     $resAssessor = executePreparedStatement("SELECT Username FROM assesoraccountlist WHERE Username = ?", [$user]);
@@ -79,9 +79,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sqlAcc = "UPDATE studentaccountlist SET Username = ?, Password = ? WHERE StudentAccountID = ?";
             executePreparedStatement($sqlAcc, [$user, $pass, $studentID]);
 
-            //Update Internship Record using StudentAccountID
-            $sqlIntern = "UPDATE internship SET CompanyINT = ?, Role = ?, Months_duration = ?, Description = ? WHERE StudentAccountID = ?";
-            executePreparedStatement($sqlIntern, [$companyID, $role, $duration, $description, $studentID]);
+            //Update Internship Record using StudentAccountID but check whether they got internship or not first
+            //because once company name deleted the internship also deleted so need reassginment
+            $checkIntern = executePreparedStatement("SELECT StudentAccountID FROM internship WHERE StudentAccountID = ?", [$studentID]);
+            
+            if ($checkIntern->num_rows > 0) {
+                //Record exists then update
+                $sqlIntern = "UPDATE internship SET CompanyINT = ?, Role = ?, Months_duration = ?, Description = ? WHERE StudentAccountID = ?";
+                executePreparedStatement($sqlIntern, [$companyID, $role, $duration, $description, $studentID]);
+            } else if ($companyID) {
+                //No record exists then insert
+                $sqlIntern = "INSERT INTO internship (CompanyINT, Role, Months_duration, Description, StudentAccountID) VALUES (?, ?, ?, ?, ?)";
+                executePreparedStatement($sqlIntern, [$companyID, $role, $duration, $description, $studentID]);
+            }
 
             //Update Student Profile
             $sqlProf = "UPDATE studentprofile SET 

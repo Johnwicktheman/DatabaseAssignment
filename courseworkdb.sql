@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 22, 2026 at 04:03 PM
+-- Generation Time: Apr 23, 2026 at 08:10 AM
 -- Server version: 5.7.24
 -- PHP Version: 8.3.1
 
@@ -96,8 +96,10 @@ CREATE TABLE `assessmentrecords` (
 
 INSERT INTO `assessmentrecords` (`AssessmentCode`, `StudentID`, `AssesorType`, `Feedback`, `understand_project`, `health_and_safety`, `connectivity`, `presentation`, `clarity`, `activities`, `project_management`, `time_management`, `Internship_Score`) VALUES
 (1, 1, 'Lecturer', 'chicken jockeyyyy', 1, 9, 4, 2, 1, 2, 3, 4, 26),
-(2, 12, 'Lecturer', '1', 3, 1, 1, 1, 4, 1, 1, 1, 13),
-(3, 1, 'Supervisor', 'Bagel Bogel', 1, 2, 0, 0, 5, 6, 7, 8, 29);
+(3, 1, 'Supervisor', 'Bagel Bogel', 1, 2, 0, 0, 5, 6, 7, 8, 29),
+(5, 17, 'Lecturer', 'dsadcxzzcac', 2, 0, 0, 0, 0, 0, 0, 0, 2),
+(6, 18, 'Lecturer', 'dsad', 7, 0, 0, 0, 0, 0, 0, 0, 7),
+(7, 17, 'Supervisor', 'dsad', 1, 0, 0, 0, 0, 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -126,7 +128,7 @@ INSERT INTO `companynamelist` (`CompanyInt`, `CompanyName`) VALUES
 CREATE TABLE `internship` (
   `InternshipID` int(11) NOT NULL,
   `StudentAccountID` int(11) NOT NULL,
-  `CompanyINT` int(11) NOT NULL,
+  `CompanyINT` int(11) DEFAULT NULL,
   `Role` varchar(100) NOT NULL,
   `Months_duration` int(11) NOT NULL,
   `Description` varchar(200) DEFAULT NULL
@@ -137,7 +139,8 @@ CREATE TABLE `internship` (
 --
 
 INSERT INTO `internship` (`InternshipID`, `StudentAccountID`, `CompanyINT`, `Role`, `Months_duration`, `Description`) VALUES
-(1, 17, 1, 'dsadsa', 2, 'dsadsadsaddsadsad');
+(1, 17, 1, 'dsadsa', 2, 'dsadsadsaddsadsad'),
+(3, 18, 1, 'dsad', 3, 'dsxcdsad');
 
 -- --------------------------------------------------------
 
@@ -157,9 +160,10 @@ CREATE TABLE `studentaccountlist` (
 --
 
 INSERT INTO `studentaccountlist` (`StudentAccountID`, `Password`, `Username`, `AdminAccountID`) VALUES
-(1, '123456', 'MichealJackson2', 1),
+(1, '123456', 'MichealJackson21', 1),
 (12, '12345', 'JackBlack21', 1),
-(17, '12345', 'fasdwad', 1);
+(17, '12345', 'fasdwad', 1),
+(18, '12345', 'NewFinal', 1);
 
 -- --------------------------------------------------------
 
@@ -185,7 +189,8 @@ CREATE TABLE `studentprofile` (
 INSERT INTO `studentprofile` (`StudentProfileID`, `StudentAccountID`, `FirstName`, `LastName`, `ProgrammeCode`, `YearOfStudy`, `AssesorAccountIDLect`, `AssesorAccountIDSuper`) VALUES
 (3, 1, 'Jicken', 'Jockey', 'dsadsa', 1, 4, 8),
 (5, 12, 'James', 'Bonded', 'sada', 1, 7, 8),
-(7, 17, 'dsadsad', 'sadsadas', 'dsadsa', 2, 3, 9);
+(7, 17, 'dsadsad', 'sadsadas', 'dsadsa', 2, 7, 8),
+(8, 18, 'fdkjsofg', 'fpdosg', 'fdsf', 1, 7, 8);
 
 --
 -- Indexes for dumped tables
@@ -224,8 +229,8 @@ ALTER TABLE `companynamelist`
 --
 ALTER TABLE `internship`
   ADD PRIMARY KEY (`InternshipID`),
-  ADD KEY `internship_ibfk_1` (`CompanyINT`),
-  ADD KEY `internship_ibfk_2` (`StudentAccountID`);
+  ADD KEY `internship_ibfk_2` (`StudentAccountID`),
+  ADD KEY `internship_ibfk_1` (`CompanyINT`);
 
 --
 -- Indexes for table `studentaccountlist`
@@ -264,31 +269,31 @@ ALTER TABLE `assesoraccountlist`
 -- AUTO_INCREMENT for table `assessmentrecords`
 --
 ALTER TABLE `assessmentrecords`
-  MODIFY `AssessmentCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `AssessmentCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `companynamelist`
 --
 ALTER TABLE `companynamelist`
-  MODIFY `CompanyInt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `CompanyInt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `internship`
 --
 ALTER TABLE `internship`
-  MODIFY `InternshipID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `InternshipID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `studentaccountlist`
 --
 ALTER TABLE `studentaccountlist`
-  MODIFY `StudentAccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `StudentAccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `studentprofile`
 --
 ALTER TABLE `studentprofile`
-  MODIFY `StudentProfileID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `StudentProfileID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
@@ -310,7 +315,7 @@ ALTER TABLE `assessmentrecords`
 -- Constraints for table `internship`
 --
 ALTER TABLE `internship`
-  ADD CONSTRAINT `internship_ibfk_1` FOREIGN KEY (`CompanyINT`) REFERENCES `companynamelist` (`CompanyInt`),
+  ADD CONSTRAINT `internship_ibfk_1` FOREIGN KEY (`CompanyINT`) REFERENCES `companynamelist` (`CompanyInt`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `internship_ibfk_2` FOREIGN KEY (`StudentAccountID`) REFERENCES `studentprofile` (`StudentAccountID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
