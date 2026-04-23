@@ -53,6 +53,14 @@ $role = $_SESSION['user_role'];
                 </h1>
                 <button onclick="window.location.href='AdminDashboard/Databases/StudentDatabase.php'">Continue</button>
             </div>
+
+             <div class="box">
+                <i class="fa-solid fa-user"></i>
+                <h1>
+                    Manage Companies
+                </h1>
+                <button onclick="window.location.href='AdminDashboard/Databases/CompanyDatabase.php'">Continue</button>
+            </div>
         </div>
     </div>
 </body>

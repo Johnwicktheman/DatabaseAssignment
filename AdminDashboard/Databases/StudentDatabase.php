@@ -47,6 +47,7 @@ $studentResult = executePreparedStatement($studentList, []);
                 echo "<td>" . $adminID . "</td>";
                 //let id = current student row id
                 echo "<td><a href='../StudentFunctions/UpdateStudent.php?id=" . $row['StudentAccountID'] . "'>Edit</a></td>";
+                echo "<td><a href='../StudentFunctions/ViewStudent.php?id=" . $row['StudentAccountID'] . "'>View</a></td>";
                 echo "<td><a href='../StudentFunctions/DeleteStudent.php?id=" . $row['StudentAccountID'] . "'>Delete</a></td>";
                 echo "</tr>";
             }

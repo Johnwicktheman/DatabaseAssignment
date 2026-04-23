@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    
 ?>
 
-<!-- http://localhost/Coursework3test/FrontPage.php -->
+<!-- http://localhost/TET/FrontPage.php -->
 
 <!DOCTYPE html>
 <html lang="en">

@@ -7,23 +7,25 @@ include '../Connection.php';
 include '../ExecutePStatement.php';
 include '../AllFunctions.php';
 checkAccess(['Lecturer', 'Supervisor']);
-//Get current Role and ID currenlty confirmed to be lecturer or supervisor
+
+//Get current Role and ID currently confirmed to be lecturer or supervisor
 $assessorID = $_SESSION['user_id'];
 $assessorType = $_SESSION['user_role'];
 
 //Check role
 if ($assessorType === 'Lecturer') {
     $assessorIDField = 'AssesorAccountIDLect';
-
 } else {
     $assessorIDField = 'AssesorAccountIDSuper';
 }
 
-//we want to show students assgined to lecturer or supervisor and show they got record or not
-$studentList = "SELECT sp.StudentAccountID, sp.FirstName, sp.LastName, ar.AssessmentCode ,ar.Internship_Score
-                FROM studentprofile sp
-                LEFT JOIN assessmentrecords ar ON sp.StudentAccountID = ar.StudentID AND ar.AssesorType = ?
-                WHERE sp." . $assessorIDField . " = ?";
+//we want to show students assigned to lecturer or supervisor and show they got record or not
+$studentList = "SELECT sp.*, i.Role, i.Months_duration, i.Description, ar.AssessmentCode, ar.Internship_Score, c.CompanyName
+                   FROM studentprofile sp
+                   LEFT JOIN internship i ON sp.StudentAccountID = i.StudentAccountID
+                   LEFT JOIN assessmentrecords ar ON sp.StudentAccountID = ar.StudentID AND ar.AssesorType = ?
+                   LEFT JOIN companynamelist c ON i.CompanyINT = c.CompanyInt
+                   WHERE sp." . $assessorIDField . " = ?";
 
 $studentResult = executePreparedStatement($studentList, [$assessorType, $assessorID]);
 
@@ -49,21 +51,26 @@ if ($targetStudentID) {
     $resCurrent = executePreparedStatement($sqlCurrent, [$targetStudentID, $assessorType]);
     $currentData = $resCurrent->fetch_assoc();
 
-    $sqlStudent = "SELECT FirstName, LastName FROM studentprofile WHERE StudentAccountID = ?";
-    $ResultStudent = executePreparedStatement($sqlStudent, [$targetStudentID]);
-    $student = $ResultStudent->fetch_assoc();
+    $sqlStudent = "SELECT sp.FirstName, sp.LastName, 
+                          i.Role, i.Months_duration, i.Description, 
+                          c.CompanyName
+                   FROM studentprofile sp
+                   LEFT JOIN internship i ON sp.StudentAccountID = i.StudentAccountID
+                   LEFT JOIN companynamelist c ON i.CompanyINT = c.CompanyInt
+                   WHERE sp.StudentAccountID = ?";
+
+    $resStudent = executePreparedStatement($sqlStudent, [$targetStudentID]);
+    $student = $resStudent->fetch_assoc();
 
     $mode = isset($_GET['mode']) ? $_GET['mode'] : 'update';
 
     //Just in case user somehow enter create when they already have a record, or update when they don't have a record
     if ($mode === 'update' && !$currentData) {
-        // Trying to update a non-existent record
         echo "<script>alert('No record found to update. Please create one first.'); window.location.href='StudentDatabaseAss.php';</script>";
         exit();
     }
     
     if ($mode === 'create' && $currentData) {
-        // Trying to create a record that already exists
         echo "<script>alert('Record already exists for this student.'); window.location.href='StudentDatabaseAss.php';</script>";
         exit();
     }
@@ -101,6 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     executePreparedStatement($sql, $params);
     
     echo "<script>alert('Record Updated Successfully!'); window.location.href='StudentDatabaseAss.php';</script>";
+    exit();
 }
 ?>
 
@@ -113,290 +121,68 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../CssFiles/TableStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
 
-    <!-- Font import -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>        
+        nav a{ margin-bottom:20px; }
+        #title{ color: #aaa9a9; font-size:30px; padding-bottom:8px; }
+        .main hr { border: 0; border-top: 1px solid #aaa9a9; }
+        header { font-size: 50px; color: #154c4b; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #154c4b; text-decoration: none; font-weight: bold; transition: color 0.3s; }
+        .back-link:hover { color: #219e75; cursor:pointer; }
+        .action-links a { text-decoration: none; color: #154c4b; font-weight: bold; margin-right: 15px; transition: color 0.3s; }
+        .delete-btn { color: #e74c3c; font-weight: bold; text-decoration: none; transition: 0.3s; }
+        .delete-btn:hover { color: #c0392b; text-decoration: underline; cursor: pointer; }
+        tr a{ text-decoration: none; color: #154c4b; font-weight: bold; margin-right: 15px; transition: color 0.3s; }
+        tr a:hover { color: #219e75; }
+        tr i { margin-right: 5px; }
 
-        nav a{
-            margin-bottom:20px;
-        }
-        
-        #title{
-            color: #aaa9a9;
-            font-size:30px;
-            padding-bottom:8px;
-        }
-
-        .main hr {
-            border: 0;
-            border-top: 1px solid #aaa9a9;
-        }
-
-        header {
-            font-size: 50px;
-            color: #154c4b;
-        }
-
-
-        .back-link {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: #154c4b;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        .back-link:hover {
-            color: #219e75;
-            cursor:pointer;
-        }
-
-        
-        .action-links a {
-            text-decoration: none;
-            color: #154c4b;
-            font-weight: bold;
-            margin-right: 15px;
-            transition: color 0.3s;
-        }
-
-        .delete-btn {
-            color: #e74c3c;
-            font-weight: bold;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .delete-btn:hover {
-            color: #c0392b;
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-        tr a{
-            text-decoration: none;
-            color: #154c4b;
-            font-weight: bold;
-            margin-right: 15px;
-            transition: color 0.3s;
-        }
-
-        tr a:hover {
-            color: #219e75;
-        }
-
-        tr i {
-            margin-right: 5px;
-        }
-
-        #modal{
-            opacity: 0;
-            position: fixed;
-            right:0;
-            left:0;
-            bottom: 60px;
-
-            transition: all 0.3s ease-in-out;
-            z-index: -1;
-
-            display:flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #modal.open{
-            opacity:1;
-            z-index:999;
-        }
-
-        #modal-inner{
-            background-color: #FFFFFF;
-            width: 700px;
-            height: 650px;
-            border-radius:20px;
-            padding: 15px 25px;
-            text-align: center;
-            box-shadow: 15px 25px 30px rgba(0,0,0,0.2);
-        }
-
-        #modal-inner h1{
-            color: #154c4b;
-        }
-
-        form {
-            display: flex;
-            justify-content:center;
-            text-align:center;
-        }
-
-        form h1{
-            color: #aaa9a9;
-            font-size:20px;
-        }
-
-        .form-collection1{
-            display:inline;
-            margin-right:100px;
-
-        }
-
-        form label{
-            font-weight: bold;
-            color: #555;
-        }
-
-        .form-group {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .form-group input{
-            margin-left:20px;
-            border-radius:10px;
-            width: 40px;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-family: inherit;
-            text-align: center;
-        }
-
-        
-
-        /* THIS IS FOR SLIDERS */
-
-
-        /* Container for slider and value readout */
-        /*
-        .slider-container {
-            align-items: center;
-            gap: 15px;
-            max-width: 250px;
-        }
-
-        .slider {
-            width: 100%;
-            height: 8px;
-            border-radius: 5px;
-            background: #aaa9a9;
-            outline: none;
-            transition: 1s;
-        }
-
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #154c4b; 
-            cursor: pointer;
-            border: 2px solid white;
-            box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
-            transition: 0.2s;
-        }
-
-        .slider:hover::-webkit-slider-thumb {
-            background: #219e75;
-            transform: scale(1.1);
-        }
-
-        .slider::-moz-range-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #154c4b; 
-            cursor: pointer;
-            border: 2px solid white;
-            box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
-            transition: 0.2s;
-        }
-
-        .slider:hover::-moz-range-thumb {
-            background: #219e75;
-            transform: scale(1.1);
-        }
-        */
-
-        /* THIS IS FOR INPUT BOXES */
-
-        ./* Chrome, Safari, Edge, Opera */
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-        display:flex;
-        -webkit-appearance: none;
-        margin: 0;
-        }
-
-        /* Firefox */
-        input[type=number] {
-        -moz-appearance: textfield;
-        }
-
-        /* Style for the number display next to slider */
-        output {
-            font-weight: bold;
-            color: #154c4b;
-            min-width: 20px;
-        }
-
-        .form-collection2 textarea {
-            width: 100%;
-            height:300px;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 12px;
-            font-family: inherit;
-            box-sizing: border-box;
-            resize: vertical;
-        }
-
-        .button-container {
-            margin-top: 30px;
+        /* Search and Filter UI */
+        .search-bar-container {
             display: flex;
             align-items: center;
             gap: 20px;
+            background-color: #f9f9f9;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
         }
-
-        .submit-btn {
-            background-color: #154c4b;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 16px;
+        .search-bar-container label {
             font-weight: bold;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: 0.3s;
+            color: #154c4b;
+            margin-right: 10px;
         }
-
-        .submit-btn:hover {
-            background-color: #219e75;
+        .search-bar-container input, .search-bar-container select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+            outline: none;
         }
+        .search-bar-container input { width: 250px; }
 
-        .btn-cancel {
-            text-decoration: none;
-            color: #721c24;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .btn-cancel:hover {
-            text-decoration: underline;
-        }
-
-
+        #modal{ opacity: 0; position: fixed; right:0; left:0; bottom: 60px; transition: all 0.3s ease-in-out; z-index: -1; display:flex; align-items: center; justify-content: center; }
+        #modal.open{ opacity:1; z-index:999; }
+        #modal-inner{ background-color: #FFFFFF; width: 700px; height: 650px; border-radius:20px; padding: 15px 25px; text-align: center; box-shadow: 15px 25px 30px rgba(0,0,0,0.2); overflow-y: auto;}
+        #modal-inner h1{ color: #154c4b; }
+        form { display: flex; justify-content:center; text-align:center; }
+        form h1{ color: #aaa9a9; font-size:20px; }
+        .form-collection1{ display:inline; margin-right:100px; }
+        form label{ font-weight: bold; color: #555; }
+        .form-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .form-group input{ margin-left:20px; border-radius:10px; width: 50px; padding: 8px; border: 1px solid #ccc; text-align: center; }
+        input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        .form-collection2 textarea { width: 100%; height:300px; padding: 15px; border: 1px solid #ccc; border-radius: 12px; resize: vertical; }
+        .button-container { margin-top: 30px; display: flex; align-items: center; gap: 20px; }
+        .submit-btn { background-color: #154c4b; color: white; border: none; padding: 12px 25px; font-size: 16px; font-weight: bold; border-radius: 25px; cursor: pointer; transition: 0.3s; }
+        .submit-btn:hover { background-color: #219e75; }
+        .btn-cancel { text-decoration: none; color: #721c24; font-weight: bold; font-size: 16px; }
     </style>
-    <title>Document</title>
+    <title>Student Database</title>
 </head>
 <body>
     <nav>
@@ -415,40 +201,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <a onclick="window.location.href='../AssessorDashboard.php'" class="back-link">&larr; Back to Dashboard</a>
 
-        <table>
-            <tr>
-            <th>Student ID</th>
-            <th>Name</th>
-            <th>Assessment Record</th>
-            <th>Internship Score</th>
-            <th>Action</th>
-            </tr>
+        <div class="search-bar-container">
+            <div>
+                <label for="jsSearch">Search:</label>
+                <input type="text" id="jsSearch" placeholder="Search ID or Name..." onkeyup="applyFilters()">
+            </div>
+            <div>
+                <label for="jsSort">Filter / Sort By:</label>
+                <select id="jsSort" onchange="applyFilters()">
+                    <option value="oldest">Oldest Added (Default)</option>
+                    <option value="newest">Newest Added</option>
+                    <option value="no_record">No Assessment Record First</option>
+                </select>
+            </div>
+        </div>
+
+        <table id="studentTable">
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Assessment Record</th>
+                    <th>Internship Score</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
                 <?php
                     while ($row = $studentResult->fetch_assoc()) {
                         $id = $row['StudentAccountID'];
                         $FirstName = $row['FirstName'];
                         $LastName = $row['LastName'];
-                        $AssessmentCodeID = $row['AssessmentCode'];// Check if assessment record exists
-                        $InternshipScore = $row['Internship_Score']; // Check if Internship Score exists
+                        $AssessmentCodeID = $row['AssessmentCode'];
+                        $InternshipScore = $row['Internship_Score'];
 
-                        echo "<tr>";
+                        // Calculate attributes for JavaScript to use
+                        $assessmentSortID = $AssessmentCodeID ? $AssessmentCodeID : 0;
+                        $hasRecord = $AssessmentCodeID ? 1 : 0;
+                        $fullName = strtolower($FirstName . " " . $LastName);
+
+                        // Attach the hidden data directly to the table row (<tr>)
+                        echo "<tr class='student-row' data-id='$id' data-name='$fullName' data-assessment-id='$assessmentSortID' data-has-record='$hasRecord'>";
+                        
                         echo "<td>" . $id . "</td>";
                         echo "<td>" . $FirstName . " " . $LastName . "</td>";
+                        
                         if ($AssessmentCodeID) {
                             echo "<td><b style='color: green;'>Record Exists</b></td>";
                         } else {
                             echo "<td><b style='color: gray;'>No Records</b></td>";
                         }
+                        
                         if ($InternshipScore !== null) {
                             if($InternshipScore >= 60){
-                            echo "<td><b style='color: teal;'>Score: " . $InternshipScore . "</b></td>";
+                                echo "<td><b style='color: teal;'>Score: " . $InternshipScore . "</b></td>";
                             }
                             else if ($InternshipScore >= 40){
-                            echo "<td><b style='color: orange;'>Score: " . $InternshipScore . "</b></td>";
+                                echo "<td><b style='color: orange;'>Score: " . $InternshipScore . "</b></td>";
                             }
                             else{
-                            echo "<td><b style='color: red;'>Score: " . $InternshipScore . "</b></td>";
-
+                                echo "<td><b style='color: red;'>Score: " . $InternshipScore . "</b></td>";
                             }
                         } else {
                             echo "<td><b style='color: gray;'>No Score</b></td>";
@@ -456,213 +268,155 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         echo "<td>";
                             if ($AssessmentCodeID) {
-                                // record found, can only update and delete
                                 echo "<span style='color: #ccc; cursor: not-allowed; margin-right: 15px;' title='Record already exists'>
                                         <i class='fas fa-plus-circle'></i> Create
-                                    </span>";
-
+                                      </span>";
                                 echo "<a href='StudentDatabaseAss.php?id=" . $id . "&mode=update' class='open-btn'>
                                         <i class='fas fa-edit'></i> Update
-                                    </a>";
-
+                                      </a>";
                                 echo "<a href='#' onclick='confirmDelete(" . $id . ")' class='delete-btn'>
                                         <i class='fas fa-delete-left'></i> Delete
-                                    </a>";
-
+                                      </a>";
                             } else {
-                                // no record found, can only create
                                 echo "<a href='StudentDatabaseAss.php?id=" . $id . "&mode=create' class='open-btn'>
                                         <i class='fas fa-plus-circle'></i> Create
-                                    </a>";
+                                      </a>";
                                 echo "<span style='color: #ccc; cursor: not-allowed; margin-right: 15px;' title='Create a record first'>
                                         <i class='fas fa-edit'></i> Update
-                                    </span>";
-
+                                      </span>";
                                 echo "<span style='color: #ccc; cursor: not-allowed; margin-right: 15px;' title='Create a record first'>
                                         <i class='fas fa-delete-left'></i> Delete
-                                    </span>";
+                                      </span>";
                             }
-
                         echo "</td>";
                         echo "</tr>";
                     }
                 ?>
-    </table>
+            </tbody>
+        </table>
 
-    <div id="modal">
-        <div id="modal-inner">
-        <h1><?php echo (isset($_GET['mode']) && $_GET['mode'] == 'create') ? 'Create' : 'Update'; ?> Assessment for: <?php echo $student['FirstName'] . " " . $student['LastName']; ?></h1>
-    <p>Role: <strong><?php echo $assessorType; ?></strong></p>
-    <hr>
-    <!--
-        <form method="POST">            
-            <div class="form-collection1">
-                <h1>Grades (Scale 0-10)</h1>
-                <div class="form-group">
-                    <label>Understanding of Project:</label><br>
-                    <div class = "slider-container">
-                        <input type="range" name="u_project" class="slider" min="0" max="10" oninput="this.nextElementSibling.value = this.value" value="<?php echo $currentData ? $currentData['understand_project'] : '0'; ?>" required>
-                        <output><?php echo $currentData['understand_project'] ?></output>
+        <div id="modal">
+            <div id="modal-inner">
+                <h1><?php echo (isset($_GET['mode']) && $_GET['mode'] == 'create') ? 'Create' : 'Update'; ?> Assessment for: <?php echo ($student['FirstName'] ?? '') . " " . ($student['LastName'] ?? ''); ?></h1>
+                <p>Role: <strong><?php echo $assessorType; ?></strong></p>
+                <p><strong>Company:</strong> <?php echo htmlspecialchars($student['CompanyName'] ?? 'N/A'); ?>
+                <strong>Role:</strong> <?php echo htmlspecialchars($student['Role'] ?? 'N/A'); ?>
+                <strong>Duration:</strong> <?php echo htmlspecialchars($student['Months_duration'] ?? '0'); ?> Months</p>
+                <p><strong>Tasks/Description:</strong> <?php echo htmlspecialchars($student['Description'] ?? 'N/A'); ?></p>
+                <hr>
+                
+                <form method="POST" action="StudentDatabaseAss.php?id=<?php echo htmlspecialchars($targetStudentID ?? ''); ?>&mode=<?php echo htmlspecialchars($mode ?? ''); ?>">            
+                    <div class="form-collection1">
+                        <h1>Grades (Scale 0-10)</h1>
+                        <div class="form-group">
+                            <label>Understanding of Project:</label><br>
+                            <input type="number" step="any" name="u_project" min="0" max="10" value="<?php echo $currentData ? $currentData['understand_project'] : '0'; ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Health and Safety:</label><br>
+                            <input type="number" step="any" name="h_safety" min="0" max="10" value="<?php echo $currentData ? $currentData['health_and_safety'] : '0'; ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Connectivity:</label><br>
+                            <input type="number" step="any" name="connectivity" min="0" max="10" value="<?php echo $currentData ? $currentData['connectivity'] : '0'; ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Presentation:</label><br>
+                            <input type="number" step="any" name="presentation" min="0" max="10" value="<?php echo $currentData ? $currentData['presentation'] : '0'; ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Clarity:</label><br>
+                            <input type="number" step="any" name="clarity" min="0" max="10" value="<?php echo $currentData ? $currentData['clarity'] : '0'; ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Activities:</label><br>
+                            <input type="number" step="any" name="activities" min="0" max="10" value="<?php echo $currentData ? $currentData['activities'] : '0'; ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Project Management:</label><br>
+                            <input type="number" step="any" name="p_manage" min="0" max="10" value="<?php echo $currentData ? $currentData['project_management'] : '0'; ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Time Management:</label><br>
+                            <input type="number" step="any" name="t_manage" min="0" max="10" value="<?php echo $currentData ? $currentData['time_management'] : '0'; ?>" required>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label>Health and Safety:</label><br>
-                    <div class = "slider-container">
-                        <input type="range" name="h_safety" class="slider" min="0" max="10" oninput="this.nextElementSibling.value = this.value"  value="<?php echo $currentData ? $currentData['health_and_safety'] : '0'; ?>" required>
-                        <output><?php echo $currentData['health_and_safety'] ?></output>
+                    <div class="form-collection2">
+                        <div class="form-group2">
+                            <h1>General Feedback:</h1><br>
+                            <textarea name="feedback" placeholder="Enter comments here..." required><?php echo $currentData ? $currentData['Feedback'] : ''; ?></textarea>            
+                        </div>
+                        <div class="button-container">
+                            <button type="submit" class="submit-btn"><?php echo (isset($_GET['mode']) && $_GET['mode'] == 'create') ? 'Create' : 'Update'; ?> Assessment</button>
+                            <a href="StudentDatabaseAss.php" class="btn-cancel">Cancel</a>
+                        </div>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Connectivity:</label><br>
-                    <div class = "slider-container">
-                        <input type="range" name="connectivity" class="slider" min="0" max="10" oninput="this.nextElementSibling.value = this.value"  value="<?php echo $currentData ? $currentData['connectivity'] : '0'; ?>" required>
-                        <output><?php echo $currentData['connectivity'] ?></output>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Presentation:</label><br>
-                    <div class = "slider-container">
-                        <input type="range" name="presentation" class="slider" min="0" max="10" oninput="this.nextElementSibling.value = this.value"  value="<?php echo $currentData ? $currentData['presentation'] : '0'; ?>" required>
-                        <output><?php echo $currentData['presentation'] ?></output>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Clarity:</label><br>
-                    <div class = "slider-container">
-                        <input type="range" name="clarity" class="slider" min="0" max="10" oninput="this.nextElementSibling.value = this.value"  value="<?php echo $currentData ? $currentData['clarity'] : '0'; ?>" required>
-                        <output><?php echo $currentData['clarity'] ?></output>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Activities:</label><br>
-                    <div class = "slider-container">
-                        <input type="range" name="activities" class="slider" min="0" max="10" oninput="this.nextElementSibling.value = this.value"  value="<?php echo $currentData ? $currentData['activities'] : '0'; ?>" required>
-                        <output><?php echo $currentData['activities'] ?></output>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Project Management:</label><br>
-                    <div class = "slider-container">
-                        <input type="range" name="p_manage" class="slider" min="0" max="10" oninput="this.nextElementSibling.value = this.value"  value="<?php echo $currentData ? $currentData['project_management'] : '0'; ?>" required>
-                        <output><?php echo $currentData['project_management'] ?></output>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Time Management:</label><br>
-                    <div class = "slider-container">
-                        <input type="range" name="t_manage" class="slider" min="0" max="10" oninput="this.nextElementSibling.value = this.value"  value="<?php echo $currentData ? $currentData['time_management'] : '0'; ?>" required>
-                        <output><?php echo $currentData['time_management'] ?></output>
-                    </div>
-                </div>
+                </form>
             </div>
-
-            <div class="form-collection2">
-                <div class="form-group">
-                    <h1>General Feedback:</h1><br>
-                    <textarea name="feedback" placeholder="Enter comments here..." required><?php echo $currentData ? $currentData['Feedback'] : ''; ?></textarea>            
-                </div>
-                <div class="button-container">
-                    <button type="submit" class="submit-btn">Update Assessment</button>
-                    <a href="StudentDatabaseAss.php" class="btn-cancel">Cancel</a>
-                </div>
-            </div>
-        -->
-            <form method="POST">            
-            <div class="form-collection1">
-                <h1>Grades (Scale 0-10)</h1>
-                <div class="form-group">
-                    <label>Understanding of Project:</label><br>
-                    <div class = "input-container">
-                        <input type="number" step="any" name="u_project" class="input" min="0" max="10" value="<?php echo $currentData ? $currentData['understand_project'] : '0'; ?>" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Health and Safety:</label><br>
-                    <div class = "input-container">
-                        <input type="number" step="any" name="h_safety" class="input" min="0" max="10" value="<?php echo $currentData ? $currentData['health_and_safety'] : '0'; ?>" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Connectivity:</label><br>
-                    <div class = "input-container">
-                        <input type="number" step="any" name="connectivity" class="input" min="0" max="10" value="<?php echo $currentData ? $currentData['connectivity'] : '0'; ?>" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Presentation:</label><br>
-                    <div class = "input-container">
-                        <input type="number" step="any" name="presentation" class="input" min="0" max="10" oninput="this.nextElementSibling.value = this.value"  value="<?php echo $currentData ? $currentData['presentation'] : '0'; ?>" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Clarity:</label><br>
-                    <div class = "input-container">
-                        <input type="number" step="any" name="clarity" class="input" min="0" max="10" oninput="this.nextElementSibling.value = this.value"  value="<?php echo $currentData ? $currentData['clarity'] : '0'; ?>" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Activities:</label><br>
-                    <div class = "input-container">
-                        <input type="number" step="any" name="activities" class="input" min="0" max="10" oninput="this.nextElementSibling.value = this.value"  value="<?php echo $currentData ? $currentData['activities'] : '0'; ?>" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Project Management:</label><br>
-                    <div class = "input-container">
-                        <input type="number" step="any" name="p_manage" class="input" min="0" max="10" oninput="this.nextElementSibling.value = this.value"  value="<?php echo $currentData ? $currentData['project_management'] : '0'; ?>" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Time Management:</label><br>
-                    <div class = "input-container">
-                        <input type="number" step="any" name="t_manage" class="input" min="0" max="10" oninput="this.nextElementSibling.value = this.value"  value="<?php echo $currentData ? $currentData['time_management'] : '0'; ?>" required>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-collection2">
-                <div class="form-group2">
-                    <h1>General Feedback:</h1><br>
-                    <textarea name="feedback" placeholder="Enter comments here..." required><?php echo $currentData ? $currentData['Feedback'] : ''; ?></textarea>            
-                </div>
-                <div class="button-container">
-                    <button type="submit" class="submit-btn"><?php echo (isset($_GET['mode']) && $_GET['mode'] == 'create') ? 'Create' : 'Update'; ?> Assessment</button>
-                    <a href="StudentDatabaseAss.php" class="btn-cancel">Cancel</a>
-                </div>
-            </div>
-        </form>
         </div>
+
     </div>
 
     <script>
+    //Open modal if an ID is present in the URL
     window.onload = function() {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('id')) {
             document.getElementById("modal").classList.add("open");
         }
+        //Run the sort function immediately to enforce the "Oldest First" default
+        applyFilters();
     }
 
+    //Delete verification
     function confirmDelete(studentID){
         if (confirm("Are you sure you want to delete this assessment record? This action cannot be undone.")) {
             window.location.href = "StudentDatabaseAss.php?delete_id=" + studentID;
         }
     }
 
+    //Main Search and Sort Function
+    function applyFilters() {
+        let searchInput = document.getElementById("jsSearch").value.toLowerCase();
+        let sortType = document.getElementById("jsSort").value;
+        let tbody = document.querySelector("#studentTable tbody");
+        let rows = Array.from(tbody.querySelectorAll(".student-row"));
 
+        //Sort the array of rows based on the dropdown selection
+        rows.sort((a, b) => {
+            let aCode = parseInt(a.getAttribute("data-assessment-id"));
+            let bCode = parseInt(b.getAttribute("data-assessment-id"));
+            let aHasRec = parseInt(a.getAttribute("data-has-record"));
+            let bHasRec = parseInt(b.getAttribute("data-has-record"));
+
+            if (sortType === 'newest') {
+                return bCode - aCode;       //Highest ID (Newest) first
+            } 
+            else if (sortType === 'oldest') {
+                return aCode - bCode;       //Lowest ID (Oldest) first
+            } 
+            else if (sortType === 'no_record') {
+                //No record
+                return aHasRec - bHasRec; 
+            }
+        });
+
+        //Re-attach rows to the table in the new sorted order and apply serach filter
+        rows.forEach(row => {
+            tbody.appendChild(row);
+            
+            // Check if it matches the search bar
+            let idTxt = row.getAttribute("data-id").toLowerCase();
+            let nameTxt = row.getAttribute("data-name").toLowerCase();
+            
+            if (idTxt.includes(searchInput) || nameTxt.includes(searchInput)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
     </script>
 </body>
 </html>

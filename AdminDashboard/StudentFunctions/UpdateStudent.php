@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //Username check
     $resAssessor = executePreparedStatement("SELECT Username FROM assesoraccountlist WHERE Username = ?", [$user]);
-    $resStudent  = executePreparedStatement("SELECT Username FROM studentaccountlist WHERE Username = ?", [$user]);
+    $resStudent  = executePreparedStatement("SELECT Username FROM studentaccountlist WHERE Username = ? AND StudentAccountID != ?", [$user, $studentID]);
     $resAdmin    = executePreparedStatement("SELECT Username FROM adminaccountlist WHERE Username = ?", [$user]);
 
     //Determine the specific error message
