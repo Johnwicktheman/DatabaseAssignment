@@ -21,7 +21,7 @@ $studentResult = executePreparedStatement($studentList, []);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Student Accounts</title>
 </head>
  <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -111,20 +111,6 @@ $studentResult = executePreparedStatement($studentList, []);
             margin-right: 5px;
         }
 
-        #modal{
-            opacity: 0;
-            position: fixed;
-            right:0;
-            left:0;
-            bottom: 60px;
-
-            transition: all 0.3s ease-in-out;
-            z-index: -1;
-
-            display:flex;
-            align-items: center;
-            justify-content: center;
-        }
 
         form {
             display: flex;
@@ -209,7 +195,7 @@ $studentResult = executePreparedStatement($studentList, []);
         <a href="admin_dashboard.php">Dashboard</a>
         <a href="StudentDatabase.php" class="active">Student Accounts</a>
         <a href="AssessorDatabase.php">Assessor Accounts</a>
-        <a href="internship_management.php">Internship Management</a>
+        <a href="CompanyDatabase.php">Company Database</a>
         <a href="results.php">Result Viewing</a>
         <a href="../Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
     </nav>
@@ -262,14 +248,13 @@ $studentResult = executePreparedStatement($studentList, []);
                             //Combined Action Column
                             echo "<td>
                                 <a href='../StudentFunctions/ViewStudent.php?id=" . $id . "'><i class='fa-solid fa-eye'></i> View</a>
-                                <a href='../StudentFunctions/UpdateStudent.php?id=" . $id . "'><i class='fa-solid fa-pen-to-square'></i> Edit</a>
+                                <a href='../StudentFunctions/EditStudent.php?id=" . $id . "'><i class='fa-solid fa-pen-to-square'></i> Edit</a>
                                
-                                <a href='../StudentFunctions/DeleteStudent.php?id=" . $id . "' class='delete-btn'><i class='fa-solid fa-trash'></i> Delete</a>
+                                <a href='../StudentFunctions/DeleteStudent.php?id=" . $id . "'> <i class='fa-solid fa-trash'></i> Delete</a>
                                 </td>";
                             echo "</tr>";
                         }
                     ?>
-                    <!-- Insert the rows here through PHP--> 
 
                 </tbody>
             </table>

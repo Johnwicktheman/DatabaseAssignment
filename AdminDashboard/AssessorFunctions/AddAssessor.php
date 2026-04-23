@@ -61,35 +61,63 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Add New Assessor</title>
+    <link rel="stylesheet" href="../../CssFiles/Add_Edit.css">
 </head>
 <body>
+
+<div class="container">
+
+    <h1 class="page-title">Add New Assessor</h1>
+
+    <p class="subtitle">Create a new assessor account.</p>
+
     <?php 
-        if ($error !=null){
-            echo $error;
+        if ($error != null){
+            echo "<div class='error'>$error</div>";
         }
     ?>
-    
-    <p>Add New Assessor</p>
-    <form action="" method="post">
-        
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br><br>
 
-        <label for="password">Password:</label>
-        <input type="text" id="password" name="password" required><br><br>
+    <div class="form-card">
 
-        <select id="type" name="type" required>
-            <option value="" disabled selected>-- Select Type --</option>
-            <option value="Lecturer">Lecturer</option>
-            <option value="Supervisor">Supervisor</option>
-        </select><br><br>
+        <form action="" method="post">
 
+            <h2 class="section-title">Assessor Information</h2>
 
-        <br><br>
+            <div class="form-grid">
 
-        <input type="submit" value="Add Assessor">
-        <a href="../Databases/AssessorDatabase.php">Cancel</a>
-    </form>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="text" id="password" name="password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="type">Assessor Type</label>
+
+                    <select id="type" name="type" required>
+                        <option value="" disabled selected>-- Select Type --</option>
+                        <option value="Lecturer">Lecturer</option>
+                        <option value="Supervisor">Supervisor</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary">Add Assessor</button>
+                <a href="../Databases/AssessorDatabase.php" class="btn btn-secondary">Cancel</a>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
 </body>
 </html>

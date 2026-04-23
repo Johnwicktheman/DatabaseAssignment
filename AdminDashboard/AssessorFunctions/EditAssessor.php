@@ -87,28 +87,53 @@ if ($AssessorResult->num_rows > 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Edit Assessor</title>
+    <link rel="stylesheet" href="../../CssFiles/Add_Edit.css">
 </head>
 <body>
-    <?php 
-        if ($error !=null){
-            echo $error;
-        }
-    ?>
-    
-    <p>Editing Assessor: <?php echo $Name; ?></p>
-    <form action="" method="post">
-        <input type="hidden" name="id" value="<?php echo $AssessorId; ?>">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" value="<?php echo $Name; ?>" required><br><br>
 
-        <label for="password">Password:</label>
-        <input type="text" id="password" name="password" value="<?php echo $Password; ?>" required><br><br>
+<div class="container">
 
-        <br><br>
+    <h1 class="page-title">Edit Assessor</h1>
 
-        <input type="submit" value="Update Assessor">
-        <a href="../Databases/AssessorDatabase.php">Cancel</a>
-    </form>
+    <p class="subtitle">Updating Assessor: <?php echo $Name; ?></p>
+
+    <?php if ($error != null): ?>
+        <div class="error"><?php echo $error; ?></div>
+    <?php endif; ?>
+
+    <div class="form-card">
+
+        <form action="" method="post">
+
+            <input type="hidden" name="id" value="<?php echo $AssessorId; ?>">
+
+            <h2 class="section-title">Assessor Information</h2>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" value="<?php echo $Name; ?>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="text" id="password" name="password" value="<?php echo $Password; ?>" required>
+                </div>
+
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn btn-primary">Update Assessor</button>
+                <a href="../Databases/AssessorDatabase.php" class="btn btn-secondary">Cancel</a>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
 </body>
 </html>

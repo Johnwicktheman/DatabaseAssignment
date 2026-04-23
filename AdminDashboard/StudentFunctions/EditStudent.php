@@ -116,163 +116,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update Student Record</title>
-      <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+    <title>Edit Student Accounts</title>
+    <link rel="stylesheet" href="../../CssFiles/Add_Edit.css">
 
-        body {
-            background-color: #f4f5f7;
-            color: #333;
-            padding: 40px;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: auto;
-        }
-
-        .page-title {
-            font-size: 42px;
-            color: #0f4f4f;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 18px;
-        }
-
-        .form-card {
-            background: white;
-            padding: 35px;
-            border-radius: 18px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-
-        .section-title {
-            font-size: 24px;
-            color: #0f4f4f;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #e5e5e5;
-            padding-bottom: 10px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-bottom: 35px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group.full-width {
-            grid-column: span 2;
-        }
-
-        label {
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #333;
-        }
-
-        input,
-        select,
-        textarea {
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            font-size: 15px;
-            transition: 0.2s ease;
-        }
-
-        input:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #0f4f4f;
-            box-shadow: 0 0 0 3px rgba(15, 79, 79, 0.15);
-        }
-
-        textarea {
-            resize: vertical;
-        }
-
-        .error {
-            background: #ffe5e5;
-            color: #c62828;
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: bold;
-            text-decoration: none;
-            transition: 0.2s ease;
-        }
-
-        .btn-primary {
-            background-color: #1e7c45;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #166437;
-        }
-
-        .btn-secondary {
-            background-color: #dcdcdc;
-            color: #333;
-        }
-
-        .btn-secondary:hover {
-            background-color: #c7c7c7;
-        }
-
-        @media (max-width: 768px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .form-group.full-width {
-                grid-column: span 1;
-            }
-        }
-    </style>
 </head>
 <body>
 
 <div class="container">
 
     <h1 class="page-title">
-        Update Student: 
-        <?php echo htmlspecialchars($studentData['FirstName'] . " " . $studentData['LastName']); ?>
+        Edit Student: 
+        <?php echo $studentData['FirstName'] . " " . $studentData['LastName']; ?>
     </h1>
 
     <p class="subtitle">
-        Edit student account and internship information.
+        Update student account and internship information.
     </p>
 
     <?php if ($error): ?>
@@ -284,7 +142,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form action="" method="post">
 
             <input type="hidden" name="id" value="<?php echo $studentID; ?>">
-
             <!-- Login Credentials -->
             <h2 class="section-title">1. Login Credentials</h2>
 
@@ -292,24 +149,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <div class="form-group">
                     <label>Username</label>
-
-                    <input 
-                        type="text" 
-                        name="username"
-                        value="<?php echo htmlspecialchars($studentData['Username']); ?>" 
-                        required
-                    >
+                    <input type="text" name="username" value="<?php echo $studentData['Username']; ?>"  required>
                 </div>
 
                 <div class="form-group">
                     <label>Password</label>
-
-                    <input 
-                        type="password"
-                        name="password"
-                        value="<?php echo htmlspecialchars($studentData['Password']); ?>"
-                        required
-                    >
+                    <input type="password" name="password" value="<?php echo $studentData['Password']; ?>" required>
                 </div>
 
             </div>
@@ -322,53 +167,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <div class="form-group">
                     <label>First Name</label>
-
-                    <input 
-                        type="text"
-                        name="firstname"
-                        value="<?php echo htmlspecialchars($studentData['FirstName']); ?>"
-                        required
-                    >
+                    <input type="text" name="firstname" value="<?php echo $studentData['FirstName']; ?>" required>
                 </div>
 
                 <div class="form-group">
                     <label>Last Name</label>
-
-                    <input 
-                        type="text"
-                        name="lastname"
-                        value="<?php echo htmlspecialchars($studentData['LastName']); ?>"
-                        required
-                    >
+                    <input type="text" name="lastname" value="<?php echo $studentData['LastName']; ?>"required>
                 </div>
 
                 <div class="form-group">
                     <label>Programme</label>
-
-                    <input 
-                        type="text"
-                        name="programme"
-                        value="<?php echo htmlspecialchars($studentData['ProgrammeCode']); ?>"
-                        required
-                    >
+                    <input type="text" name="programme" value="<?php echo $studentData['ProgrammeCode']; ?>" required>
                 </div>
 
                 <div class="form-group">
                     <label>Year of Study</label>
-
-                    <input 
-                        type="number"
-                        name="year"
-                        value="<?php echo htmlspecialchars($studentData['YearOfStudy']); ?>"
-                        min="1"
-                        max="4"
-                        required
-                    >
+                    <input type="number" name="year" value="<?php echo $studentData['YearOfStudy']; ?>" min="1" max="4" required>
                 </div>
 
                 <div class="form-group">
                     <label>Lecturer</label>
-
                     <select name="lecturer">
 
                         <option value="NULL">-- Unassigned --</option>
@@ -378,7 +196,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 value="<?php echo $l['AssessorAccountID']; ?>"
                                 <?php if($studentData['AssesorAccountIDLect'] == $l['AssessorAccountID']) echo 'selected'; ?>
                             >
-                                <?php echo htmlspecialchars($l['Username']); ?>
+                                <?php echo $l['Username']; ?>
                             </option>
                         <?php endwhile; ?>
 
@@ -389,7 +207,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label>Supervisor</label>
 
                     <select name="supervisor">
-
                         <option value="NULL">-- Unassigned --</option>
 
                         <?php while($s = $supervisors->fetch_assoc()): ?>
@@ -397,7 +214,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 value="<?php echo $s['AssessorAccountID']; ?>"
                                 <?php if($studentData['AssesorAccountIDSuper'] == $s['AssessorAccountID']) echo 'selected'; ?>
                             >
-                                <?php echo htmlspecialchars($s['Username']); ?>
+                                <?php echo $s['Username']; ?>
                             </option>
                         <?php endwhile; ?>
 
@@ -416,7 +233,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label>Company</label>
 
                     <select name="company_id" required>
-
                         <option value="">-- Select Company --</option>
 
                         <?php while($c = $companies->fetch_assoc()): ?>
@@ -424,57 +240,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 value="<?php echo $c['CompanyInt']; ?>"
                                 <?php if($studentData['CompanyINT'] == $c['CompanyInt']) echo 'selected'; ?>
                             >
-                                <?php echo htmlspecialchars($c['CompanyName']); ?>
+                                <?php echo $c['CompanyName']; ?>
                             </option>
                         <?php endwhile; ?>
-
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label>Role</label>
-
-                    <input 
-                        type="text"
-                        name="role"
-                        value="<?php echo htmlspecialchars($studentData['Role'] ?? ''); ?>"
-                        required
-                    >
+                    <input type="text" name="role" value="<?php echo $studentData['Role'] ?? ''; ?>" required>
                 </div>
 
                 <div class="form-group">
                     <label>Duration (Months)</label>
-
-                    <input 
-                        type="number"
-                        name="duration"
-                        value="<?php echo htmlspecialchars($studentData['Months_duration'] ?? ''); ?>"
-                        required
-                    >
+                    <input type="number" name="duration"  value="<?php echo $studentData['Months_duration'] ?? ''; ?>" required>
                 </div>
 
                 <div class="form-group full-width">
                     <label>Description</label>
-
-                    <textarea 
-                        name="description"
-                        rows="5"
-                    ><?php echo htmlspecialchars($studentData['Description'] ?? ''); ?></textarea>
+                    <textarea name="description" rows="5" ><?php echo $studentData['Description'] ?? ''; ?></textarea>
                 </div>
 
             </div>
 
 
             <div class="button-group">
-
-                <button type="submit" class="btn btn-primary">
-                    Save All Changes
-                </button>
-
-                <a href="../Databases/StudentDatabase.php" class="btn btn-secondary">
-                    Cancel
-                </a>
-
+                <button type="submit" class="btn btn-primary"> Save All Changes </button>
+                <a href="../Databases/StudentDatabase.php" class="btn btn-secondary"> Cancel</a>
             </div>
 
         </form>
