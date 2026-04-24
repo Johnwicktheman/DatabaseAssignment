@@ -132,9 +132,7 @@ $studentResult = executePreparedStatement($studentList, []);
         <div id="title">Student Accounts </div>
         <hr>
         <header>Manage Student Accounts</header>
-        <a onclick="window.location.href='../AssessorDashboard.php'" class="back-link">&larr; Back to Dashboard</a>
-
-
+         <a onclick="window.location.href='../../AdminDashboard.php'" class="back-link">&larr; Back to Dashboard</a>
         <div class="page-header">
             <h1> Student Accounts </h1>
             <a href="../StudentFunctions/AddStudent.php" class="btn btn-primary">Add Student</a>

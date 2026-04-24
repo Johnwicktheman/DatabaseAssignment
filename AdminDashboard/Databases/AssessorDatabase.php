@@ -44,7 +44,7 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
         }
 
         .back-link:hover {
-            color: #219e75;
+            color: #3179c0;
             cursor:pointer;
         }
 
@@ -132,7 +132,7 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
         <a href="CompanyDatabase.php">Company Database</a><br>
         <a href="results.php">Result Viewing</a><br>
         <div id="logout">
-        <a href="../Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+        <a href="../../Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
         </div>
     </nav>
 
@@ -142,6 +142,7 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
         <div id="title"> Assessor Accounts </div>
         <hr>
         <header>Manage Assessor Accounts</header>
+          <a onclick="window.location.href='../../AdminDashboard.php'" class="back-link">&larr; Back to Dashboard</a>
         <div class="page-header">
             <h1> Assessor Accounts </h1>
             <a href="../AssessorFunctions/AddAssessor.php" class="btn btn-primary">Add Assessor</a>
