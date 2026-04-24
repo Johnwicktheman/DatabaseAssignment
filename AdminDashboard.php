@@ -16,26 +16,35 @@ $role = $_SESSION['user_role'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="CssFiles/AssessorDashBoard.css">
+    <link rel="stylesheet" href="CssFiles/AdminDashBoard2.css">
+
+    <!-- Font import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+
     <title>Document</title>
 </head>
 <body>
      <nav>
-        <p>ASSESSOR PANEL</p>
+        <p> ADMIN PANEL</p>
         <hr>
-        <a href="#">Dashboard</a><br>
-        <a href="Dashboard.php">Dashboard</a><br>
-        <a href="Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
-</nav>
+        <a href="AdminDashboard.php">Dashboard</a><br>
+        <a href="AdminDashboard/Databases/StudentDatabase.php">Student Accounts</a><br>
+        <a href="AdminDashboard/Databases/AssessorDatabase.php">Assessor Accounts</a><br>
+        <a href="AdminDashboard/Databases/CompanyDatabase.php">Company Database</a><br>
+        <a href="results.php">Result Viewing</a><br>
+        <div id="logout">
+        <a href="../Logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+        </div>
     </nav>
 
     <div class = "main">
         <div id="title">Dashboard</div>
         <hr>
         <header>Welcome Back, <?php echo $current_user. "!" ?> </header>
-        <header>You are logged in as <?php echo $role; ?>.</header>
         <br>
-        <div id="subtitle">manage your students internship blah blah blah</div>
+        <div id="subtitle">You are logged in as <?php echo $role; ?>.</div>
 
         <div class ="container">
             <div class="box">

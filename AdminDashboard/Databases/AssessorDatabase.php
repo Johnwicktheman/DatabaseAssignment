@@ -190,12 +190,14 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
     <nav>
         <p> ADMIN PANEL</p>
         <hr>
-        <a href="admin_dashboard.php">Dashboard</a>
+        <a href="../../AdminDashboard.php">Dashboard</a>
         <a href="StudentDatabase.php" class="active">Student Accounts</a>
         <a href="AssessorDatabase.php">Assessor Accounts</a>
         <a href="CompanyDatabase.php">Company Database</a>
         <a href="results.php">Result Viewing</a>
+        <div id="logout">
         <a href="../Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+        </div>
     </nav>
 
     
@@ -242,7 +244,7 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
 
                             echo "<td>
                                 <a href='../AssessorFunctions/EditAssessor.php?id=" . $row['AssessorAccountID'] . "'><i class='fa-solid fa-pen-to-square'></i> Edit</a>
-                                <a href='../AssessorFunctions/DeleteAssessor.php?id=" . $row['AssessorAccountID'] . "'<i class='fa-solid fa-trash'></i> Delete</a>
+                                <a href='../AssessorFunctions/DeleteAssessor.php?id=" . $row['AssessorAccountID'] . "'><i class='fa-solid fa-trash'></i> Delete</a>
                                 </td>";
                             echo "</tr>";
                         }

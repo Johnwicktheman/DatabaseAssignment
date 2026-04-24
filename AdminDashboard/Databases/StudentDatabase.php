@@ -27,7 +27,7 @@ $studentResult = executePreparedStatement($studentList, []);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Student Accounts</title>
 
-    <link rel="stylesheet" href="../../CssFiles/AssessorDashBoard.css">
+    <link rel="stylesheet" href="../../CssFiles/AdminDashBoard2.css">
     <link rel="stylesheet" href="../../CssFiles/TableStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
 

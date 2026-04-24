@@ -190,8 +190,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <hr>
         <a href="../AssessorDashboard.php">Dashboard</a><br>
         <a href="StudentDatabaseAss.php">Assessment Records</a><br>
-        <a href="#">Student Database</a><br>
-        <a href="../Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+        <a href="ViewStudentDatabase.php">Student Database</a><br>
+        <div id="logout">
+            <a href="../Logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+        </div>
     </nav>
 
     <div class="main">

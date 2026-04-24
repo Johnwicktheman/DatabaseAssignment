@@ -93,9 +93,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
 
-        
-
-
         <div class="form-group">
             <label>Health and Safety:</label>
             <input type="number" name="h_safety" min="0" max="10" value="<?php echo $currentData['health_and_safety']; ?>" required>

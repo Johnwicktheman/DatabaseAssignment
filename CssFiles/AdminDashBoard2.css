@@ -13,7 +13,7 @@ nav{
     position: fixed;
     top:0;
     left:0;
-    background-color: #154c4b;
+    background-color: #10253b;
     overflow-x: hidden;
     padding:20px;
 }
@@ -45,7 +45,7 @@ nav a {
 }
 
 nav a:hover{
-    background-color: #219e75;
+    background-color: #3179c0;
     color: #f0f1f5;
     padding:12px;
     cursor:pointer;
@@ -78,7 +78,7 @@ nav a:hover{
 
 header {
     font-size:50px;
-    color:#154c4b;
+    color:#10253b;
     padding-top:10px;
 }
 
@@ -122,7 +122,7 @@ header {
 }
 
 .box button{
-    background-color: #154c4b;
+    background-color: #10253b;
     color: white;
     font-family: "Bricolage Grotesque";
     font-size:20px;
@@ -135,6 +135,6 @@ header {
 }
 
 .box button:hover{
-    background-color: #219e75;
+    background-color:#3179c0;
                 
 }

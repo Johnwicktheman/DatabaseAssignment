@@ -73,6 +73,31 @@ if ($filtervalue !== '') {
             color: #219e75;
             cursor:pointer;
         }
+        /* Search and Filter UI */
+        .search-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background-color: #f9f9f9;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+        .search-bar-container label {
+            font-weight: bold;
+            color: #154c4b;
+            margin-right: 10px;
+        }
+        .search-bar-container input, .search-bar-container select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+            outline: none;
+        }
+        .search-bar-container input { width: 250px; }
+
 
         </style>
     </head>
@@ -83,7 +108,9 @@ if ($filtervalue !== '') {
             <a href="../AssessorDashboard.php">Dashboard</a><br>
             <a href="StudentDatabaseAss.php">Assessment Records</a><br>
             <a href="#">Student Database</a><br>
-            <a href="../Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+            <div id="logout">
+                <a href="../Logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+            </div>
         </nav>
 
         <div class="main">
@@ -92,14 +119,22 @@ if ($filtervalue !== '') {
             <header>Student Databases</header>
             <a onclick="window.location.href='../AssessorDashboard.php'" class="back-link">&larr; Back to Dashboard</a>
 
-        <form action="" method="GET">
-            <div class="input-group ">
-                <input type="text" name="search" value="<?php if(isset($_GET['search'])){echo $_GET['search'];} ?>" class="form-control" placeholder="Search Student">
-                <button type="submit" class="btn btn-primary">Search</button>
+        <div class="search-bar-container">
+            <div>
+                <label for="jsSearch">Search:</label>
+                <input type="text" id="jsSearch" placeholder="Search ID or Name..." onkeyup="applyFilters()">
             </div>
-        </form>    
+            <div>
+                <label for="jsSort">Filter / Sort By:</label>
+                <select id="jsSort" onchange="applyFilters()">
+                    <option value="oldest">Oldest Added (Default)</option>
+                    <option value="newest">Newest Added</option>
+                    <option value="no_record">No Assessment Record First</option>
+                </select>
+            </div>
+        </div>   
 
-            <table>
+            <table id="studentTable">
                 <tr>
                     <th>Student ID</th>
                     <th>First name</th>
@@ -120,10 +155,9 @@ if ($filtervalue !== '') {
                             $company = $row['CompanyName'];
                             ?>
 
-                            <tr>
-                                <td><?= $id; ?></td>
-                                <td><?= $FirstName; ?></td>
-                                <td><?= $LastName; ?></td>
+                            <tr class="student-row" data-id="<?= $id; ?>" data-firstName="<?= $FirstName; ?>" data-lastName="<?= $LastName; ?>">                                <td ><?= $id; ?></td>
+                                <td ><?= $FirstName; ?></td>
+                                <td ><?= $LastName; ?></td>
                                 <td><?= $YearOfStudy; ?></td>
                                 <td><?= $role; ?></td>
                                 <td><?= $company; ?></td>
@@ -136,5 +170,51 @@ if ($filtervalue !== '') {
                     <?php endif; ?>
             </table>
         </div>
+
+        <script>
+            //Main Search and Sort Function
+            function applyFilters() {
+                let searchInput = document.getElementById("jsSearch").value.toLowerCase();
+                let sortType = document.getElementById("jsSort").value;
+                let tbody = document.querySelector("#studentTable tbody") || document.querySelector("#studentTable");
+                let rows = Array.from(tbody.querySelectorAll(".student-row"));
+
+                //Sort the array of rows based on the dropdown selection
+                rows.sort((a, b) => {
+                    let aCode = parseInt(a.getAttribute("data-assessment-id"));
+                    let bCode = parseInt(b.getAttribute("data-assessment-id"));
+                    let aHasRec = parseInt(a.getAttribute("data-has-record"));
+                    let bHasRec = parseInt(b.getAttribute("data-has-record"));
+
+                    if (sortType === 'newest') {
+                        return bCode - aCode;       //Highest ID (Newest) first
+                    } 
+                    else if (sortType === 'oldest') {
+                        return aCode - bCode;       //Lowest ID (Oldest) first
+                    } 
+                    else if (sortType === 'no_record') {
+                        //No record
+                        return aHasRec - bHasRec; 
+                    }
+                });
+
+                //Re-attach rows to the table in the new sorted order and apply serach filter
+                rows.forEach(row => {
+                    tbody.appendChild(row);
+                    
+                    // Check if it matches the search bar
+                    let idTxt = row.getAttribute("data-id").toLowerCase();
+                    let firstnameTxt = row.getAttribute("data-firstName").toLowerCase();
+                    let lastnameTxt = row.getAttribute("data-lastName").toLowerCase();
+                    
+                    if (idTxt.includes(searchInput) || firstnameTxt.includes(searchInput) || lastnameTxt.includes(searchInput)) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            }
+    </script>
+
     </body>
 </html>
