@@ -36,8 +36,6 @@ $error = null;
 //After they press submit button what happens
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id   = $_POST['id'];
-    $user = $_POST['username'];
-    $pass = $_POST['password'];
 
 
     //check same username but different id
@@ -81,6 +79,7 @@ if ($AssessorResult->num_rows > 0) {
     $row = $AssessorResult->fetch_assoc();
     $Name = $row['Username'];
     $Password = $row['Password'];
+    $id = $row['AssessorAccountID'];
     $adminID = $row['AdminAccountID'];
     $currentType = $row['AssesorType'];
 }
@@ -91,6 +90,12 @@ if ($AssessorResult->num_rows > 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../../CssFiles/Add_Edit.css">
     <title>Document</title>
 </head>
 <body>
@@ -104,18 +109,51 @@ if ($AssessorResult->num_rows > 0) {
             echo "</ul>";
         }
     ?>
-    
-    <p>Deleting Assessor: <?php echo $Name; ?></p>
-    <p> Are you sure you want to delete this assessor? This action cannot be undone.</p>
-    <p>Username: <?php echo $Name; ?></p>
-    <p>Password: <?php echo $Password; ?></p>
-    <p>Added by Admin ID: <?php echo $adminID; ?></p>
-    <p>Type: <?php echo $currentType; ?></p>
-    
-    <form action="" method="post">
-        <input type="hidden" name="id" value="<?php echo $AssessorId; ?>">
-        <input type="submit" value="Delete Assessor">
-        <a href="../Databases/AssessorDatabase.php">Cancel</a>
-    </form>
+    <div class="container">
+        <h1 class="page-title">Delete Assessor</h1>
+        <p class="subtitle">Review the details below before permanent removal.</p>
+
+        <div class="form-card">
+            <h2 class="section-title">Confirmation Required</h2>
+            <div class="form-grid">
+
+                <div class="form-group full-width">
+                    <label>Username: </label>
+                    <div class="detail-value"><?php echo $Name; ?></div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Password: </label>
+                    <div class="detail-value"><?php echo $Password; ?></div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>ID: </label>
+                    <div class="detail-value"><?php echo $id; ?></div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Added by Admin ID: </label>
+                    <div class="detail-value"><?php echo $adminID; ?></div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Type: </label>
+                    <div class="detail-value"><?php echo $currentType; ?></div>
+                </div>
+                
+                <div class="form-group full-width">
+                    <form action="" method="post">
+                        <div class="button-group">
+                            <input type="hidden" name="id" value="<?php echo $id; ?>">
+                            <input type="submit" value="Delete" class="btn btn-secondary" style="background-color:#ff4d4d;">
+                            <a href="../Databases/StudentDatabase.php" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </body>
 </html>

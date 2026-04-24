@@ -2,13 +2,14 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: "Bricolage Grotesque", sans-serif; 
         }
 
         body {
             background-color: #f4f5f7;
             color: #333;
             padding: 40px;
+            font-family: "Bricolage Grotesque", sans-serif; 
         }
 
         .container {
@@ -26,6 +27,7 @@
             color: #666;
             margin-bottom: 30px;
             font-size: 18px;
+            text-decoration: none; /* for hyperlinks as subtitles */
         }
 
         .form-card {
@@ -139,4 +141,8 @@
             .form-group.full-width {
                 grid-column: span 1;
             }
+        }
+
+        .back-link{
+            text-decoration: none;
         }

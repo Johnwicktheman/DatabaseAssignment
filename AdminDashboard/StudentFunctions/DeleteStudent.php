@@ -62,7 +62,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Confirm Delete - <?php echo $fName . " " . $lName; ?></title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../../CssFiles/Add_Edit.css">
+    <!--
       <style>
         * {
             margin: 0;
@@ -207,17 +214,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     </style>
+-->
 </head>
 <body>
-    <h2>Confirm Deletion</h2>
-    <p>Are you sure you want to delete student: <?php echo $fName . " " . $lName; ?></strong>?</p>
-    <p>Username: <?php echo $uName; ?></p>
+    <div class="container">
+        <h1 class="page-title">Delete Student</h1>
+        <p class="subtitle">Review the details below before permanent removal.</p>
 
-    <form action="" method="post">
-        <input type="hidden" name="id" value="<?php echo $studentID; ?>">
-        <input type="submit" value="Yes, Delete Student">
-        <a href="../Databases/StudentDatabase.php">No, Cancel</a>
-    </form>
+        <div class="form-card">
+            <h2 class="section-title">Confirmation Required</h2>
+            <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label>Are you sure you want to delete student:</label>
+                        <div class="detail-value"><?php echo $fName . " " . $lName; ?></div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Username: </label>
+                        <div class="detail-value"><?php echo $uName; ?></div>
+                    </div>
+
+                </div>
+
+                <div class="form-group full-width">
+                    <form action="" method="post">
+                        <div class="button-group">
+                            <input type="hidden" name="id" value="<?php echo $studentID; ?>">
+                            <input type="submit" value="Delete" class="btn btn-secondary" style="background-color:#ff4d4d;">
+                            <a href="../Databases/StudentDatabase.php" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </div>
 </body>
 </html>
 </body>
