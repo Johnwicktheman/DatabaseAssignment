@@ -127,8 +127,8 @@ $role = $_SESSION['user_role'];
                     { dbKey: 'health_and_safety',    name: 'Health and Safety',        weight: 10 },
                     { dbKey: 'connectivity',         name: 'Connectivity',             weight: 10 },
                     { dbKey: 'presentation',         name: 'Presentation',             weight: 15 },
-                    { dbKey: 'clarity',              name: 'Clarity',                  weight: 15 },
-                    { dbKey: 'activities',           name: 'Activities',               weight: 10 },
+                    { dbKey: 'clarity',              name: 'Clarity',                  weight: 10 },
+                    { dbKey: 'activities',           name: 'Activities',               weight: 15 },
                     { dbKey: 'project_management',   name: 'Project Management',       weight: 15 },
                     { dbKey: 'time_management',      name: 'Time Management',          weight: 15 }
                 ];
