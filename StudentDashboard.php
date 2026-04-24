@@ -171,11 +171,12 @@ $role = $_SESSION['user_role'];
                         `;
                     });
                     
+                    
                     if (totalWeighted >= 70){
                     tableHTML += `
                         <tr style="background-color: #f0f1f5;">
                             <td colspan="3" style="padding: 12px; font-weight: 900; color: #2e2e50; text-align: right;">FINAL CALCULATED SCORE: </td>
-                            <td style="padding: 12px; text-align: center; color: #1d9e75; font-weight: 900; font-size: 1.2em;">${totalWeighted.toFixed(2)} / 100</td>
+                            <td style="padding: 12px; text-align: center; color: #1d9e75; font-weight: 900; font-size: 1.2em;">${Math.round(totalWeighted)} / 100</td>
                         </tr>
                     `;
                     }
@@ -184,7 +185,7 @@ $role = $_SESSION['user_role'];
                     tableHTML += `
                         <tr style="background-color: #f0f1f5;">
                             <td colspan="3" style="padding: 12px; font-weight: 900; color: #2e2e50; text-align: right;">FINAL CALCULATED SCORE: </td>
-                            <td style="padding: 12px; text-align: center; color: orange; font-weight: 900; font-size: 1.2em;">${totalWeighted.toFixed(2)} / 100</td>
+                            <td style="padding: 12px; text-align: center; color: orange; font-weight: 900; font-size: 1.2em;">${Math.round(totalWeighted)} / 100</td>
                         </tr>
                     `;
                     }
@@ -193,7 +194,7 @@ $role = $_SESSION['user_role'];
                     tableHTML += `
                         <tr style="background-color: #f0f1f5;">
                             <td colspan="3" style="padding: 12px; font-weight: 900; color: #2e2e50; text-align: right;">FINAL CALCULATED SCORE: </td>
-                            <td style="padding: 12px; text-align: center; color: red; font-weight: 900; font-size: 1.2em;">${totalWeighted.toFixed(2)} / 100</td>
+                            <td style="padding: 12px; text-align: center; color: red; font-weight: 900; font-size: 1.2em;">${Math.round(totalWeighted)} / 100</td>
                         </tr>
                     `;
                     }
