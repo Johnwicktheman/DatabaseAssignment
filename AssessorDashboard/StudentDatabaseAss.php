@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
 
     <link rel="stylesheet" href="../CssFiles/AssessorDashBoard.css">
-    <link rel="stylesheet" href="../CssFiles/TableStyle.css">
+    <link rel="stylesheet" href="../CssFiles/AssessorTableStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -136,9 +136,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .action-links a { text-decoration: none; color: #154c4b; font-weight: bold; margin-right: 15px; transition: color 0.3s; }
         .delete-btn { color: #e74c3c; font-weight: bold; text-decoration: none; transition: 0.3s; }
         .delete-btn:hover { color: #c0392b; text-decoration: underline; cursor: pointer; }
-        tr a{ text-decoration: none; color: #154c4b; font-weight: bold; margin-right: 15px; transition: color 0.3s; }
-        tr a:hover { color: #219e75; }
-        tr i { margin-right: 5px; }
 
         /* Search and Filter UI */
         .search-bar-container {

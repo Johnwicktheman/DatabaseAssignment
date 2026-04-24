@@ -24,8 +24,8 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
     <title> Assessor Accounts </title>
 
     <link rel="stylesheet" href="user_management.css">
-    <link rel="stylesheet" href="../../CssFiles/AssessorDashBoard.css">
-    <link rel="stylesheet" href="../../CssFiles/TableStyle.css">
+    <link rel="stylesheet" href="../../CssFiles/AdminDashBoard2.css">
+    <link rel="stylesheet" href="../../CssFiles/AdminTableStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
 
     <!-- Font import -->
@@ -34,28 +34,6 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
 
     <style>        
-
-        nav a{
-            margin-bottom:20px;
-        }
-        
-        #title{
-            color: #aaa9a9;
-            font-size:30px;
-            padding-bottom:8px;
-        }
-
-        .main hr {
-            border: 0;
-            border-top: 1px solid #aaa9a9;
-        }
-
-        header {
-            font-size: 50px;
-            color: #154c4b;
-        }
-
-
         .back-link {
             display: inline-block;
             margin-bottom: 20px;
@@ -69,45 +47,6 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
             color: #219e75;
             cursor:pointer;
         }
-
-        
-        .action-links a {
-            text-decoration: none;
-            color: #154c4b;
-            font-weight: bold;
-            margin-right: 15px;
-            transition: color 0.3s;
-        }
-
-        .delete-btn {
-            color: #e74c3c;
-            font-weight: bold;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .delete-btn:hover {
-            color: #c0392b;
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-        tr a{
-            text-decoration: none;
-            color: #154c4b;
-            font-weight: bold;
-            margin-right: 15px;
-            transition: color 0.3s;
-        }
-
-        tr a:hover {
-            color: #219e75;
-        }
-
-        tr i {
-            margin-right: 5px;
-        }
-
 
         form {
             display: flex;
@@ -190,22 +129,23 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
     <nav>
         <p> ADMIN PANEL</p>
         <hr>
-        <a href="../../AdminDashboard.php">Dashboard</a>
-        <a href="StudentDatabase.php" class="active">Student Accounts</a>
-        <a href="AssessorDatabase.php">Assessor Accounts</a>
-        <a href="CompanyDatabase.php">Company Database</a>
-        <a href="results.php">Result Viewing</a>
+        <a href="../../AdminDashboard.php">Dashboard</a><br>
+        <a href="StudentDatabase.php" class="active">Student Accounts</a><br>
+        <a href="AssessorDatabase.php">Assessor Accounts</a><br>
+        <a href="CompanyDatabase.php">Company Database</a><br>
+        <a href="results.php">Result Viewing</a><br>
         <div id="logout">
         <a href="../Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
         </div>
     </nav>
 
     
-    <main class = "main">
+    <div class = "main">
 
         <div id="title"> Assessor Accounts </div>
         <hr>
         <header>Manage Assessor Accounts</header>
+        <a onclick="window.location.href='../AssessorDashboard.php'" class="back-link">&larr; Back to Dashboard</a>
 
         <div class="page-header">
             <h1> Assessor Accounts </h1>
@@ -254,7 +194,7 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
             </table>
          </div>
 
-    </main>
+    </div>
 
   
      </div>

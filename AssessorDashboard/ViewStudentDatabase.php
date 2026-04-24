@@ -57,7 +57,7 @@ if ($filtervalue !== '') {
         <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
 
         <link rel="stylesheet" href="../CssFiles/AssessorDashBoard.css">
-        <link rel="stylesheet" href="../CssFiles/TableStyle.css">
+        <link rel="stylesheet" href="../CssFiles/AssessorTableStyle.css">
 
         <style>
         .back-link {

@@ -21,14 +21,14 @@ tr{
 
 
 th {
-    background-color: #154c4b;
+    background-color: #10253b;
     color: #f8f9fa ;
     font-size: 14px;
     letter-spacing: 1px;
     font-weight: 900;
 }
 
-tr:not(:first-child):hover{
+tbody tr:hover{
     background-color:#e6e6e6;
     transform: scale(1.02);
 
@@ -37,4 +37,41 @@ tr:not(:first-child):hover{
 
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     cursor: pointer;
+}
+
+tr a{ 
+    text-decoration: none; 
+    color: #10253b; 
+    font-weight: bold; 
+    margin-right: 15px; 
+    transition: color 0.3s; 
+}
+        
+tr a:hover { 
+    color: #3179c0; 
+}
+        
+tr i { 
+    margin-right: 5px; 
+}
+
+.action-links a { 
+    text-decoration: none; 
+    color: #10253b; 
+    font-weight: bold; 
+    margin-right: 15px; 
+    transition: color 0.3s; 
+}
+        
+.delete-btn { 
+    color: #e74c3c; 
+    font-weight: bold; 
+    text-decoration: none; 
+    transition: 0.3s; 
+}
+        
+.delete-btn:hover { 
+    color: #c0392b; 
+    text-decoration: underline; 
+    cursor: pointer; 
 }
