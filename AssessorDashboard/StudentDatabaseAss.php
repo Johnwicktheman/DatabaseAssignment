@@ -89,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $t_manage = $_POST['t_manage'];
     
     //find total score
-    $totalScore = $u_project + $h_safety + $connectivity + $presentation + $clarity + $activities + $p_manage + $t_manage;
+    $totalScore = $u_project + $h_safety + $connectivity + $presentation * 1.5 + $clarity + $activities * 1.5 + $p_manage * 1.5 + $t_manage * 1.5;
     $totalScore = (int)round($totalScore);
 
     // Check if record exists to determine action
@@ -127,10 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>        
-        nav a{ margin-bottom:20px; }
         #title{ color: #aaa9a9; font-size:30px; padding-bottom:8px; }
-        .main hr { border: 0; border-top: 1px solid #aaa9a9; }
-        header { font-size: 50px; color: #154c4b; }
         .back-link { display: inline-block; margin-bottom: 20px; color: #154c4b; text-decoration: none; font-weight: bold; transition: color 0.3s; }
         .back-link:hover { color: #219e75; cursor:pointer; }
         .action-links a { text-decoration: none; color: #154c4b; font-weight: bold; margin-right: 15px; transition: color 0.3s; }
@@ -252,10 +249,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         }
                         
                         if ($InternshipScore !== null) {
-                            if($InternshipScore >= 60){
+                            if($InternshipScore >= 70){
                                 echo "<td><b style='color: teal;'>Score: " . $InternshipScore . "</b></td>";
                             }
-                            else if ($InternshipScore >= 40){
+                            else if ($InternshipScore >= 50){
                                 echo "<td><b style='color: orange;'>Score: " . $InternshipScore . "</b></td>";
                             }
                             else{

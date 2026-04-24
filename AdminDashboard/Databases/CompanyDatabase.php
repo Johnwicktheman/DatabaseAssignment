@@ -443,7 +443,7 @@ $CompanyResult = executePreparedStatement($CList, []);
   <aside class="sidebar">
     <h2>Admin Panel</h2>
     <nav>
-      <a href="admin_dashboard.php">Dashboard</a>
+      <a href="../../AssessorDashboard.php">Dashboard</a>
       <a href="StudentDatabase.php">Student Accounts</a>
       <a href="AssessorDatabase.php">Assessor Accounts</a>
       <a href="CompanyDatabase.php" class="active">Company Database</a>

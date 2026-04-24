@@ -1,0 +1,77 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden; /* Ensures border-radius works on table */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+th, td {
+    text-align: left;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+tr{
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+
+th {
+    background-color: #2e2e50;
+    color: #f8f9fa ;
+    font-size: 14px;
+    letter-spacing: 1px;
+    font-weight: 900;
+}
+
+tbody tr:hover{
+    background-color:#e6e6e6;
+    transform: scale(1.02);
+
+    position: relative;
+    z-index: 1;
+
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+tr a{ 
+    text-decoration: none; 
+    color: #2e2e50; 
+    font-weight: bold; 
+    margin-right: 15px; 
+    transition: color 0.3s; 
+}
+        
+tr a:hover { 
+    color: #4a4adb; 
+}
+        
+tr i { 
+    margin-right: 5px; 
+}
+
+.action-links a { 
+    text-decoration: none; 
+    color: #2e2e50; 
+    font-weight: bold; 
+    margin-right: 15px; 
+    transition: color 0.3s; 
+}
+        
+.delete-btn { 
+    color: #e74c3c; 
+    font-weight: bold; 
+    text-decoration: none; 
+    transition: 0.3s; 
+}
+        
+.delete-btn:hover { 
+    color: #c0392b; 
+    text-decoration: underline; 
+    cursor: pointer; 
+}

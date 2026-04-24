@@ -37,33 +37,6 @@ $studentResult = executePreparedStatement($studentList, []);
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
 
     <style>        
-        #title{
-            color: #aaa9a9;
-            font-size:30px;
-            padding-bottom:8px;
-        }
-
-        .main hr {
-            border: 0;
-            border-top: 1px solid #aaa9a9;
-        }
-
-        header {
-            font-size: 50px;
-            color: #154c4b;
-        }
-
-
-        .back-link {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: #154c4b;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-
         form {
             display: flex;
             justify-content:center;
@@ -149,7 +122,7 @@ $studentResult = executePreparedStatement($studentList, []);
         <a href="AssessorDatabase.php">Assessor Accounts</a><br>
         <a href="CompanyDatabase.php">Company Database</a><br>
         <a href="results.php">Result Viewing</a><br>
-        <a href="../Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+        <a href="../../Logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
     </nav>
 
 
