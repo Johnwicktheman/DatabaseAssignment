@@ -9,7 +9,6 @@ include '../../AllFunctions.php';
 
 checkAccess('Admin');
 
-// 1. Get the ID from the URL (from the "Delete" link in your table)
 $companyID = $_GET['id'] ?? null;
 
 if (!$companyID) {
@@ -17,8 +16,8 @@ if (!$companyID) {
     exit();
 }
 
-// 2. Fetch the company name so we can show the user what they are deleting
-$fetchSql = "SELECT CompanyName FROM companynamelist WHERE CompanyInt = ?";
+// 1. Fetch all company details and picturepath
+$fetchSql = "SELECT * FROM companynamelist WHERE CompanyInt = ?";
 $fetchRes = executePreparedStatement($fetchSql, [$companyID]);
 $company = $fetchRes->fetch_assoc();
 
@@ -28,19 +27,26 @@ if (!$company) {
 
 $error = null;
 
-// 3. Handle the actual deletion when the button is pressed
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
+        // 2. Identify the file path for deletion
+        $imageToDelete = "../../" . $company['picturepath'];
+
+        // 3. Delete from Database first
         $deleteSql = "DELETE FROM companynamelist WHERE CompanyInt = ?";
         $deleteRes = executePreparedStatement($deleteSql, [$companyID]);
 
         if ($deleteRes) {
+            // 4. Physically delete the file from the images folder
+            if (!empty($company['picturepath']) && file_exists($imageToDelete)) {
+                unlink($imageToDelete);
+            }
+
             header("Location: ../Databases/CompanyDatabase.php?msg=Deleted");
             exit();
         }
     } catch (Exception $e) {
-        // This usually triggers if a student is still linked to this company
-        $error = "Cannot delete this company because students are currently assigned to it.";
+        $error = "Cannot delete this company because students or records are currently linked to it.";
     }
 }
 ?>
@@ -49,32 +55,68 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Confirm Delete</title>
-    <style>
-        .warning-box { background: #f8d7da; color: #721c24; padding: 20px; border: 1px solid #f5c6cb; border-radius: 5px; }
-        .btn-delete { background: red; color: white; padding: 10px 20px; border: none; cursor: pointer; text-decoration: none; }
-        .btn-cancel { background: #6c757d; color: white; padding: 10px 20px; text-decoration: none; margin-left: 10px; border-radius: 2px; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Confirm Delete - <?php echo htmlspecialchars($company['CompanyName']); ?></title>
+    <link rel="stylesheet" href="../../CssFiles/Add_Edit.css">
 </head>
 <body>
 
-    <h2>Delete Confirmation</h2>
+    <div class="container">
+        <h1 class="page-title">Delete Company</h1>
+        <p class="subtitle">Review the details below before permanent removal.</p>
 
-    <div class="warning-box">
-        <?php if ($error): ?>
-            <p style="font-weight: bold;"><?php echo $error; ?></p>
-        <?php else: ?>
-            <p>Are you sure you want to delete <strong><?php echo htmlspecialchars($company['CompanyName']); ?></strong>?</p>
-            <p>This will remove the company permanently from the system.</p>
-        <?php endif; ?>
+        <div class="form-card">
+            <h2 class="section-title">Confirmation Required</h2>
+
+            <?php if ($error): ?>
+                <div class="error"><?php echo $error; ?></div>
+            <?php endif; ?>
+
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label>Company Logo</label>
+                    <?php if (!empty($company['PicturePath'])): ?>
+                        <img src="../../<?php echo htmlspecialchars($company['PicturePath'] ); ?>" class="logo-preview" alt="Logo" style="width: 120px; height: 120px; object-fit: contain;">
+                    <?php else: ?>
+                        <div class="detail-value">No Logo Uploaded</div>
+                    <?php endif; ?>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Company Name:</label>
+                    <div class="detail-value"><?php echo htmlspecialchars($company['CompanyName']); ?></div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Industry:</label>
+                    <div class="detail-value"><?php echo htmlspecialchars($company['CompanyType'] ?? 'N/A'); ?></div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Contact Number:</label>
+                    <div class="detail-value"><?php echo htmlspecialchars($company['ContactNumber'] ?? 'N/A'); ?></div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Email Address:</label>
+                    <div class="detail-value"><?php echo htmlspecialchars($company['EmailContact'] ?? 'N/A'); ?></div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Company Address:</label>
+                    <div class="detail-value"><?php echo nl2br(htmlspecialchars($company['CompanyAddress'] ?? 'N/A')); ?></div>
+                </div>
+            </div>
+
+            <form action="" method="post">
+                <div class="button-group">
+                    <input type="submit" value="Delete" class="btn btn-secondary" style="background-color:#ff4d4d;">
+                    <a href="../Databases/CompanyDatabase.php" class="btn btn-secondary" >Cancel</a>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <form action="" method="post" style="margin-top: 20px;">
-        <?php if (!$error): ?>
-            <button type="submit" class="btn-delete">Yes, Delete Permanently</button>
-        <?php endif; ?>
-        <a href="../Databases/CompanyDatabase.php" class="btn-cancel">No, Go Back</a>
-    </form>
 
 </body>
 </html>

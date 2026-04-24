@@ -5,7 +5,7 @@ function checkAccess($requiredRole) {
     $roles = (array)$requiredRole;
 
     if (!isset($_SESSION['username']) || !in_array($_SESSION['user_role'], $roles)) {
-        header("Location: FrontPage.php"); 
+        header("Location: ../../FrontPage.php"); 
         exit();
     }
 }

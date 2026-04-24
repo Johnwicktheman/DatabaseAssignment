@@ -1,0 +1,94 @@
+ #title{
+            color: #aaa9a9;
+            font-size:30px;
+            padding-bottom:8px;
+        }
+
+        .main hr {
+            border: 0;
+            border-top: 1px solid #aaa9a9;
+        }
+
+        header {
+            font-size: 50px;
+            color: #154c4b;
+        }
+
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #154c4b;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+
+        form {
+            display: flex;
+            justify-content:center;
+            text-align:center;
+        }
+
+        form h1{
+            color: #aaa9a9;
+            font-size:20px;
+        }
+
+        .form-collection1{
+            display:inline;
+            margin-right:100px;
+
+        }
+
+        form label{
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .form-group input{
+            margin-left:20px;
+            border-radius:10px;
+            width: 40px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: inherit;
+            text-align: center;
+        }
+
+
+        /* This is from the Add button  */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .page-header h1 {
+            font-size: 22px;
+            color: #1a1a2e;
+        }
+
+
+        .btn {
+            padding: 9px 18px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-primary { background-color: #3f9254; color: #fff; }
+        .btn-primary:hover { background-color: #20532d; }

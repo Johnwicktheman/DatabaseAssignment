@@ -34,6 +34,20 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
 
     <style>        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #154c4b;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #219e75;
+            cursor:pointer;
+        }
+
         form {
             display: flex;
             justify-content:center;
@@ -109,9 +123,6 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
 
 <body>
 
-    <!-- Sidebar-->
-
-
     <nav>
         <p> ADMIN PANEL</p>
         <hr>
@@ -121,7 +132,7 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
         <a href="CompanyDatabase.php">Company Database</a><br>
         <a href="results.php">Result Viewing</a><br>
         <div id="logout">
-        <a href="../../Logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+        <a href="../Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
         </div>
     </nav>
 
@@ -131,8 +142,6 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
         <div id="title"> Assessor Accounts </div>
         <hr>
         <header>Manage Assessor Accounts</header>
-        <a onclick="window.location.href='../AssessorDashboard.php'" class="back-link">&larr; Back to Dashboard</a>
-
         <div class="page-header">
             <h1> Assessor Accounts </h1>
             <a href="../AssessorFunctions/AddAssessor.php" class="btn btn-primary">Add Assessor</a>
