@@ -88,7 +88,21 @@ foreach ($AllStuff as $row) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Results Viewing</title>
   <link rel="stylesheet" href="../../CssFiles/results.css">
-  
+  <style>
+    .back-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        color: #154c4b;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s;
+    }
+
+    .back-link:hover {
+        color: #3179c0;
+        cursor:pointer;
+    }
+  </style>
 </head>
 <body>
 
@@ -102,7 +116,7 @@ foreach ($AllStuff as $row) {
         <a href="CompanyDatabase.php">Company Database</a><br>
         <a href="results.php">Result Viewing</a><br>
         <div id="logout">
-        <a href="../Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+        <a href="../../Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
         </div>
   </nav>
 
@@ -114,6 +128,7 @@ foreach ($AllStuff as $row) {
     <div id="title"> Results Viewing </div>
         <hr>
         <header>Student Results</header>
+        <a onclick="window.location.href='../../AdminDashboard.php'" class="back-link">&larr; Back to Dashboard</a>
 
     <!-- Search -->
     <div class="search-bar" style="margin-top:20px">

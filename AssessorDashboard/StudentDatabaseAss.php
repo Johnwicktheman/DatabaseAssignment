@@ -379,21 +379,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         let tbody = document.querySelector("#studentTable tbody");
         let rows = Array.from(tbody.querySelectorAll(".student-row"));
 
-        //Sort the array of rows based on the dropdown selection
-        rows.sort((a, b) => {
-            let aCode = parseInt(a.getAttribute("data-assessment-id"));
-            let bCode = parseInt(b.getAttribute("data-assessment-id"));
-            let aHasRec = parseInt(a.getAttribute("data-has-record"));
-            let bHasRec = parseInt(b.getAttribute("data-has-record"));
+       rows.sort((a, b) => {
+            let aID = parseInt(a.getAttribute("data-id"));
+            let bID = parseInt(b.getAttribute("data-id"));
 
             if (sortType === 'newest') {
-                return bCode - aCode;       //Highest ID (Newest) first
+                return bID - aID; // Sort by ID descending
             } 
             else if (sortType === 'oldest') {
-                return aCode - bCode;       //Lowest ID (Oldest) first
+                return aID - bID; // Sort by ID ascending
             } 
             else if (sortType === 'no_record') {
-                //No record
+                let aHasRec = parseInt(a.getAttribute("data-has-record"));
+                let bHasRec = parseInt(b.getAttribute("data-has-record"));
+                
+                // If both have records or both don't, sort by ID ascending
+                if (aHasRec === bHasRec) {
+                    return aID - bID;
+                }
+                // Otherwise, put the one without a record (0) before the one with a record (1)
                 return aHasRec - bHasRec; 
             }
         });

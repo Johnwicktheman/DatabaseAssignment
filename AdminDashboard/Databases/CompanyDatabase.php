@@ -54,16 +54,18 @@ if ($CompanyResult && $CompanyResult->num_rows > 0) {
         <a href="CompanyDatabase.php">Company Database</a><br>
         <a href="results.php">Result Viewing</a><br>
         <div id="logout">
-        <a href="../Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+        <a href="../../Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
         </div>
   </nav>
 
   <main class="main">
 
+
     <div class="page-header">
       <h1>Company Database</h1>
       <a href="../CompanyFunctions/AddCompany.php" class="btn btn-primary" style="text-decoration: none; display: inline-block;">+ Add Company</a>
     </div>
+    
 
     <div class="toolbar">
       <input type="text" id="searchInput" placeholder="Search by company name" oninput="applyFilters()" />

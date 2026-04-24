@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 24, 2026 at 03:27 PM
+-- Generation Time: Apr 23, 2026 at 08:10 AM
 -- Server version: 5.7.24
 -- PHP Version: 8.3.1
 
@@ -39,7 +39,8 @@ CREATE TABLE `adminaccountlist` (
 
 INSERT INTO `adminaccountlist` (`AdminAccount_id`, `Password`, `Username`) VALUES
 (1, '12345', 'HueWeiFeng'),
-(4, '12345', 'ValiantTai');
+(2, '12345', 'JamesBond'),
+(3, '12345', 'ValiantTai');
 
 -- --------------------------------------------------------
 
@@ -60,8 +61,12 @@ CREATE TABLE `assesoraccountlist` (
 --
 
 INSERT INTO `assesoraccountlist` (`AssessorAccountID`, `Password`, `Username`, `AdminAccountID`, `AssesorType`) VALUES
-(10, '12345', 'DrTan', 1, 'Lecturer'),
-(11, '12345', 'DrTanSuper', 1, 'Supervisor');
+(3, '2132', 'JameGorgan', 1, 'Lecturer'),
+(4, '12345', 'JackBlack', 1, 'Lecturer'),
+(6, '12345', 'JamesBagewl', 1, 'Lecturer'),
+(7, '12345', 'HueWeiFengLect', 1, 'Lecturer'),
+(8, '12345', 'FaysalSuperman', 1, 'Supervisor'),
+(9, '12345', 'HueWeiFengSuper', 2, 'Supervisor');
 
 -- --------------------------------------------------------
 
@@ -90,12 +95,11 @@ CREATE TABLE `assessmentrecords` (
 --
 
 INSERT INTO `assessmentrecords` (`AssessmentCode`, `StudentID`, `AssesorType`, `Feedback`, `understand_project`, `health_and_safety`, `connectivity`, `presentation`, `clarity`, `activities`, `project_management`, `time_management`, `Internship_Score`) VALUES
-(11, 21, 'Lecturer', 'I see he did a really great job by saving TWO dying cats from cancer', 1, 2, 3, 4, 5, 6, 7, 8, 49),
-(12, 22, 'Lecturer', 'Wow amazing he defeated godzilla', 9, 8, 7, 6, 5, 4, 3, 2, 52),
-(13, 20, 'Lecturer', 'Wow he saved cancer', 9, 9, 9, 9, 9, 9, 9, 9, 90),
-(14, 21, 'Supervisor', 'I couldve created the cancer ', 2, 3, 4, 1, 2, 3, 1, 2, 22),
-(15, 22, 'Supervisor', 'I beat godzilla too', 1, 2, 3, 4, 5, 1, 2, 3, 26),
-(16, 20, 'Supervisor', 'I cured cancer too', 1, 2, 3, 3, 2, 5, 6, 7, 40);
+(1, 1, 'Lecturer', 'chicken jockeyyyy', 1, 9, 4, 2, 1, 2, 3, 4, 26),
+(3, 1, 'Supervisor', 'Bagel Bogel', 1, 2, 0, 0, 5, 6, 7, 8, 29),
+(5, 17, 'Lecturer', 'dsadcxzzcac', 2, 0, 0, 0, 0, 0, 0, 0, 2),
+(6, 18, 'Lecturer', 'dsad', 7, 0, 0, 0, 0, 0, 0, 0, 7),
+(7, 17, 'Supervisor', 'dsad', 1, 0, 0, 0, 0, 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -105,21 +109,15 @@ INSERT INTO `assessmentrecords` (`AssessmentCode`, `StudentID`, `AssesorType`, `
 
 CREATE TABLE `companynamelist` (
   `CompanyInt` int(11) NOT NULL,
-  `CompanyName` varchar(100) NOT NULL,
-  `CompanyAddress` varchar(100) DEFAULT NULL,
-  `CompanyType` enum('Technology','Finance','Healthcare','Engineering','Media','Other') DEFAULT NULL,
-  `ContactNumber` varchar(100) DEFAULT NULL,
-  `EmailContact` varchar(100) DEFAULT NULL,
-  `PicturePath` varchar(255) DEFAULT NULL
+  `CompanyName` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `companynamelist`
 --
 
-INSERT INTO `companynamelist` (`CompanyInt`, `CompanyName`, `CompanyAddress`, `CompanyType`, `ContactNumber`, `EmailContact`, `PicturePath`) VALUES
-(1, 'Google', 'JalanBoom', 'Technology', '+018293201', 'JamesbONd', NULL),
-(6, 'dsadsa', 'dsadsadas', 'Technology', 'dssadsa', 'dsadsa@gmail.com', 'images/1777027182_Scatter-plot-for-corruption-perception-index-and-GDP-per-capita-Source-authors.png');
+INSERT INTO `companynamelist` (`CompanyInt`, `CompanyName`) VALUES
+(1, 'Google');
 
 -- --------------------------------------------------------
 
@@ -141,9 +139,8 @@ CREATE TABLE `internship` (
 --
 
 INSERT INTO `internship` (`InternshipID`, `StudentAccountID`, `CompanyINT`, `Role`, `Months_duration`, `Description`) VALUES
-(7, 21, 1, 'Software Developer', 3, 'He saved two dying cat from cancer by creating software that cures cancer'),
-(8, 20, 1, 'Software engineer', 3, 'He help saved cancer from a children'),
-(10, 22, 1, 'Software Intern', 2, 'Defeated godzilla in 1v1 ');
+(1, 17, 1, 'dsadsa', 2, 'dsadsadsaddsadsad'),
+(3, 18, 1, 'dsad', 3, 'dsxcdsad');
 
 -- --------------------------------------------------------
 
@@ -163,9 +160,10 @@ CREATE TABLE `studentaccountlist` (
 --
 
 INSERT INTO `studentaccountlist` (`StudentAccountID`, `Password`, `Username`, `AdminAccountID`) VALUES
-(20, '12345', '20705238', 1),
-(21, '12345', '20705239', 1),
-(22, '12345', '20705237', 4);
+(1, '123456', 'MichealJackson21', 1),
+(12, '12345', 'JackBlack21', 1),
+(17, '12345', 'fasdwad', 1),
+(18, '12345', 'NewFinal', 1);
 
 -- --------------------------------------------------------
 
@@ -189,9 +187,10 @@ CREATE TABLE `studentprofile` (
 --
 
 INSERT INTO `studentprofile` (`StudentProfileID`, `StudentAccountID`, `FirstName`, `LastName`, `ProgrammeCode`, `YearOfStudy`, `AssesorAccountIDLect`, `AssesorAccountIDSuper`) VALUES
-(10, 20, 'Valiant', 'Tai', 'CS102', 2, 10, 11),
-(11, 21, 'Hue', 'WeiFeng', '102', 2, 10, 11),
-(12, 22, 'Faysal', 'Carry', 'CS101', 2, 10, 11);
+(3, 1, 'Jicken', 'Jockey', 'dsadsa', 1, 4, 8),
+(5, 12, 'James', 'Bonded', 'sada', 1, 7, 8),
+(7, 17, 'dsadsad', 'sadsadas', 'dsadsa', 2, 7, 8),
+(8, 18, 'fdkjsofg', 'fpdosg', 'fdsf', 1, 7, 8);
 
 --
 -- Indexes for dumped tables
@@ -258,43 +257,43 @@ ALTER TABLE `studentprofile`
 -- AUTO_INCREMENT for table `adminaccountlist`
 --
 ALTER TABLE `adminaccountlist`
-  MODIFY `AdminAccount_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `AdminAccount_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `assesoraccountlist`
 --
 ALTER TABLE `assesoraccountlist`
-  MODIFY `AssessorAccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `AssessorAccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `assessmentrecords`
 --
 ALTER TABLE `assessmentrecords`
-  MODIFY `AssessmentCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `AssessmentCode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `companynamelist`
 --
 ALTER TABLE `companynamelist`
-  MODIFY `CompanyInt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `CompanyInt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `internship`
 --
 ALTER TABLE `internship`
-  MODIFY `InternshipID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `InternshipID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `studentaccountlist`
 --
 ALTER TABLE `studentaccountlist`
-  MODIFY `StudentAccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `StudentAccountID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `studentprofile`
 --
 ALTER TABLE `studentprofile`
-  MODIFY `StudentProfileID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `StudentProfileID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
