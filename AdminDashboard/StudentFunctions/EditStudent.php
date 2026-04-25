@@ -24,7 +24,7 @@ $fetchSql = "SELECT acc.Username, acc.Password, prof.*,
              FROM studentaccountlist acc
              JOIN studentprofile prof ON acc.StudentAccountID = prof.StudentAccountID 
              LEFT JOIN internship intern ON acc.StudentAccountID = intern.StudentAccountID
-             WHERE prof.StudentProfileID = ?";
+             WHERE acc.StudentAccountID = ?";
 
 $fetchResult = executePreparedStatement($fetchSql, [$studentID]);
 
@@ -86,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($checkIntern->num_rows > 0) {
                 //Record exists then update
                 $sqlIntern = "UPDATE internship SET CompanyINT = ?, Role = ?, Months_duration = ?, Description = ? WHERE StudentAccountID = ?";
-                executePreparedStatement($sqlIntern, [$companyID, $role, $duration, $description, $studentID]);
+                executePreparedStatement($sqlIntern, [$companyID, $role, $duration, $description, $studentID]); 
             } else if ($companyID) {
                 //No record exists then insert
                 $sqlIntern = "INSERT INTO internship (CompanyINT, Role, Months_duration, Description, StudentAccountID) VALUES (?, ?, ?, ?, ?)";

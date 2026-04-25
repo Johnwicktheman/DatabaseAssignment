@@ -22,7 +22,7 @@ if (!$studentID) {
 
 $fetchSql = "SELECT studentaccountlist.Username, studentaccountlist.Password, studentprofile.* FROM studentaccountlist 
              JOIN studentprofile ON studentaccountlist.StudentAccountID = studentprofile.StudentAccountID 
-             WHERE studentprofile.StudentProfileID = ?";
+             WHERE studentaccountlist.StudentAccountID = ?";
 
 $fetchResult = executePreparedStatement($fetchSql, [$studentID]);
 if ($fetchResult->num_rows > 0) {

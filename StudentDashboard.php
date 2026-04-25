@@ -44,6 +44,7 @@ $role = $_SESSION['user_role'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="CssFiles/StudentDashBoard.css">
     <link rel="stylesheet" href="CssFiles/StudentTableStyle.css">
+    <link rel="stylesheet" href="CssFiles/results.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -75,7 +76,7 @@ $role = $_SESSION['user_role'];
                     <p style="color:green; font-weight:bold;">Evaluation Finished!</p>
                     <button onclick="toggleBreakdown('lecturer')">Marks Breakdown</button>
                 <?php else: ?>
-                    <p style="color:#ff8787;">Pending Evaluation</p>
+                    <p style="color:#ff8787;">Pending Evaluation. Please wait</p>
                 <?php endif; ?>
             </div>
 

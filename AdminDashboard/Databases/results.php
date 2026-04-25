@@ -86,7 +86,16 @@ foreach ($AllStuff as $row) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Results Viewing</title>
+
+  <!-- font import -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="../../CssFiles/results.css">
+  <link rel="stylesheet" href="../../CssFiles/AdminDashBoard.css">
+  <link rel="stylehsheet" href="../../CssFiles/AdminTableStyle.css">
+
   <style>
     .back-link {
         display: inline-block;
@@ -201,14 +210,14 @@ foreach ($AllStuff as $row) {
     //same thing as Company database
     var students = <?php echo json_encode($jsStudents); ?>;
     var criteria = [
-      { name: 'Undertaking Tasks/Projects',                   weight: 10 },
-      { name: 'Health & Safety Requirements',                 weight: 10 },
-      { name: 'Connectivity & Theoretical Knowledge',         weight: 10 },
-      { name: 'Presentation of the Report',                   weight: 15 },
-      { name: 'Clarity of Language & Illustration',           weight: 10 },
-      { name: 'Lifelong Learning Activities',                 weight: 15 },
-      { name: 'Project Management',                           weight: 15 },
-      { name: 'Time Management',                              weight: 15 },
+      { name: 'Undertaking Tasks/Projects', weight: 10 },
+      { name: 'Health & Safety Requirements', weight: 10 },
+      { name: 'Connectivity & Theoretical Knowledge', weight: 10 },
+      { name: 'Presentation of the Report', weight: 15 },
+      { name: 'Clarity of Language & Illustration', weight: 10 },
+      { name: 'Lifelong Learning Activities', weight: 15 },
+      { name: 'Project Management', weight: 15 },
+      { name: 'Time Management', weight: 15 },
     ];
 
 

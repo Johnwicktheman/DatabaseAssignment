@@ -167,7 +167,7 @@ $studentResult = executePreparedStatement($studentList, []);
                 <tbody>
                     <?php
                         while ($row = $studentResult->fetch_assoc()) {
-                            $id       = $row['StudentProfileID'];
+                             $id = $row['StudentAccountID'];
                             $firstName = $row['FirstName'];
                             $lastName = $row['LastName'];
                             $user = "$firstName $lastName";

@@ -36,7 +36,7 @@ $fetchSql = "SELECT acc.Username, acc.Password, prof.*,
              LEFT JOIN assessmentrecords ar_super ON acc.StudentAccountID = ar_super.StudentID AND ar_super.AssesorType = 'Supervisor'
              LEFT JOIN assesoraccountlist aa_lect ON aa_lect.AssessorAccountID = prof.AssesorAccountIDLect
              LEFT JOIN assesoraccountlist aa_super ON aa_super.AssessorAccountID = prof.AssesorAccountIDSuper
-             WHERE prof.StudentProfileID = ?";
+             WHERE acc.StudentAccountID = ?";
 
 $fetchResult = executePreparedStatement($fetchSql, [$studentID]);
 
