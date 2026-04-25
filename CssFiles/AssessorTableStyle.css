@@ -1,77 +1,88 @@
+/* Canonical table styles — used by StudentDatabase, AssessorDatabase, results, CompanyDatabase */
+
+.table-wrapper {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    overflow: hidden;
+    margin-bottom: 28px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
-    background-color: white;
-    border-radius: 15px;
-    overflow: hidden; /* Ensures border-radius works on table */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    font-size: 14px;
 }
 
 th, td {
     text-align: left;
-    padding: 15px 20px;
+    padding: 13px 16px;
     border-bottom: 1px solid #eee;
 }
 
-tr{
+thead {
+    background-color: #10253b;
+    color: #f8f9fa;
+}
+
+th {
+    font-size: 14px;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+tbody tr {
     background-color: white;
+    border-bottom: 1px solid #eee;
     transition: all 0.3s ease;
 }
 
-
-th {
-    background-color: #154c4b;
-    color: #f8f9fa ;
-    font-size: 14px;
-    letter-spacing: 1px;
-    font-weight: 900;
+tbody tr:last-child {
+    border-bottom: none;
 }
 
-tbody tr:hover{
-    background-color:#e6e6e6;
+tbody tr:hover {
+    background-color: #e6e6e6;
     transform: scale(1.02);
-
     position: relative;
     z-index: 1;
-
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     cursor: pointer;
 }
 
-tr a{ 
-    text-decoration: none; 
-    color: #154c4b; 
-    font-weight: bold; 
-    margin-right: 15px; 
-    transition: color 0.3s; 
-}
-        
-tr a:hover { 
-    color: #219e75; 
-}
-        
-tr i { 
-    margin-right: 5px; 
+tr a {
+    text-decoration: none;
+    color: #10253b;
+    font-weight: bold;
+    margin-right: 15px;
+    transition: color 0.3s;
 }
 
-.action-links a { 
-    text-decoration: none; 
-    color: #154c4b; 
-    font-weight: bold; 
-    margin-right: 15px; 
-    transition: color 0.3s; 
+tr a:hover {
+    color: #3179c0;
 }
-        
-.delete-btn { 
-    color: #e74c3c; 
-    font-weight: bold; 
-    text-decoration: none; 
-    transition: 0.3s; 
+
+tr i {
+    margin-right: 5px;
 }
-        
-.delete-btn:hover { 
-    color: #c0392b; 
-    text-decoration: underline; 
-    cursor: pointer; 
+
+.action-links a {
+    text-decoration: none;
+    color: #10253b;
+    font-weight: bold;
+    margin-right: 15px;
+    transition: color 0.3s;
+}
+
+.delete-btn {
+    color: #e74c3c;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.delete-btn:hover {
+    color: #c0392b;
+    text-decoration: underline;
+    cursor: pointer;
 }

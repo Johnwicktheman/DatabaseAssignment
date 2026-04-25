@@ -38,19 +38,17 @@ if ($CompanyResult && $CompanyResult->num_rows > 0) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title></title>
-
-  <!-- Font import -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
-
-    
+  <title> Company Database</title>
+  
   <link rel="stylesheet" href="../../CssFiles/CompanyDatabase.css">
   <link rel="stylesheet" href="../../CssFiles/AdminDashBoard.css">
-  <style>
-   
-  </style>
+
+  <!-- Font import -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+
+
 </head>
 <body>
 
@@ -58,17 +56,22 @@ if ($CompanyResult && $CompanyResult->num_rows > 0) {
         <p> ADMIN PANEL</p>
         <hr>
         <a href="../../AdminDashboard.php">Dashboard</a><br>
-        <a href="StudentDatabase.php" class="active">Student Accounts</a><br>
+        <a href="StudentDatabase.php">Student Accounts</a><br>
         <a href="AssessorDatabase.php">Assessor Accounts</a><br>
         <a href="CompanyDatabase.php">Company Database</a><br>
-        <a href="results.php">Result Viewing</a><br>
+        <a href="ResultsViewing.php">Result Viewing</a><br>
         <div id="logout">
         <a href="../../Logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
         </div>
   </nav>
 
+  
   <main class="main">
-
+    
+    <div id="title">Internship Companies</div>
+    <hr>
+    <header>Manage Internship Companies</header>
+    <a onclick="window.location.href='../../AdminDashboard.php'" class="back-link">&larr; Back to Dashboard</a>
 
     <div class="page-header">
       <h1>Company Database</h1>

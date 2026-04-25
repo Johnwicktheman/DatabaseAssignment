@@ -75,26 +75,22 @@ foreach ($AllStuff as $row) {
 ?>
 
 
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Results Viewing</title>
+  
+  <link rel="stylesheet" href="../../CssFiles/ResultsViewing.css">
+  <link rel="stylesheet" href="../../CssFiles/AdminDashBoard.css">
+  <link rel="stylehsheet" href="../../CssFiles/AdminTableStyle.css">
+  <link rel="stylesheet" href="../../CssFiles/searchbar.css">
 
   <!-- font import -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="../../CssFiles/results.css">
-  <link rel="stylesheet" href="../../CssFiles/AdminDashBoard.css">
-  <link rel="stylehsheet" href="../../CssFiles/AdminTableStyle.css">
 
   <style>
     .back-link {
@@ -121,7 +117,7 @@ foreach ($AllStuff as $row) {
         <a href="StudentDatabase.php" class="active">Student Accounts</a><br>
         <a href="AssessorDatabase.php">Assessor Accounts</a><br>
         <a href="CompanyDatabase.php">Company Database</a><br>
-        <a href="results.php">Result Viewing</a><br>
+        <a href="ResultsViewing.php">Result Viewing</a><br>
         <div id="logout">
         <a href="../../Logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
         </div>
@@ -133,12 +129,18 @@ foreach ($AllStuff as $row) {
 
     <div id="title"> Results Viewing </div>
         <hr>
-        <header>Student Results</header>
+        <header>Student Results Viewing</header>
         <a onclick="window.location.href='../../AdminDashboard.php'" class="back-link">&larr; Back to Dashboard</a>
 
+    <div class="page-header">
+      <h1>Student Assessment Records</h1>
+    </div>
+    
+
     <!-- Search -->
-    <div class="search-bar" style="margin-top:20px">
-      <input type="text" id="searchInput" placeholder="Search by student name or ID..." oninput="filterTable()" />
+    <div class="search-bar-container" style="margin-top:20px>
+      <label for="searchInput">Search:</label>
+      <input type="text" id="searchInput" placeholder="Search by Student ID or Name..." oninput="filterTable()" />
     </div>
 
     <p class="hint">Click on a row to view the full mark breakdown.</p>

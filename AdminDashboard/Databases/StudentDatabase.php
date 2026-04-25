@@ -104,8 +104,8 @@ $studentResult = executePreparedStatement($studentList, []);
             transition: background 0.2s;
         }
 
-        .btn-primary { background-color: #3f9254; color: #fff; }
-        .btn-primary:hover { background-color: #20532d; }
+        .btn-primary { background-color: #10253b; color: #fff; }
+        .btn-primary:hover { background-color: #3179c0; }
 
 
         </style>
@@ -119,10 +119,10 @@ $studentResult = executePreparedStatement($studentList, []);
         <p> ADMIN PANEL</p>
         <hr>
         <a href="../../AdminDashboard.php">Dashboard</a><br>
-        <a href="StudentDatabase.php" class="active">Student Accounts</a><br>
+        <a href="StudentDatabase.php" >Student Accounts</a><br>
         <a href="AssessorDatabase.php">Assessor Accounts</a><br>
         <a href="CompanyDatabase.php">Company Database</a><br>
-        <a href="results.php">Result Viewing</a><br>
+        <a href="ResultsViewing.php">Result Viewing</a><br>
         <div id="logout">
         <a href="../../Logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>\
         </div>
@@ -136,13 +136,13 @@ $studentResult = executePreparedStatement($studentList, []);
          <a onclick="window.location.href='../../AdminDashboard.php'" class="back-link">&larr; Back to Dashboard</a>
         <div class="page-header">
             <h1> Student Accounts </h1>
-            <a href="../StudentFunctions/AddStudent.php" class="btn btn-primary">Add Student</a>
+            <a href="../StudentFunctions/AddStudent.php" class="btn btn-primary">+ Add Student</a>
         </div>
 
         <div class="search-bar-container">
             <div>
                 <label for="jsSearch">Search:</label>
-                <input type="text" id="jsSearch" placeholder="Search ID or Name..." onkeyup="applyFilters()">
+                <input type="text" id="jsSearch" placeholder="Search by Student ID or Name..." onkeyup="applyFilters()">
             </div>
             <div>
                 <label for="jsSort">Filter / Sort By:</label>
