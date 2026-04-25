@@ -7,73 +7,70 @@ include '../../Connection.php';
 include '../../ExecutePStatement.php';
 include '../../AllFunctions.php';
 
-// See if they are logged in and if they are admin or not
+//check their current access 
 checkAccess('Admin');
 
-// Error text
+//error text
 $error = null;
 
-// After they press submit button, process the form
+//after press submit button what happens
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // 1. Grab all the text form data
-    $CompanyName    = trim($_POST['CompanyName']);
+    //get all data from form
+    $CompanyName    = $_POST['CompanyName'];
     $CompanyType    = $_POST['CompanyType'];
-    $CompanyAddress = trim($_POST['CompanyAddress']);
-    $ContactNumber  = trim($_POST['ContactNumber']);
-    $EmailContact   = trim($_POST['EmailContact']);
+    $CompanyAddress = $_POST['CompanyAddress'];
+    $ContactNumber  = $_POST['ContactNumber'];
+    $EmailContact   = $_POST['EmailContact'];
 
-    // 2. Check for duplicate company names
-    $resCompanyNAme = executePreparedStatement("SELECT CompanyName FROM companynamelist WHERE CompanyName = ?", [$CompanyName]);
-    
+    //check for company duplciate name
+    $companycheck = "SELECT CompanyName FROM companynamelist WHERE CompanyName = ?";
+    $resCompanyNAme = executePreparedStatement($companycheck, [$CompanyName]);
+
     if ($resCompanyNAme && $resCompanyNAme->num_rows > 0) {
-        $error = "The company name '<strong>" . htmlspecialchars($CompanyName) . "</strong>' is already taken.";
+        $error = "The company name '$CompanyName' is already taken.";
     } 
 
-    // 3. Handle Image Upload (If no previous errors)
-    $logoPath = null; // Default to null if no image is uploaded
+    //Handle image upload and set as null first
+    $logoPath = null; 
     
+    //check the file got upload or not and no error such as too big size
     if (!$error && isset($_FILES['CompanyLogo']) && $_FILES['CompanyLogo']['error'] === UPLOAD_ERR_OK) {
-        // Define where to save the image (adjust the ../ as needed based on your folder structure)
+        //where to store file
         $uploadDir = '../../images/'; 
-        
-        // Create the images folder if it doesn't exist yet
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
 
-        // Make the file name unique using time() so we don't accidentally overwrite files with the same name
+        //make the file name unique using time()_ so we dont overwrite files with the same name
         $fileName = time() . '_' . basename($_FILES['CompanyLogo']['name']);
         $targetFilePath = $uploadDir . $fileName;
         
-        // Check if it's a real image (Security Check)
+        //choose allowed file types
         $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
-        $allowedTypes = array('jpg', 'jpeg', 'png', 'gif');
+        $allowedTypes = array('jpg', 'jpeg', 'png');
         
         if (in_array($fileType, $allowedTypes)) {
-            // Move the file from the temporary folder to your images folder
+            //move file ffrom temp location _FILES to our directory folder
             if (move_uploaded_file($_FILES['CompanyLogo']['tmp_name'], $targetFilePath)) {
-                // Save the relative path to put in the database
+                //move to root 
                 $logoPath = 'images/' . $fileName; 
             } else {
                 $error = "There was an error moving the uploaded file.";
             }
         } else {
-            $error = "Sorry, only JPG, JPEG, PNG, & GIF files are allowed for the logo.";
+            $error = "only JPG, JPEG, and PNG files are allowed for the logo.";
         }
     }
 
-    // 4. If everything is completely error-free, insert into the database
+    //if all ok insert into database
     if (!$error) {
         $insertSql = "INSERT INTO companynamelist (CompanyName, CompanyAddress, CompanyType, ContactNumber, EmailContact, PicturePath) VALUES (?, ?, ?, ?, ?, ?)";
         $insertRes = executePreparedStatement($insertSql, [$CompanyName, $CompanyAddress, $CompanyType, $ContactNumber, $EmailContact, $logoPath]);
 
         if ($insertRes) {
-            // Success! Redirect back to the database grid
+            //if success go back to CompanyDatabase
             header("Location: ../Databases/CompanyDatabase.php");
             exit();
         } else {
-            $error = "Failed to add company to the database. Please try again.";
+            $error = "Failed to add company to the database.";
         }
     }
 }
@@ -140,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
 
                     <div class="form-group full-width">
-                        <label for="CompanyAddress">Contact Person & Address</label>
+                        <label for="CompanyAddress">Company Address</label>
                         <textarea id="CompanyAddress" name="CompanyAddress" rows="3" placeholder="e.g. John Doe&#10;123 Tech Lane, Cyberjaya" required><?php echo isset($_POST['CompanyAddress']) ? htmlspecialchars($_POST['CompanyAddress']) : ''; ?></textarea>
                     </div>
 

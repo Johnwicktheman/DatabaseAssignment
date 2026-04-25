@@ -29,7 +29,7 @@ $studentResult = executePreparedStatement($studentList, []);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Student Accounts</title>
 
-    <link rel="stylesheet" href="../../CssFiles/AdminDashBoard2.css">
+    <link rel="stylesheet" href="../../CssFiles/AdminDashBoard.css">
     <link rel="stylesheet" href="../../CssFiles/AdminTableStyle.css">
     <link rel="stylesheet" href="../../CssFiles/searchbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
@@ -81,7 +81,6 @@ $studentResult = executePreparedStatement($studentList, []);
         }
 
 
-        /* This is from the Add button  */
         .page-header {
             display: flex;
             justify-content: space-between;
@@ -116,7 +115,6 @@ $studentResult = executePreparedStatement($studentList, []);
 <body>
 <body>
 
-    <!-- Sidebar-->
     <nav>
         <p> ADMIN PANEL</p>
         <hr>
@@ -156,7 +154,6 @@ $studentResult = executePreparedStatement($studentList, []);
             </div>
         </div>
 
-        <!-- Table -->
             <table id="searchTable">
                 <thead>
                     <tr>
@@ -182,10 +179,8 @@ $studentResult = executePreparedStatement($studentList, []);
                             echo "<td>" . $adminID . "</td>";
                             //let id = current student row id
 
-                            //Hardcoded Role (Because student accounts are all students)
                             echo "<td> Student </td>";
 
-                            //Combined Action Column
                             echo "<td>
                                 <a href='../StudentFunctions/ViewStudent.php?id=" . $id . "'><i class='fa-solid fa-eye'></i> View</a>
                                 <a href='../StudentFunctions/EditStudent.php?id=" . $id . "'><i class='fa-solid fa-pen-to-square'></i> Edit</a>

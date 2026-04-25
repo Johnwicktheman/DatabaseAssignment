@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: AdminDashboard.php");
         exit;
     }
-    // Check Assessor
+    //Check Assessor
     $sqlAssessor = "SELECT AssessorAccountID, Username, AssesorType FROM assesoraccountlist WHERE Username = ? AND Password = ?";
     $resAssessor = executePreparedStatement($sqlAssessor, [$username, $password]);
 

@@ -8,11 +8,11 @@ include '../ExecutePStatement.php';
 include '../AllFunctions.php';
 checkAccess(['Lecturer', 'Supervisor']);
 
-//Get current Role and ID currently confirmed to be lecturer or supervisor
+//get current Role and ID currently confirmed to be lecturer or supervisor
 $assessorID = $_SESSION['user_id'];
 $assessorType = $_SESSION['user_role'];
 
-//Check role
+//check role
 if ($assessorType === 'Lecturer') {
     $assessorIDField = 'AssesorAccountIDLect';
 } else {
@@ -46,7 +46,7 @@ $currentData = null;
 $student = null;
 
 if ($targetStudentID) {
-    // Only fetch this if an ID is present in the URL
+    //if got targertstudent then start to select
     $sqlCurrent = "SELECT * FROM assessmentrecords WHERE StudentID = ? AND AssesorType = ?";
     $resCurrent = executePreparedStatement($sqlCurrent, [$targetStudentID, $assessorType]);
     $currentData = $resCurrent->fetch_assoc();
@@ -64,7 +64,7 @@ if ($targetStudentID) {
 
     $mode = isset($_GET['mode']) ? $_GET['mode'] : 'update';
 
-    //Just in case user somehow enter create when they already have a record, or update when they don't have a record
+    //just in case user somehow enter create when they already have a record, or update when they don't have a record
     if ($mode === 'update' && !$currentData) {
         echo "<script>alert('No record found to update. Please create one first.'); window.location.href='StudentDatabaseAss.php';</script>";
         exit();
@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $totalScore = $u_project + $h_safety + $connectivity + $presentation * 1.5 + $clarity + $activities * 1.5 + $p_manage * 1.5 + $t_manage * 1.5;
     $totalScore = (int)round($totalScore);
 
-    // Check if record exists to determine action
+    //check if record exists to determine action
     $checkSql = "SELECT AssessmentCode FROM assessmentrecords WHERE StudentID = ? AND AssesorType = ?";
     $checkRes = executePreparedStatement($checkSql, [$targetStudentID, $assessorType]);
 
@@ -120,6 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../CssFiles/AssessorDashBoard.css">
     <link rel="stylesheet" href="../CssFiles/AssessorTableStyle.css">
     <link rel="stylesheet" href="../CssFiles/searchbar.css">
+    <link rel="stylesheet" href="../CssFiles/StudentDatabaseAss.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
 
@@ -128,24 +129,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>        
-        #modal{ opacity: 0; position: fixed; right:0; left:0; bottom: 60px; transition: all 0.3s ease-in-out; z-index: -1; display:flex; align-items: center; justify-content: center; }
-        #modal.open{ opacity:1; z-index:999; }
-        #modal-inner{ background-color: #FFFFFF; width: 700px; height: auto; border-radius:20px; padding: 15px 25px; text-align: center; box-shadow: 15px 25px 30px rgba(0,0,0,0.2); overflow-y: auto;}
-        #modal-inner h1{ color: #154c4b; }
-        form { display: flex; justify-content:center; text-align:center; }
-        form h1{ color: #aaa9a9; font-size:20px; }
-        .form-collection1{ display:inline; margin-right:100px; }
-        form label{ font-weight: bold; color: #555; }
-        .form-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .form-group input{ margin-left:20px; border-radius:10px; width: 50px; padding: 8px; border: 1px solid #ccc; text-align: center; }
-        input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-        .form-collection2 textarea { width: 100%; height:300px; padding: 15px; border: 1px solid #ccc; border-radius: 12px; resize: vertical; }
-        .button-container { margin-top: 30px; display: flex; align-items: center; gap: 20px; }
-        .submit-btn { background-color: #154c4b; color: white; border: none; padding: 12px 25px; font-size: 16px; font-weight: bold; border-radius: 25px; cursor: pointer; transition: 0.3s; }
-        .submit-btn:hover { background-color: #219e75; }
-        .btn-cancel { text-decoration: none; color: #721c24; font-weight: bold; font-size: 16px; }
-    </style>
     <title>Student Database</title>
 </head>
 <body>
@@ -201,12 +184,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $AssessmentCodeID = $row['AssessmentCode'];
                         $InternshipScore = $row['Internship_Score'];
 
-                        // Calculate attributes for JavaScript to use
+                        
                         $assessmentSortID = $AssessmentCodeID ? $AssessmentCodeID : 0;
                         $hasRecord = $AssessmentCodeID ? 1 : 0;
                         $fullName = strtolower($FirstName . " " . $LastName);
 
-                        // Attach the hidden data directly to the table row (<tr>)
+                        //attach the hidden id directly to the table row
                         echo "<tr class='search-row' data-id='$id' data-name='$fullName' data-assessment-id='$assessmentSortID' data-has-record='$hasRecord'>";
                         
                         echo "<td>" . $id . "</td>";
@@ -272,13 +255,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div id="modal-inner">
                 <h1><?php echo (isset($_GET['mode']) && $_GET['mode'] == 'create') ? 'Create' : 'Update'; ?> Assessment for: <?php echo ($student['FirstName'] ?? '') . " " . ($student['LastName'] ?? ''); ?></h1>
                 <p>Role: <strong><?php echo $assessorType; ?></strong></p>
-                <p><strong>Company:</strong> <?php echo htmlspecialchars($student['CompanyName'] ?? 'N/A'); ?>
-                <strong>Role:</strong> <?php echo htmlspecialchars($student['Role'] ?? 'N/A'); ?>
-                <strong>Duration:</strong> <?php echo htmlspecialchars($student['Months_duration'] ?? '0'); ?> Months</p>
-                <p><strong>Tasks/Description:</strong> <?php echo htmlspecialchars($student['Description'] ?? 'N/A'); ?></p>
+                <p><strong>Company:</strong> <?php echo $student['CompanyName'] ?? 'N/A'; ?>
+                <strong>Role:</strong> <?php echo $student['Role'] ?? 'N/A'; ?>
+                <strong>Duration:</strong> <?php $student['Months_duration'] ?? '0'; ?> Months</p>
+                <p><strong>Tasks/Description:</strong> <?php echo $student['Description'] ?? 'N/A'; ?></p>
                 <hr>
                 
-                <form method="POST" action="StudentDatabaseAss.php?id=<?php echo htmlspecialchars($targetStudentID ?? ''); ?>&mode=<?php echo htmlspecialchars($mode ?? ''); ?>">            
+                <form method="POST" action="StudentDatabaseAss.php?id=<?php echo $targetStudentID ?? ''; ?>&mode=<?php echo $mode ?? ''; ?>">            
                     <div class="form-collection1">
                         <h1>Grades (Scale 0-10)</h1>
                         <div class="form-group">
@@ -332,7 +315,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <script src="../JSscripts/searchbar.js"></script>
     <script>
-    //Delete verification
+    //delete verification
     function confirmDelete(studentID){
         if (confirm("Are you sure you want to delete this assessment record? This action cannot be undone.")) {
             window.location.href = "StudentDatabaseAss.php?delete_id=" + studentID;
@@ -343,7 +326,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (urlParams.has('id')) {
             document.getElementById("modal").classList.add("open");
         }
-        //Run the sort function immediately to enforce the "Oldest First" default
+        //run the sort function immediately to enforce the "Oldest First" default
         applyFilters();
     }
     </script>

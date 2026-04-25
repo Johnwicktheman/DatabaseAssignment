@@ -18,7 +18,7 @@ if (!$studentID) {
     exit();
 }
 
-//Get data for prefill form
+//Get data to show
 $fetchSql = "SELECT acc.Username, acc.Password, prof.*, 
                     intern.CompanyINT, intern.Role, intern.Months_duration, intern.Description,
                     comp.CompanyName,
@@ -153,7 +153,7 @@ $error = null;
 <body>
 
     <a href="../Databases/StudentDatabase.php" class="back-link">&larr; Back to Student Database</a>
-    <h2 class="page-title"><?php echo htmlspecialchars($studentData['FirstName'] . " " . $studentData['LastName']); ?></h2>
+    <h2 class="page-title"><?php echo $studentData['FirstName'] . " " . $studentData['LastName']; ?></h2>
 
     <div class="grid">
         <div class="container-group">
@@ -165,8 +165,8 @@ $error = null;
 
             <div class="container">
                 <header>Personal Information</header>
-                <p><strong>Programme Code:</strong> <?php echo htmlspecialchars($studentData['ProgrammeCode']); ?></p>
-                <p><strong>Year of Study:</strong> <?php echo htmlspecialchars($studentData['YearOfStudy']); ?></p>
+                <p><strong>Programme Code:</strong> <?php echo $studentData['ProgrammeCode']; ?></p>
+                <p><strong>Year of Study:</strong> <?php echo $studentData['YearOfStudy']; ?></p>
             </div>
         </div>
 
@@ -175,19 +175,19 @@ $error = null;
             <div class="group-small-container">
                 <div class="small-container">
                     <header>Company:</header> <br>
-                    <p><?php echo htmlspecialchars($studentData['CompanyName'] ?? 'N/A'); ?></p>
+                    <p><?php echo $studentData['CompanyName'] ?? 'N/A'; ?></p>
                 </div>
                 <div class="small-container">
                     <header>Role:</header> <br>
-                    <p><?php echo htmlspecialchars($studentData['Role'] ?? 'N/A'); ?></p>
+                    <p><?php echo $studentData['Role'] ?? 'N/A'; ?></p>
                 </div>
                 <div class="small-container">
                     <header>Duration (months):</header> <br>
-                    <p><?php echo htmlspecialchars($studentData['Months_duration'] ?? 'N/A'); ?></p>
+                    <p><?php echo $studentData['Months_duration'] ?? 'N/A'; ?></p>
                 </div>
             </div>
                 <p><strong>Description:</strong> <br>
-                <p class="description"><?php echo nl2br(htmlspecialchars($studentData['Description'] ?? 'N/A')); ?></p>
+                <p class="description"><?php echo $studentData['Description'] ?? 'N/A'; ?></p>
         </div>
 
         <div  class="container">

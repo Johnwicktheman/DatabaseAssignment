@@ -5,11 +5,6 @@ include 'ExecutePStatement.php';
 include 'AllFunctions.php';
 
 checkAccess(['Lecturer', 'Supervisor']);
-//see if they are loggged in and if they are Assessor or not
-// if (!isset($_SESSION['username']) || ($_SESSION['user_role'] !== 'Supervisor' && $_SESSION['user_role'] !== 'Lecturer')) {
-//     header("Location: ../FrontPage.php"); 
-//     exit();
-// }
 
 //Get current Role and ID currently confirmed to be lecturer or supervisor
 $assessorID = $_SESSION['user_id'];
@@ -24,19 +19,19 @@ if ($assessorType === 'Lecturer') {
 
 $current_user = $_SESSION['username'];
 $role = $_SESSION['user_role'];
-
+//find total assgined students
 $sqlTotal = "SELECT COUNT(*) as total FROM studentprofile WHERE $assessorIDField = ?";
 $resTotal = executePreparedStatement($sqlTotal, [$assessorID]);
 $totalStudents = $resTotal->fetch_assoc()['total'];
 
-// 2. Completed Records (Students with an entry in assessmentrecords for this assessor)
+//count completed assessments for students assigned to this lecturer
 $sqlDone = "SELECT COUNT(*) as done FROM assessmentrecords ar
             JOIN studentprofile sp ON ar.StudentID = sp.StudentAccountID
             WHERE sp.$assessorIDField = ? AND ar.AssesorType = ?";
 $resDone = executePreparedStatement($sqlDone, [$assessorID, $assessorType]);
 $doneRecords = $resDone->fetch_assoc()['done'];
 
-// 3. Logic Calculations
+
 $pendingRecords = $totalStudents - $doneRecords;
 $percentage = ($totalStudents > 0) ? round(($doneRecords / $totalStudents) * 100) : 0;
 

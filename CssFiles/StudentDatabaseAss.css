@@ -1,0 +1,16 @@
+        #modal{ opacity: 0; position: fixed; right:0; left:0; bottom: 60px; transition: all 0.3s ease-in-out; z-index: -1; display:flex; align-items: center; justify-content: center; }
+        #modal.open{ opacity:1; z-index:999; }
+        #modal-inner{ background-color: #FFFFFF; width: 700px; height: auto; border-radius:20px; padding: 15px 25px; text-align: center; box-shadow: 15px 25px 30px rgba(0,0,0,0.2); overflow-y: auto;}
+        #modal-inner h1{ color: #154c4b; }
+        form { display: flex; justify-content:center; text-align:center; }
+        form h1{ color: #aaa9a9; font-size:20px; }
+        .form-collection1{ display:inline; margin-right:100px; }
+        form label{ font-weight: bold; color: #555; }
+        .form-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .form-group input{ margin-left:20px; border-radius:10px; width: 50px; padding: 8px; border: 1px solid #ccc; text-align: center; }
+        input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        .form-collection2 textarea { width: 100%; height:300px; padding: 15px; border: 1px solid #ccc; border-radius: 12px; resize: vertical; }
+        .button-container { margin-top: 30px; display: flex; align-items: center; gap: 20px; }
+        .submit-btn { background-color: #154c4b; color: white; border: none; padding: 12px 25px; font-size: 16px; font-weight: bold; border-radius: 25px; cursor: pointer; transition: 0.3s; }
+        .submit-btn:hover { background-color: #219e75; }
+        .btn-cancel { text-decoration: none; color: #721c24; font-weight: bold; font-size: 16px; }

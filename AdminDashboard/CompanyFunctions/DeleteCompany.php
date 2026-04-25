@@ -16,7 +16,7 @@ if (!$companyID) {
     exit();
 }
 
-// 1. Fetch all company details and picturepath
+//get all data to show
 $fetchSql = "SELECT * FROM companynamelist WHERE CompanyInt = ?";
 $fetchRes = executePreparedStatement($fetchSql, [$companyID]);
 $company = $fetchRes->fetch_assoc();
@@ -28,26 +28,26 @@ if (!$company) {
 $error = null;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    try {
-        // 2. Identify the file path for deletion
-        $imageToDelete = "../../" . $company['picturepath'];
 
-        // 3. Delete from Database first
-        $deleteSql = "DELETE FROM companynamelist WHERE CompanyInt = ?";
-        $deleteRes = executePreparedStatement($deleteSql, [$companyID]);
+        //get image path to delete later
+    $imageToDelete = "../../" . $company['PicturePath'];
 
-        if ($deleteRes) {
-            // 4. Physically delete the file from the images folder
-            if (!empty($company['picturepath']) && file_exists($imageToDelete)) {
-                unlink($imageToDelete);
-            }
+        //delete the row from database first
+    $deleteSql = "DELETE FROM companynamelist WHERE CompanyInt = ?";
+    $deleteRes = executePreparedStatement($deleteSql, [$companyID]);
 
-            header("Location: ../Databases/CompanyDatabase.php?msg=Deleted");
-            exit();
+    if ($deleteRes) {
+        //now delete the image
+        if (!empty($company['PicturePath']) && file_exists($imageToDelete)) {
+            unlink($imageToDelete);
         }
-    } catch (Exception $e) {
-        $error = "Cannot delete this company because students or records are currently linked to it.";
-    }
+
+        header("Location: ../Databases/CompanyDatabase.php?msg=Deleted");
+        exit();
+    }else {
+        $error = "Failed to delete the company. Please try again.";
+    }   
+    
 }
 ?>
 
@@ -57,14 +57,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Confirm Delete - <?php echo htmlspecialchars($company['CompanyName']); ?></title>
+    <title>Delete Company</title>
     <link rel="stylesheet" href="../../CssFiles/Add_Edit.css">
 </head>
 <body>
 
     <div class="container">
         <h1 class="page-title">Delete Company</h1>
-        <p class="subtitle">Review the details below before permanent removal.</p>
+        <p class="subtitle">Review the details below before removal.</p>
 
         <div class="form-card">
             <h2 class="section-title">Confirmation Required</h2>
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="form-group full-width">
                     <label>Company Logo</label>
                     <?php if (!empty($company['PicturePath'])): ?>
-                        <img src="../../<?php echo htmlspecialchars($company['PicturePath'] ); ?>" class="logo-preview" alt="Logo" style="width: 120px; height: 120px; object-fit: contain;">
+                        <img src="../../<?php echo $company['PicturePath']; ?>" class="logo-preview" alt="Logo" style="width: 120px; height: 120px; object-fit: contain;">
                     <?php else: ?>
                         <div class="detail-value">No Logo Uploaded</div>
                     <?php endif; ?>
@@ -85,27 +85,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <div class="form-group full-width">
                     <label>Company Name:</label>
-                    <div class="detail-value"><?php echo htmlspecialchars($company['CompanyName']); ?></div>
+                    <div class="detail-value"><?php echo $company['CompanyName']; ?></div>
                 </div>
 
                 <div class="form-group full-width">
                     <label>Industry:</label>
-                    <div class="detail-value"><?php echo htmlspecialchars($company['CompanyType'] ?? 'N/A'); ?></div>
+                    <div class="detail-value"><?php echo $company['CompanyType'] ?? 'N/A'; ?></div>
                 </div>
 
                 <div class="form-group full-width">
                     <label>Contact Number:</label>
-                    <div class="detail-value"><?php echo htmlspecialchars($company['ContactNumber'] ?? 'N/A'); ?></div>
+                    <div class="detail-value"><?php echo $company['ContactNumber'] ?? 'N/A'; ?></div>
                 </div>
 
                 <div class="form-group full-width">
                     <label>Email Address:</label>
-                    <div class="detail-value"><?php echo htmlspecialchars($company['EmailContact'] ?? 'N/A'); ?></div>
+                    <div class="detail-value"><?php echo $company['EmailContact'] ?? 'N/A'; ?></div>
                 </div>
 
                 <div class="form-group full-width">
                     <label>Company Address:</label>
-                    <div class="detail-value"><?php echo nl2br(htmlspecialchars($company['CompanyAddress'] ?? 'N/A')); ?></div>
+                    <div class="detail-value"><?php echo $company['CompanyAddress'] ?? 'N/A'; ?></div>
                 </div>
             </div>
 

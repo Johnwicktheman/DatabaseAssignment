@@ -13,13 +13,14 @@ checkAccess('Admin');
 $CList = "SELECT * FROM companynamelist";
 $CompanyResult = executePreparedStatement($CList, []);
 
+
+//since we are using js for this page so make it into a list first
 $companiesData = [];
 if ($CompanyResult && $CompanyResult->num_rows > 0) {
     while ($row = $CompanyResult->fetch_assoc()) {
         $companiesData[] = [
             'id'       => $row['CompanyInt'],
-            // Fallback to "Unknown" if name is missing so JS doesn't crash
-            'name'     => $row['CompanyName'] ?: 'Unknown Company',
+            'name'     => $row['CompanyName'] ?: 'N/A',
             'industry' => $row['CompanyType'] ?? 'Other',
             'address'  => $row['CompanyAddress'] ?? 'N/A',
             'contact'  => 'Contact Number',
@@ -37,7 +38,7 @@ if ($CompanyResult && $CompanyResult->num_rows > 0) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Company Database – Internship Assessment System</title>
+  <title></title>
   <link rel="stylesheet" href="../../CssFiles/CompanyDatabase.css">
   <style>
    
@@ -81,7 +82,7 @@ if ($CompanyResult && $CompanyResult->num_rows > 0) {
 
       <div class="view-btns">
         <button class="view-btn active" id="gridBtn" onclick="setView('grid')" title="Card view">⊞</button>
-        <button class="view-btn"        id="listBtn" onclick="setView('list')" title="Table view">☰</button>
+        <button class="view-btn" id="listBtn" onclick="setView('list')" title="Table view">☰</button>
       </div>
     </div>
 
@@ -108,33 +109,36 @@ if ($CompanyResult && $CompanyResult->num_rows > 0) {
   </main>
 
   <script>
-    // Pull the data straight from your PHP Database (Added fallback `?: '[]'` so it never crashes)
+    //change the data from php into javascript data
     var companies = <?php echo json_encode($companiesData) ?: '[]'; ?>;
     var currentView  = 'grid';
 
-    /* ── Initials from name ── */
+    //this is for profile picture for initials
     function initials(name) {
-      // Added safety check in case name is empty!
+      //if name empty just put ?
       if (!name || name.trim() === '') return '?';
       var parts = name.trim().split(' ');
       if (parts.length === 1) return parts[0][0].toUpperCase();
+
+      //check whether is a two part word like Amazon Prime or just Google if Google get G else get AP
       return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
     }
 
-    /* ── Logo HTML helpers ── */
+    //if no image put initial else put the company logo
     function logoImgCard(c) {
       if (c.logo) return '<img class="company-logo" src="../../' + c.logo + '" alt="' + c.name + '" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">' +
                          '<div class="logo-placeholder" style="display:none">' + initials(c.name) + '</div>';
       return '<div class="logo-placeholder">' + initials(c.name) + '</div>';
     }
 
+    //same thing but this is for table style
     function logoImgTable(c) {
       if (c.logo) return '<img class="table-logo" src="../../' + c.logo + '" alt="' + c.name + '" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">' +
                          '<div class="table-placeholder" style="display:none">' + initials(c.name) + '</div>';
       return '<div class="table-placeholder">' + initials(c.name) + '</div>';
     }
 
-    /* ── Render cards ── */
+    //drawing grid cards
     function renderCards(data) {
       var grid = document.getElementById('cardGrid');
       grid.innerHTML = '';
@@ -145,7 +149,7 @@ if ($CompanyResult && $CompanyResult->num_rows > 0) {
       }
 
       data.forEach(function(c) {
-        // Safe string to stop names like "Bob's" from breaking the delete button
+        //make sure string like Amazon's with apotrophe work adding \\ to the '
         var safeName = c.name.replace(/'/g, "\\'");
 
         grid.innerHTML +=
@@ -174,7 +178,7 @@ if ($CompanyResult && $CompanyResult->num_rows > 0) {
       });
     }
 
-    /* ── Render table ── */
+    //for table data
     function renderTable(data) {
       var tbody = document.getElementById('tableBody');
       tbody.innerHTML = '';
@@ -185,7 +189,7 @@ if ($CompanyResult && $CompanyResult->num_rows > 0) {
       }
 
       data.forEach(function(c) {
-        // Safe string to stop names like "Bob's" from breaking the delete button
+        //make sure string like Amazon's with apotrophe work adding \\ to the '
         var safeName = c.name.replace(/'/g, "\\'");
 
         tbody.innerHTML +=
@@ -203,14 +207,14 @@ if ($CompanyResult && $CompanyResult->num_rows > 0) {
       });
     }
 
-    /* ── Filters ── */
+    //For search bar
     function applyFilters() {
-      var q        = document.getElementById('searchInput').value.toLowerCase();
+      var q = document.getElementById('searchInput').value.toLowerCase();
       var industry = document.getElementById('industryFilter').value;
 
 
       var filtered = companies.filter(function(c) {
-        var matchText     = c.name.toLowerCase().includes(q) || c.contact.toLowerCase().includes(q);
+        var matchText = c.name.toLowerCase().includes(q)
         var matchIndustry = industry === '' || c.industry === industry;
 
         return matchText && matchIndustry;
@@ -220,7 +224,7 @@ if ($CompanyResult && $CompanyResult->num_rows > 0) {
       renderTable(filtered);
     }
 
-    /* ── View toggle ── */
+    //change view table or grid
     function setView(view) {
       currentView = view;
       if (view === 'grid') {

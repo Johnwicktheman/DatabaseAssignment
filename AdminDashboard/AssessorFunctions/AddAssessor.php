@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $resStudent = executePreparedStatement("SELECT Username FROM studentaccountlist WHERE Username = ?", [$user]);
     $resAdmin = executePreparedStatement("SELECT Username FROM adminaccountlist WHERE Username = ?", [$user]);
 
-    // Check if any of them found a match
+    //Check if any of them found a match if found that means got same name
     if ($resAssessor->num_rows > 0) {
         $error = "Username is already taken by another Assessor.";
     } else if ($resStudent->num_rows > 0) {

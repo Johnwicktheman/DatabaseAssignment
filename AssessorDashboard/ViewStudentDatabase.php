@@ -19,11 +19,11 @@
         $assessorIDField = 'AssesorAccountIDSuper';
     }
 
-    // Initialize search variable
+    //Get default search
 $filtervalue = isset($_GET['search']) ? $_GET['search'] : '';
 
 if ($filtervalue !== '') {
-    // Search Mode: Use LIKE with wildcards
+    
     $searchTerm = "%" . $filtervalue . "%";
     $studentsList = "SELECT sp.StudentProfileID, sp.StudentAccountID, sp.FirstName, sp.LastName, sp.YearOfStudy, intern.Role, comp.CompanyName 
                     FROM studentprofile sp
@@ -34,10 +34,9 @@ if ($filtervalue !== '') {
                     OR sp.LastName LIKE ? 
                     OR comp.CompanyName LIKE ?";
     
-    // Pass the search term for every '?' placeholder
+   
     $studentResult = executePreparedStatement($studentsList, [$searchTerm, $searchTerm, $searchTerm, $searchTerm]);
 } else {
-    // Default Mode: Show all students (or whatever logic you prefer)
     $studentsList = "SELECT sp.StudentProfileID, sp.StudentAccountID, sp.FirstName, sp.LastName, sp.YearOfStudy, intern.Role, comp.CompanyName 
                     FROM studentprofile sp
                     LEFT JOIN internship intern ON sp.StudentAccountID = intern.StudentAccountID
@@ -73,7 +72,7 @@ if ($filtervalue !== '') {
             color: #219e75;
             cursor:pointer;
         }
-        /* Search and Filter UI */
+
         .search-bar-container {
             display: flex;
             align-items: center;

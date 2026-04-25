@@ -1,13 +1,13 @@
 <?php
-session_start(); // Access the current session
+session_start(); 
 
-// 1. Unset all session variables
+//Unset all session variables
 $_SESSION = array();
 
-// 3. Destroy the session on the server
+//Destroy the session on the server
 session_destroy();
 
-// 4. Redirect to the login page or home page
+//Redirect to the login page or home page
 header("Location: FrontPage.php"); 
 exit();
 ?>

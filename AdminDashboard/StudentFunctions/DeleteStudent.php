@@ -62,164 +62,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirm Delete - <?php echo $fName . " " . $lName; ?></title>
+    <title>Delete student</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="../../CssFiles/Add_Edit.css">
-    <!--
-      <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background-color: #f4f5f7;
-            color: #333;
-            padding: 40px;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: auto;
-        }
-
-        .page-title {
-            font-size: 42px;
-            color: #0f4f4f;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 18px;
-        }
-
-        .form-card {
-            background: white;
-            padding: 35px;
-            border-radius: 18px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-
-        .section-title {
-            font-size: 24px;
-            color: #0f4f4f;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #e5e5e5;
-            padding-bottom: 10px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-bottom: 35px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group.full-width {
-            grid-column: span 2;
-        }
-
-        label {
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #333;
-        }
-
-        input,
-        select,
-        textarea {
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            font-size: 15px;
-            transition: 0.2s ease;
-        }
-
-        input:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #0f4f4f;
-            box-shadow: 0 0 0 3px rgba(15, 79, 79, 0.15);
-        }
-
-        textarea {
-            resize: vertical;
-        }
-
-        .error {
-            background: #ffe5e5;
-            color: #c62828;
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: bold;
-            text-decoration: none;
-            transition: 0.2s ease;
-        }
-
-        .btn-primary {
-            background-color: #1e7c45;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #166437;
-        }
-
-        .btn-secondary {
-            background-color: #dcdcdc;
-            color: #333;
-        }
-
-        .btn-secondary:hover {
-            background-color: #c7c7c7;
-        }
-
-        @media (max-width: 768px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .form-group.full-width {
-                grid-column: span 1;
-            }
-        }
-    </style>
--->
+    
 </head>
 <body>
     <div class="container">
         <h1 class="page-title">Delete Student</h1>
-        <p class="subtitle">Review the details below before permanent removal.</p>
+        <p class="subtitle">Review the details below before removal.</p>
 
         <div class="form-card">
             <h2 class="section-title">Confirmation Required</h2>

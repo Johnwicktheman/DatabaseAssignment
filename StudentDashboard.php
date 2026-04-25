@@ -115,20 +115,20 @@ $role = $_SESSION['user_role'];
             </div>
 
             <script>
-                // Prepare data from PHP
+                //Prepare data from PHP
                 const evaluations = {
                     lecturer: <?php echo $lectGrade ? json_encode($lectGrade) : 'null'; ?>,
                     supervisor: <?php echo $superGrade ? json_encode($superGrade) : 'null'; ?>
                 };
 
-                // Mapping Database Keys to Display Names and Weights
+                //Mapping Database Keys to Display Names and Weights
                 const criteria = [
                     { dbKey: 'understand_project',   name: 'Understanding of Project', weight: 10 },
-                    { dbKey: 'health_and_safety',    name: 'Health and Safety',        weight: 10 },
-                    { dbKey: 'connectivity',         name: 'Connectivity',             weight: 10 },
-                    { dbKey: 'presentation',         name: 'Presentation',             weight: 15 },
-                    { dbKey: 'clarity',              name: 'Clarity',                  weight: 10 },
-                    { dbKey: 'activities',           name: 'Activities',               weight: 15 },
+                    { dbKey: 'health_and_safety',    name: 'Health and Safety Requirements at the Workplace',        weight: 10 },
+                    { dbKey: 'connectivity',         name: 'Connectivity and Use of Theoretical Knowledge',             weight: 10 },
+                    { dbKey: 'presentation',         name: 'Presentation of the Report as a Written Document',             weight: 15 },
+                    { dbKey: 'clarity',              name: 'Clarity of Language and Illustration',                  weight: 10 },
+                    { dbKey: 'activities',           name: 'Lifelong Learning Activities',               weight: 15 },
                     { dbKey: 'project_management',   name: 'Project Management',       weight: 15 },
                     { dbKey: 'time_management',      name: 'Time Management',          weight: 15 }
                 ];
@@ -166,7 +166,7 @@ $role = $_SESSION['user_role'];
                                 <td style="padding: 12px; font-weight: bold; color: #555;">${item.name}</td>
                                 <td style="padding: 12px; text-align: center;">${item.weight}%</td>
                                 <td style="padding: 12px; text-align: center;">${rawMark} / 10</td>
-                                <td style="padding: 12px; text-align: center; color: #2e2e50; font-weight: 800;">${weightedScore.toFixed(2)}</td>
+                                <td style="padding: 12px; text-align: center; color: #2e2e50; font-weight: bold;">${weightedScore.toFixed(2)}</td>
                             </tr>
                         `;
                     });
@@ -175,8 +175,8 @@ $role = $_SESSION['user_role'];
                     if (totalWeighted >= 70){
                     tableHTML += `
                         <tr style="background-color: #f0f1f5;">
-                            <td colspan="3" style="padding: 12px; font-weight: 900; color: #2e2e50; text-align: right;">FINAL CALCULATED SCORE: </td>
-                            <td style="padding: 12px; text-align: center; color: #1d9e75; font-weight: 900; font-size: 1.2em;">${Math.round(totalWeighted)} / 100</td>
+                            <td colspan="3" style="padding: 12px; font-weight: bold; color: #2e2e50; text-align: right;">FINAL CALCULATED SCORE: </td>
+                            <td style="padding: 12px; text-align: center; color: #1d9e75; font-weight: bold; font-size: 1.2em;">${Math.round(totalWeighted)} / 100</td>
                         </tr>
                     `;
                     }
@@ -184,8 +184,8 @@ $role = $_SESSION['user_role'];
                     else if (totalWeighted >= 50){
                     tableHTML += `
                         <tr style="background-color: #f0f1f5;">
-                            <td colspan="3" style="padding: 12px; font-weight: 900; color: #2e2e50; text-align: right;">FINAL CALCULATED SCORE: </td>
-                            <td style="padding: 12px; text-align: center; color: orange; font-weight: 900; font-size: 1.2em;">${Math.round(totalWeighted)} / 100</td>
+                            <td colspan="3" style="padding: 12px; font-weight: bold; color: #2e2e50; text-align: right;">FINAL CALCULATED SCORE: </td>
+                            <td style="padding: 12px; text-align: center; color: orange; font-weight: bold; font-size: 1.2em;">${Math.round(totalWeighted)} / 100</td>
                         </tr>
                     `;
                     }
@@ -193,8 +193,8 @@ $role = $_SESSION['user_role'];
                     else{
                     tableHTML += `
                         <tr style="background-color: #f0f1f5;">
-                            <td colspan="3" style="padding: 12px; font-weight: 900; color: #2e2e50; text-align: right;">FINAL CALCULATED SCORE: </td>
-                            <td style="padding: 12px; text-align: center; color: red; font-weight: 900; font-size: 1.2em;">${Math.round(totalWeighted)} / 100</td>
+                            <td colspan="3" style="padding: 12px; font-weight:bold; color: #2e2e50; text-align: right;">FINAL CALCULATED SCORE: </td>
+                            <td style="padding: 12px; text-align: center; color: red; font-weight: bold; font-size: 1.2em;">${Math.round(totalWeighted)} / 100</td>
                         </tr>
                     `;
                     }

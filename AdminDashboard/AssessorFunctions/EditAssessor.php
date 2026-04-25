@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($error) {
         //If there is error show error msg below
     } else {
-        // PROCEED: Everything is safe
+        //all good
         $updateSql = "UPDATE assesoraccountlist SET Username = ?, Password = ? WHERE AssessorAccountID = ?";
         $updateRes = executePreparedStatement($updateSql, [$user, $pass, $id]);
 

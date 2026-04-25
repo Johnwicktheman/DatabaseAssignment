@@ -24,7 +24,7 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
     <title> Assessor Accounts </title>
 
     <link rel="stylesheet" href="user_management.css">
-    <link rel="stylesheet" href="../../CssFiles/AdminDashBoard2.css">
+    <link rel="stylesheet" href="../../CssFiles/AdminDashBoard.css">
     <link rel="stylesheet" href="../../CssFiles/AdminTableStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
 
@@ -164,8 +164,6 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
                 </select>
             </div>
         </div>
-
-        <!-- Table -->
          <div class="table-wrapper">
             <table id="searchTable">
                 <thead>
@@ -178,7 +176,6 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <!-- Insert the rows here through PHP--> 
                     <?php
                         while ($row = $AssessorResult->fetch_assoc()) {
                             $id       = $row['AssessorAccountID'];

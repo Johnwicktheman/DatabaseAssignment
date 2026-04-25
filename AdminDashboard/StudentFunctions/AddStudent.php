@@ -11,11 +11,11 @@
 
     checkAccess('Admin');
 
-    // Get all lecturers for dropdown
+    //get all lecturers for dropdown
     $lecturerSql = "SELECT AssessorAccountID, Username FROM assesoraccountlist WHERE AssesorType = ?";
     $lecturers = executePreparedStatement($lecturerSql, ['Lecturer']);
 
-    // Fetch all Supervisors for dropdown
+    //get all supervisors for dropdown
     $supervisorSql = "SELECT AssessorAccountID, Username FROM assesoraccountlist WHERE AssesorType = ?";
     $supervisors = executePreparedStatement($supervisorSql, ['Supervisor']);
 
@@ -32,7 +32,7 @@
         $programme = $_POST['programme'];
         $year = $_POST['year'];
 
-        // Internship Details
+        //internship details
         $companyID = $_POST['company_id'];
         $role = $_POST['role'];
         $duration = $_POST['duration'];
@@ -41,103 +41,44 @@
         $lectID = ($_POST['lecturer'] === "NULL") ? null : $_POST['lecturer'];
         $superID = ($_POST['supervisor'] === "NULL") ? null : $_POST['supervisor'];
 
-        // Username Availability Check
+        //username duplicate check
         $resAssessor = executePreparedStatement(
             "SELECT Username FROM assesoraccountlist WHERE Username = ?",
             [$user]
         );
-
         $resStudent = executePreparedStatement(
             "SELECT Username FROM studentaccountlist WHERE Username = ? ",
             [$user]
         );
-
         $resAdmin = executePreparedStatement(
             "SELECT Username FROM adminaccountlist WHERE Username = ?",
             [$user]
         );
-
-        // Determine the specific error message
+        //which username is taken
         if ($resAssessor->num_rows > 0) {
-
             $error = "Username is already taken by an Assessor (Lecturer/Supervisor).";
-
         } else if ($resStudent->num_rows > 0) {
-
             $error = "Username is already taken by another Student.";
-
         } else if ($resAdmin->num_rows > 0) {
-
             $error = "Username is already taken by an Admin.";
-
         } else {
-
             $conn->begin_transaction();
-
             try {
-
-                // Insert student account to get the StudentAccountID
-                $insertAccSql = "
-                    INSERT INTO studentaccountlist 
-                    (Username, Password, AdminAccountID) 
-                    VALUES (?, ?, ?)
-                ";
-
+                $insertAccSql = "INSERT INTO studentaccountlist (Username, Password, AdminAccountID) 
+                                VALUES (?, ?, ?)";
                 executePreparedStatement($insertAccSql, [$user, $pass, $AdminID]);
-
                 $newStudentID = $conn->insert_id;
+                //if all ok inert
+                $insertProfSql = "INSERT INTO studentprofile(StudentAccountID,FirstName,LastName,ProgrammeCode,YearOfStudy,AssesorAccountIDLect,AssesorAccountIDSuper) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-                // Insert student profile
-                $insertProfSql = "
-                    INSERT INTO studentprofile
-                    (
-                        StudentAccountID,
-                        FirstName,
-                        LastName,
-                        ProgrammeCode,
-                        YearOfStudy,
-                        AssesorAccountIDLect,
-                        AssesorAccountIDSuper
-                    )
-                    VALUES (?, ?, ?, ?, ?, ?, ?)
-                ";
-
-                executePreparedStatement(
-                    $insertProfSql,
-                    [
-                        $newStudentID,
-                        $fname,
-                        $lname,
-                        $programme,
-                        $year,
-                        $lectID,
-                        $superID
-                    ]
-                );
+                executePreparedStatement($insertProfSql,[$newStudentID,$fname,$lname,$programme,$year,$lectID,$superID]);
 
                 // Create internship record using the StudentAccountID as the link
-                $insertInternSql = "
-                    INSERT INTO internship
-                    (
-                        StudentAccountID,
-                        CompanyINT,
-                        Role,
-                        Months_duration,
-                        Description
-                    )
-                    VALUES (?, ?, ?, ?, ?)
-                ";
+                $insertInternSql = "INSERT INTO internship(StudentAccountID,CompanyINT,Role,Months_duration,Description)
+                    VALUES (?, ?, ?, ?, ?)";
 
-                executePreparedStatement(
-                    $insertInternSql,
-                    [
-                        $newStudentID,
-                        $companyID,
-                        $role,
-                        $duration,
-                        $description
-                    ]
-                );
+                executePreparedStatement($insertInternSql,[$newStudentID,$companyID,$role,$duration,$description]);
 
                 $conn->commit();
 
@@ -186,9 +127,7 @@
         <div class="form-card">
 
             <form action="" method="post">
-
-                <!-- Login Credentials -->
-                <h2 class="section-title">1. Login Credentials</h2>
+                <h2 class="section-title">Login Credentials</h2>
 
                 <div class="form-grid">
 
@@ -204,8 +143,7 @@
 
                 </div>
 
-                <!-- Student Profile -->
-                <h2 class="section-title">2. Student Profile</h2>
+                <h2 class="section-title">Student Profile</h2>
 
                 <div class="form-grid">
 
@@ -271,8 +209,7 @@
 
                 </div>
 
-                <!-- Internship Information -->
-                <h2 class="section-title">3. Internship Information</h2>
+                <h2 class="section-title">Internship Information</h2>
 
                 <div class="form-grid">
 

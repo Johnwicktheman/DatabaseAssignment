@@ -147,8 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form action="" method="post">
 
             <input type="hidden" name="id" value="<?php echo $studentID; ?>">
-            <!-- Login Credentials -->
-            <h2 class="section-title">1. Login Credentials</h2>
+            <h2 class="section-title">Login Credentials</h2>
 
             <div class="form-grid">
 
@@ -165,8 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
 
-            <!-- Student Profile -->
-            <h2 class="section-title">2. Student Profile</h2>
+            <h2 class="section-title">Student Profile</h2>
 
             <div class="form-grid">
 
@@ -229,8 +227,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
 
-            <!-- Internship Details -->
-            <h2 class="section-title">3. Internship Details</h2>
+
+            <h2 class="section-title">Internship Details</h2>
 
             <div class="form-grid">
 
