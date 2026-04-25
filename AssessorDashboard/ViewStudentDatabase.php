@@ -134,7 +134,7 @@ if ($filtervalue !== '') {
             </div>
         </div>   
 
-            <table id="studentTable">
+            <table id="searchTable">
                 <tr>
                     <th>Student ID</th>
                     <th>First name</th>
@@ -155,7 +155,8 @@ if ($filtervalue !== '') {
                             $company = $row['CompanyName'];
                             ?>
 
-                            <tr class="student-row" data-id="<?= $id; ?>" data-firstName="<?= $FirstName; ?>" data-lastName="<?= $LastName; ?>">                                <td ><?= $id; ?></td>
+                            <tr class="search-row" data-id="<?= $id; ?>" data-name="<?= $FirstName . $LastName; ?>">                                
+                                <td ><?= $id; ?></td>
                                 <td ><?= $FirstName; ?></td>
                                 <td ><?= $LastName; ?></td>
                                 <td><?= $YearOfStudy; ?></td>
@@ -163,58 +164,18 @@ if ($filtervalue !== '') {
                                 <td><?= $company; ?></td>
                             </tr>
                         <?php endwhile; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="6" style="text-align:center;">No students found matching "<?= htmlspecialchars($filtervalue) ?>"</td>
-                        </tr>
+                   <tbody id="tableBody">
+                    <tr id="noResultsRow" style="display: none;">
+                        <td colspan="10" style="text-align: center; padding: 20px; color: #777;">
+                            No records found matching your search.
+                        </td>
+                    </tr>
+                </tbody>
                     <?php endif; ?>
             </table>
         </div>
 
-        <script>
-            //Main Search and Sort Function
-            function applyFilters() {
-                let searchInput = document.getElementById("jsSearch").value.toLowerCase();
-                let sortType = document.getElementById("jsSort").value;
-                let tbody = document.querySelector("#studentTable tbody") || document.querySelector("#studentTable");
-                let rows = Array.from(tbody.querySelectorAll(".student-row"));
-
-                //Sort the array of rows based on the dropdown selection
-                rows.sort((a, b) => {
-                    let aCode = parseInt(a.getAttribute("data-assessment-id"));
-                    let bCode = parseInt(b.getAttribute("data-assessment-id"));
-                    let aHasRec = parseInt(a.getAttribute("data-has-record"));
-                    let bHasRec = parseInt(b.getAttribute("data-has-record"));
-
-                    if (sortType === 'newest') {
-                        return bCode - aCode;       //Highest ID (Newest) first
-                    } 
-                    else if (sortType === 'oldest') {
-                        return aCode - bCode;       //Lowest ID (Oldest) first
-                    } 
-                    else if (sortType === 'no_record') {
-                        //No record
-                        return aHasRec - bHasRec; 
-                    }
-                });
-
-                //Re-attach rows to the table in the new sorted order and apply serach filter
-                rows.forEach(row => {
-                    tbody.appendChild(row);
-                    
-                    // Check if it matches the search bar
-                    let idTxt = row.getAttribute("data-id").toLowerCase();
-                    let firstnameTxt = row.getAttribute("data-firstName").toLowerCase();
-                    let lastnameTxt = row.getAttribute("data-lastName").toLowerCase();
-                    
-                    if (idTxt.includes(searchInput) || firstnameTxt.includes(searchInput) || lastnameTxt.includes(searchInput)) {
-                        row.style.display = "";
-                    } else {
-                        row.style.display = "none";
-                    }
-                });
-            }
-    </script>
+        <script src="../JSscripts/searchbar.js"></script>
 
     </body>
 </html>

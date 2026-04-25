@@ -35,7 +35,7 @@ $role = $_SESSION['user_role'];
         <a href="AdminDashboard/Databases/CompanyDatabase.php">Company Database</a><br>
         <a href="AdminDashboard/Databases/results.php">Result Viewing</a><br>
         <div id="logout">
-        <a href="Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+        <a href="Logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
         </div>
     </nav>
 
@@ -70,7 +70,16 @@ $role = $_SESSION['user_role'];
                 </h1>
                 <button onclick="window.location.href='AdminDashboard/Databases/CompanyDatabase.php'">Continue</button>
             </div>
+        </div>
 
+        <div class="container">
+            <div class="box">
+                <i class="fa-solid fa-user"></i>
+                <h1>
+                    Result Viewing
+                </h1>
+                <button onclick="window.location.href='AdminDashboard/Databases/results.php'">Continue</button>
+            </div>  
         </div>
     </div>
 </body>

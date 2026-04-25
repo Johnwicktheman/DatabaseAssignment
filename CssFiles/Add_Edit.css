@@ -144,5 +144,8 @@
         }
 
         .back-link{
-            text-decoration: none;
+            color: #0f4f4f;
+            margin-bottom: 30px;
+            font-size: 18px;
+            text-decoration: none; /* for hyperlinks as subtitles */
         }

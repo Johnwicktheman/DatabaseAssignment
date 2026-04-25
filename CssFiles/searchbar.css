@@ -1,0 +1,28 @@
+.search-bar-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: #f9f9f9;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+}
+
+.search-bar-container label {
+    font-weight: bold;
+    color: #2e2e2e;
+    margin-right: 10px;
+}
+
+.search-bar-container input, .search-bar-container select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 15px;
+    outline: none;
+}
+        
+.search-bar-container input { 
+    width: 250px; 
+}

@@ -11,7 +11,9 @@ include '../../AllFunctions.php';
 checkAccess('Admin');
 
 
-$studentList = "SELECT * FROM studentaccountlist";
+$studentList = "SELECT sa.*, sp.FirstName, sp.LastName, sp.StudentProfileID FROM studentaccountlist sa
+                LEFT JOIN studentprofile sp 
+                ON sa.StudentAccountID = sp.StudentAccountID";
 $studentResult = executePreparedStatement($studentList, []);
 
 ?>
@@ -29,6 +31,7 @@ $studentResult = executePreparedStatement($studentList, []);
 
     <link rel="stylesheet" href="../../CssFiles/AdminDashBoard2.css">
     <link rel="stylesheet" href="../../CssFiles/AdminTableStyle.css">
+    <link rel="stylesheet" href="../../CssFiles/searchbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
 
     <!-- Font import -->
@@ -122,11 +125,11 @@ $studentResult = executePreparedStatement($studentList, []);
         <a href="AssessorDatabase.php">Assessor Accounts</a><br>
         <a href="CompanyDatabase.php">Company Database</a><br>
         <a href="results.php">Result Viewing</a><br>
-        <a href="../../Logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+        <div id="logout">
+        <a href="../../Logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>\
+        </div>
     </nav>
 
-
-    
     <main class = "main">
 
         <div id="title">Student Accounts </div>
@@ -138,8 +141,23 @@ $studentResult = executePreparedStatement($studentList, []);
             <a href="../StudentFunctions/AddStudent.php" class="btn btn-primary">Add Student</a>
         </div>
 
+        <div class="search-bar-container">
+            <div>
+                <label for="jsSearch">Search:</label>
+                <input type="text" id="jsSearch" placeholder="Search ID or Name..." onkeyup="applyFilters()">
+            </div>
+            <div>
+                <label for="jsSort">Filter / Sort By:</label>
+                <select id="jsSort" onchange="applyFilters()">
+                    <option value="oldest">Oldest Added (Default)</option>
+                    <option value="newest">Newest Added</option>
+                    <option value="no_record">No Assessment Record First</option>
+                </select>
+            </div>
+        </div>
+
         <!-- Table -->
-            <table>
+            <table id="searchTable">
                 <thead>
                     <tr>
                         <th> Student ID</th>
@@ -152,11 +170,13 @@ $studentResult = executePreparedStatement($studentList, []);
                 <tbody>
                     <?php
                         while ($row = $studentResult->fetch_assoc()) {
-                            $id       = $row['StudentAccountID'];
-                            $user     = $row['Username'];
+                            $id       = $row['StudentProfileID'];
+                            $firstName = $row['FirstName'];
+                            $lastName = $row['LastName'];
+                            $user = "$firstName $lastName";
                             $adminID  = $row['AdminAccountID'];
 
-                            echo "<tr>";
+                            echo "<tr class='search-row' data-id='$id' data-name='$user'>";
                             echo "<td>" . $id . "</td>";
                             echo "<td>" . $user . "</td>";
                             echo "<td>" . $adminID . "</td>";
@@ -176,14 +196,20 @@ $studentResult = executePreparedStatement($studentList, []);
                         }
                     ?>
                 </tbody>
+                <tbody id="tableBody">
+                    <tr id="noResultsRow" style="display: none;">
+                        <td colspan="10" style="text-align: center; padding: 20px; color: #777;">
+                            No records found matching your search.
+                        </td>
+                    </tr>
+                </tbody>
             </table>
          </div>
 
     </main>
 
-
      </div>
-
+    <script src="../../JSscripts/searchbar.js"></script>
 
 </body>
 </html>

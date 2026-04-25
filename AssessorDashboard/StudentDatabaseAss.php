@@ -119,6 +119,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <link rel="stylesheet" href="../CssFiles/AssessorDashBoard.css">
     <link rel="stylesheet" href="../CssFiles/AssessorTableStyle.css">
+    <link rel="stylesheet" href="../CssFiles/searchbar.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -127,41 +129,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>        
-        #title{ color: #aaa9a9; font-size:30px; padding-bottom:8px; }
-        .back-link { display: inline-block; margin-bottom: 20px; color: #154c4b; text-decoration: none; font-weight: bold; transition: color 0.3s; }
-        .back-link:hover { color: #219e75; cursor:pointer; }
-        .action-links a { text-decoration: none; color: #154c4b; font-weight: bold; margin-right: 15px; transition: color 0.3s; }
-        .delete-btn { color: #e74c3c; font-weight: bold; text-decoration: none; transition: 0.3s; }
-        .delete-btn:hover { color: #c0392b; text-decoration: underline; cursor: pointer; }
-
-        /* Search and Filter UI */
-        .search-bar-container {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            background-color: #f9f9f9;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-        }
-        .search-bar-container label {
-            font-weight: bold;
-            color: #154c4b;
-            margin-right: 10px;
-        }
-        .search-bar-container input, .search-bar-container select {
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 15px;
-            outline: none;
-        }
-        .search-bar-container input { width: 250px; }
-
         #modal{ opacity: 0; position: fixed; right:0; left:0; bottom: 60px; transition: all 0.3s ease-in-out; z-index: -1; display:flex; align-items: center; justify-content: center; }
         #modal.open{ opacity:1; z-index:999; }
-        #modal-inner{ background-color: #FFFFFF; width: 700px; height: 650px; border-radius:20px; padding: 15px 25px; text-align: center; box-shadow: 15px 25px 30px rgba(0,0,0,0.2); overflow-y: auto;}
+        #modal-inner{ background-color: #FFFFFF; width: 700px; height: auto; border-radius:20px; padding: 15px 25px; text-align: center; box-shadow: 15px 25px 30px rgba(0,0,0,0.2); overflow-y: auto;}
         #modal-inner h1{ color: #154c4b; }
         form { display: flex; justify-content:center; text-align:center; }
         form h1{ color: #aaa9a9; font-size:20px; }
@@ -212,7 +182,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
 
-        <table id="studentTable">
+        <table id="searchTable">
             <thead>
                 <tr>
                     <th>Student ID</th>
@@ -237,7 +207,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $fullName = strtolower($FirstName . " " . $LastName);
 
                         // Attach the hidden data directly to the table row (<tr>)
-                        echo "<tr class='student-row' data-id='$id' data-name='$fullName' data-assessment-id='$assessmentSortID' data-has-record='$hasRecord'>";
+                        echo "<tr class='search-row' data-id='$id' data-name='$fullName' data-assessment-id='$assessmentSortID' data-has-record='$hasRecord'>";
                         
                         echo "<td>" . $id . "</td>";
                         echo "<td>" . $FirstName . " " . $LastName . "</td>";
@@ -289,6 +259,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                 ?>
             </tbody>
+            <tbody id="tableBody">
+                    <tr id="noResultsRow" style="display: none;">
+                        <td colspan="10" style="text-align: center; padding: 20px; color: #777;">
+                            No records found matching your search.
+                        </td>
+                    </tr>
+                </tbody>
         </table>
 
         <div id="modal">
@@ -353,10 +330,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
     </div>
-
+    <script src="../JSscripts/searchbar.js"></script>
     <script>
-    //Open modal if an ID is present in the URL
-    window.onload = function() {
+    //Delete verification
+    function confirmDelete(studentID){
+        if (confirm("Are you sure you want to delete this assessment record? This action cannot be undone.")) {
+            window.location.href = "StudentDatabaseAss.php?delete_id=" + studentID;
+        }
+    }
+        window.onload = function() {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('id')) {
             document.getElementById("modal").classList.add("open");
@@ -364,59 +346,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //Run the sort function immediately to enforce the "Oldest First" default
         applyFilters();
     }
-
-    //Delete verification
-    function confirmDelete(studentID){
-        if (confirm("Are you sure you want to delete this assessment record? This action cannot be undone.")) {
-            window.location.href = "StudentDatabaseAss.php?delete_id=" + studentID;
-        }
-    }
-
-    //Main Search and Sort Function
-    function applyFilters() {
-        let searchInput = document.getElementById("jsSearch").value.toLowerCase();
-        let sortType = document.getElementById("jsSort").value;
-        let tbody = document.querySelector("#studentTable tbody");
-        let rows = Array.from(tbody.querySelectorAll(".student-row"));
-
-       rows.sort((a, b) => {
-            let aID = parseInt(a.getAttribute("data-id"));
-            let bID = parseInt(b.getAttribute("data-id"));
-
-            if (sortType === 'newest') {
-                return bID - aID; // Sort by ID descending
-            } 
-            else if (sortType === 'oldest') {
-                return aID - bID; // Sort by ID ascending
-            } 
-            else if (sortType === 'no_record') {
-                let aHasRec = parseInt(a.getAttribute("data-has-record"));
-                let bHasRec = parseInt(b.getAttribute("data-has-record"));
-                
-                // If both have records or both don't, sort by ID ascending
-                if (aHasRec === bHasRec) {
-                    return aID - bID;
-                }
-                // Otherwise, put the one without a record (0) before the one with a record (1)
-                return aHasRec - bHasRec; 
-            }
-        });
-
-        //Re-attach rows to the table in the new sorted order and apply serach filter
-        rows.forEach(row => {
-            tbody.appendChild(row);
-            
-            // Check if it matches the search bar
-            let idTxt = row.getAttribute("data-id").toLowerCase();
-            let nameTxt = row.getAttribute("data-name").toLowerCase();
-            
-            if (idTxt.includes(searchInput) || nameTxt.includes(searchInput)) {
-                row.style.display = "";
-            } else {
-                row.style.display = "none";
-            }
-        });
-    }
     </script>
+
 </body>
 </html>

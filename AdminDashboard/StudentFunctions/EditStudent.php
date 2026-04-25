@@ -24,7 +24,7 @@ $fetchSql = "SELECT acc.Username, acc.Password, prof.*,
              FROM studentaccountlist acc
              JOIN studentprofile prof ON acc.StudentAccountID = prof.StudentAccountID 
              LEFT JOIN internship intern ON acc.StudentAccountID = intern.StudentAccountID
-             WHERE acc.StudentAccountID = ?";
+             WHERE prof.StudentProfileID = ?";
 
 $fetchResult = executePreparedStatement($fetchSql, [$studentID]);
 
@@ -121,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="../../CssFiles/Add_Edit.css">
 
 </head>

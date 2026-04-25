@@ -116,7 +116,7 @@ foreach ($AllStuff as $row) {
         <a href="CompanyDatabase.php">Company Database</a><br>
         <a href="results.php">Result Viewing</a><br>
         <div id="logout">
-        <a href="../../Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+        <a href="../../Logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
         </div>
   </nav>
 

@@ -28,6 +28,8 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
     <link rel="stylesheet" href="../../CssFiles/AdminTableStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
 
+    <link rel="stylesheet" href="../../CssFiles/searchbar.css">
+
     <!-- Font import -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -132,7 +134,7 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
         <a href="CompanyDatabase.php">Company Database</a><br>
         <a href="results.php">Result Viewing</a><br>
         <div id="logout">
-        <a href="../../Logout.php" style="color: #ff4d4d; font-weight: bold;" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+        <a href="../../Logout.php" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
         </div>
     </nav>
 
@@ -148,10 +150,24 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
             <a href="../AssessorFunctions/AddAssessor.php" class="btn btn-primary">Add Assessor</a>
         </div>
 
+        <div class="search-bar-container">
+            <div>
+                <label for="jsSearch">Search:</label>
+                <input type="text" id="jsSearch" placeholder="Search ID or Name..." onkeyup="applyFilters()">
+            </div>
+            <div>
+                <label for="jsSort">Filter / Sort By:</label>
+                <select id="jsSort" onchange="applyFilters()">
+                    <option value="oldest">Oldest Added (Default)</option>
+                    <option value="newest">Newest Added</option>
+                    <option value="no_record">No Assessment Record First</option>
+                </select>
+            </div>
+        </div>
 
         <!-- Table -->
          <div class="table-wrapper">
-            <table id="userTable">
+            <table id="searchTable">
                 <thead>
                     <tr>
                         <th> Assessor ID</th>
@@ -167,10 +183,9 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
                         while ($row = $AssessorResult->fetch_assoc()) {
                             $id       = $row['AssessorAccountID'];
                             $user     = $row['Username'];
-
                             $type     = $row['AssesorType']; 
 
-                            echo "<tr>";
+                            echo "<tr class='search-row' data-id='$id' data-name='$user'>";
                             echo "<td>" . $id . "</td>";
                             echo "<td>" . $user . "</td>";
     
@@ -187,6 +202,13 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
                     ?>
 
                 </tbody>
+                <tbody id="tableBody">
+                    <tr id="noResultsRow" style="display: none;">
+                        <td colspan="10" style="text-align: center; padding: 20px; color: #777;">
+                            No records found matching your search.
+                        </td>
+                    </tr>
+                </tbody>
             </table>
          </div>
 
@@ -194,6 +216,7 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
 
   
      </div>
+    <script src="../../JSscripts/searchbar.js"></script>
 
 </body>
 </html>
