@@ -46,7 +46,7 @@ $role = $_SESSION['user_role'];
     <link rel="stylesheet" href="CssFiles/StudentDashBoard.css">
     <link rel="stylesheet" href="CssFiles/ResultsViewing.css">
 
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
@@ -71,6 +71,8 @@ $role = $_SESSION['user_role'];
 
         <div class="container">
             <div class="box">
+                <i class="fa-solid fa-book"></i>
+
                 <h1 style="margin-bottom:2px;">Lecturer <br> Evaluation</h1>
                 <p style="margin-top:2px;">Evaluated by <?php echo $profileData['LectName']; ?></p>
                 <?php if ($lectGrade): ?>
@@ -82,6 +84,7 @@ $role = $_SESSION['user_role'];
             </div>
 
             <div class="box">
+                <i class="fa-solid fa-book"></i>
                 <h1 style="margin-bottom:2px;">Supervisor Evaluation</h1>
                 <p style="margin-top:2px;">Evaluated by <?php echo $profileData['SuperName']; ?></p>
                 <?php if ($superGrade): ?>
