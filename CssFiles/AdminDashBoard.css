@@ -13,7 +13,7 @@ nav{
     position: fixed;
     top:0;
     left:0;
-    background-color: #10253b;
+    background-color: #1e2957;
     overflow-x: hidden;
     padding:20px;
 }
@@ -79,7 +79,7 @@ nav a:hover{
 
 header {
     font-size:50px;
-    color:#10253b;
+    color:#1e2957;
     padding-top:10px;
 }
 
@@ -91,7 +91,7 @@ header {
 .back-link { 
     display: inline-block; 
     margin-bottom: 20px; 
-    color: #10253b;
+    color: #1e2957;
     text-decoration: none; 
     font-weight: bold; 
     transition: color 0.3s; 
@@ -137,7 +137,7 @@ header {
 }
 
 .box button{
-    background-color: #10253b;
+    background-color: #1e2957;
     color: white;
     font-family: "Bricolage Grotesque";
     font-size:20px;

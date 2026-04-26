@@ -5,51 +5,7 @@
       margin-bottom: 24px;
     }
 
-    .page-header h1 { font-size: 22px; color: #1a1a2e; }
-
-    /* ── View toggle ── */
-    .toolbar {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .toolbar input {
-      flex: 1;
-      min-width: 180px;
-      padding: 9px 14px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-      outline: none;
-      background: #fff;
-    }
-    .toolbar input:focus { border-color: #10253b; }
-
-    .toolbar select {
-      padding: 9px 14px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-      outline: none;
-      background: #fff;
-    }
-    .toolbar select:focus { border-color: #10253b; }
-
-    .view-btns { display: flex; gap: 4px; }
-
-    .view-btn {
-      padding: 8px 13px;
-      border: 1px solid #ccc;
-      background: #fff;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background 0.2s;
-    }
-    .view-btn.active { background: #10253b; color: #fff; border-color: #10253b; }
+    .page-header h1 { font-size: 22px; color: #1e2957; }
 
     /* ── Buttons ── */
     .btn {
@@ -62,7 +18,8 @@
       transition: background 0.2s;
       white-space: nowrap;
     }
-    .btn-primary { background-color: #10253b; color: #fff; }
+    .btn-primary { background-color: #1e2957; color: #fff; }
+
     .btn-primary:hover { background-color: #3179c0; }
     
     .btn-sm {
@@ -73,92 +30,10 @@
       cursor: pointer;
       font-weight: 600;
     }
-    .btn-edit { background-color: #f0f0ff; color: #10253b; }
+    .btn-edit { background-color: #f0f0ff; color: #1e2957; }
     .btn-edit:hover { background-color: #dde0ff; }
     .btn-del  { background-color: #fff0f0; color: #e74c3c; }
     .btn-del:hover  { background-color: #ffd5d5; }
-
-    /* ── Card grid view ── */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 18px;
-    }
-
-    .company-card {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .card-top {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .company-logo {
-      width: 52px;
-      height: 52px;
-      border-radius: 8px;
-      object-fit: contain;
-      border: 1px solid #eee;
-      background: #f7f7f7;
-      flex-shrink: 0;
-    }
-
-    .logo-placeholder {
-      width: 52px;
-      height: 52px;
-      border-radius: 8px;
-      background: #10253b;
-      color: #fff;
-      font-size: 18px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .card-name { font-size: 15px; font-weight: 700; color: #1a1a2e; }
-    .card-industry { font-size: 12px; color: #888; }
-
-    .card-details { font-size: 13px; color: #555; line-height: 1.7; }
-    .card-details span { display: block; }
-
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 4px;
-    }
-
-    .card-actions { display: flex; gap: 6px; }
-
-    /* ── Table view ── */
-    .table-view { display: none; }
-
-    .table-wrapper {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      overflow: hidden;
-    }
-
-    table { width: 100%; border-collapse: collapse; font-size: 14px; }
-
-    thead { background-color: #1a1a2e; color: #fff; }
-    thead th { padding: 13px 16px; text-align: left; font-weight: 600; }
-
-    tbody tr { border-bottom: 1px solid #eee; transition: background 0.15s; }
-    tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background-color: #f7f8ff; }
-    tbody td { padding: 11px 16px; color: #333; vertical-align: middle; }
 
     .table-logo-wrap {
       display: flex;
@@ -179,7 +54,7 @@
       width: 34px;
       height: 34px;
       border-radius: 6px;
-      background: #10253b;
+      background: #1e2957;
       color: #fff;
       font-size: 13px;
       font-weight: 700;
@@ -204,7 +79,7 @@
     .slots-badge {
       font-size: 12px;
       font-weight: 700;
-      color: #10253b;
+      color: #1e2957;
       background: #dde0ff;
       padding: 3px 9px;
       border-radius: 10px;

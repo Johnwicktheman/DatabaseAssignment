@@ -82,10 +82,10 @@ foreach ($AllStuff as $row) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Results Viewing</title>
   
+  <link rel="stylesheet" href="../../CssFiles/searchbar.css">
+  <link rel="stylesheet" href="../../CssFiles/AdminTableStyle.css">
   <link rel="stylesheet" href="../../CssFiles/ResultsViewing.css">
   <link rel="stylesheet" href="../../CssFiles/AdminDashBoard.css">
-  <link rel="stylehsheet" href="../../CssFiles/AdminTableStyle.css">
-  <link rel="stylesheet" href="../../CssFiles/searchbar.css">
 
   <!-- font import -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -96,7 +96,7 @@ foreach ($AllStuff as $row) {
     .back-link {
         display: inline-block;
         margin-bottom: 20px;
-        color: #154c4b;
+        color: #1e2957;
         text-decoration: none;
         font-weight: bold;
         transition: color 0.3s;
@@ -138,14 +138,11 @@ foreach ($AllStuff as $row) {
     
 
     <!-- Search -->
-    <div class="search-bar-container" style="margin-top:20px>
+    <div class="search-bar-container">
       <label for="searchInput">Search:</label>
       <input type="text" id="searchInput" placeholder="Search by Student ID or Name..." oninput="filterTable()" />
     </div>
 
-    <p class="hint">Click on a row to view the full mark breakdown.</p>
-
-    <div class="table-wrapper">
       <table>
         <thead>
           <tr>
@@ -159,46 +156,47 @@ foreach ($AllStuff as $row) {
         </thead>
         <tbody id="tableBody"></tbody>
       </table>
-    </div>
+
+    <p class="hint">Click on a row to view the full mark breakdown.</p>
 
     <div class="breakdown-panel" id="breakdownPanel">
 
-      <div class="breakdown-header">
-        <div>
-          <h2 id="bStudentName">–</h2>
-          <p id="bStudentMeta">–</p>
-        </div>
-        <div class="breakdown-total">
-          <div class="label">Total Score</div>
-          <div class="score" id="bTotalScore">–</div>
-        </div>
-      </div>
-
-      <table class="breakdown-table">
-        <thead>
-          <tr>
-            <th style="color: #fff;">Criteria</th>
-            <th style="color: #fff;">Weight</th>
-            <th style="color: #fff;">Mark / 100</th>
-            <th style="color: #fff;">Weighted</th>
-            <th style="color: #fff;">Bar</th>
-          </tr>
-        </thead>
-        <tbody id="bCriteriaBody"></tbody>
-      </table>
-
-      <div class="comments-section">
-        <h3>Assessor Comments</h3>
-
-        <div class="comment-block">
-          <label>Lecturer Comments</label>
-          <p id="bStrengths">–</p>
+        <div class="breakdown-header">
+          <div>
+            <h2 id="bStudentName">–</h2>
+            <p id="bStudentMeta">–</p>
+          </div>
+          <div class="breakdown-total">
+            <div class="label">Total Score</div>
+            <div class="score" id="bTotalScore">–</div>
+          </div>
         </div>
 
-        <div class="comment-block">
-          <label>Supervisor Comments</label>
-          <p id="bImprove">–</p>
-        </div>
+        <table class="breakdown-table">
+          <thead>
+            <tr>
+              <th style="color: #fff;">Criteria</th>
+              <th style="color: #fff;">Weight</th>
+              <th style="color: #fff;">Mark / 100</th>
+              <th style="color: #fff;">Weighted</th>
+              <th style="color: #fff;">Bar</th>
+            </tr>
+          </thead>
+          <tbody id="bCriteriaBody"></tbody>
+        </table>
+
+        <div class="comments-section">
+          <h3>Assessor Comments</h3>
+
+          <div class="comment-block">
+            <label>Lecturer Comments</label>
+            <p id="bStrengths">–</p>
+          </div>
+
+          <div class="comment-block">
+            <label>Supervisor Comments</label>
+            <p id="bImprove">–</p>
+          </div>
 
         
       </div>
@@ -354,10 +352,6 @@ foreach ($AllStuff as $row) {
           '</td>' +
           '</tr>';
       }
-
-     
-     
-
       var panel = document.getElementById('breakdownPanel');
       panel.classList.add('active');
       panel.scrollIntoView({ behavior: 'smooth', block: 'start' });

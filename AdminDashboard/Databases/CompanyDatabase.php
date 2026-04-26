@@ -19,14 +19,14 @@ $companiesData = [];
 if ($CompanyResult && $CompanyResult->num_rows > 0) {
     while ($row = $CompanyResult->fetch_assoc()) {
         $companiesData[] = [
-            'id'       => $row['CompanyInt'],
-            'name'     => $row['CompanyName'] ?: 'N/A',
+            'id' => $row['CompanyInt'],
+            'name' => $row['CompanyName'] ?: 'N/A',
             'industry' => $row['CompanyType'] ?? 'Other',
-            'address'  => $row['CompanyAddress'] ?? 'N/A',
-            'contact'  => 'Contact Number',
-            'phone'    => $row['ContactNumber'] ?? 'N/A',
-            'email'    => $row['EmailContact'] ?? 'N/A',
-            'logo'     => $row['PicturePath'] ?? '',
+            'address' => $row['CompanyAddress'] ?? 'N/A',
+            'contact' => 'Contact Number',
+            'phone' => $row['ContactNumber'] ?? 'N/A',
+            'email' => $row['EmailContact'] ?? 'N/A',
+            'logo' => $row['PicturePath'] ?? '',
             
         ];
     }
@@ -41,7 +41,11 @@ if ($CompanyResult && $CompanyResult->num_rows > 0) {
   <title> Company Database</title>
   
   <link rel="stylesheet" href="../../CssFiles/CompanyDatabase.css">
+  <link rel="stylesheet" href="../../CssFiles/AdminTableStyle.css">
   <link rel="stylesheet" href="../../CssFiles/AdminDashBoard.css">
+  <link rel="stylesheet" href="../../CssFiles/searchbar.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
+
 
   <!-- Font import -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -78,9 +82,11 @@ if ($CompanyResult && $CompanyResult->num_rows > 0) {
       <a href="../CompanyFunctions/AddCompany.php" class="btn btn-primary" style="text-decoration: none; display: inline-block;">+ Add Company</a>
     </div>
     
-
-    <div class="toolbar">
+    <div class="search-bar-container">
+      <label>Search:</label>
       <input type="text" id="searchInput" placeholder="Search by company name" oninput="applyFilters()" />
+
+      <label>Filter / Sort By:</label>
       <select id="industryFilter" onchange="applyFilters()">
         <option value="">All Industries</option>
         <option value="Technology">Technology</option>
@@ -90,16 +96,10 @@ if ($CompanyResult && $CompanyResult->num_rows > 0) {
         <option value="Media">Media</option>
         <option value="Other">Other</option>
       </select>
+  </div>
 
-      <div class="view-btns">
-        <button class="view-btn active" id="gridBtn" onclick="setView('grid')" title="Card view">⊞</button>
-        <button class="view-btn" id="listBtn" onclick="setView('list')" title="Table view">☰</button>
-      </div>
-    </div>
+    <!-- <div class="card-grid" id="cardGrid"></div> -->
 
-    <div class="card-grid" id="cardGrid"></div>
-
-    <div class="table-view" id="tableView">
       <div class="table-wrapper">
         <table>
           <thead>
@@ -115,14 +115,12 @@ if ($CompanyResult && $CompanyResult->num_rows > 0) {
           </tbody>
         </table>
       </div>
-    </div>
 
   </main>
 
   <script>
     //change the data from php into javascript data
     var companies = <?php echo json_encode($companiesData) ?: '[]'; ?>;
-    var currentView  = 'grid';
 
     //this is for profile picture for initials
     function initials(name) {
@@ -136,57 +134,10 @@ if ($CompanyResult && $CompanyResult->num_rows > 0) {
     }
 
     //if no image put initial else put the company logo
-    function logoImgCard(c) {
-      if (c.logo) return '<img class="company-logo" src="../../' + c.logo + '" alt="' + c.name + '" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">' +
-                         '<div class="logo-placeholder" style="display:none">' + initials(c.name) + '</div>';
-      return '<div class="logo-placeholder">' + initials(c.name) + '</div>';
-    }
-
-    //same thing but this is for table style
     function logoImgTable(c) {
       if (c.logo) return '<img class="table-logo" src="../../' + c.logo + '" alt="' + c.name + '" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">' +
                          '<div class="table-placeholder" style="display:none">' + initials(c.name) + '</div>';
       return '<div class="table-placeholder">' + initials(c.name) + '</div>';
-    }
-
-    //drawing grid cards
-    function renderCards(data) {
-      var grid = document.getElementById('cardGrid');
-      grid.innerHTML = '';
-
-      if (data.length === 0) {
-        grid.innerHTML = '<div class="empty-state">No companies found in database.</div>';
-        return;
-      }
-
-      data.forEach(function(c) {
-        //make sure string like Amazon's with apotrophe work adding \\ to the '
-        var safeName = c.name.replace(/'/g, "\\'");
-
-        grid.innerHTML +=
-          '<div class="company-card">' +
-            '<div class="card-top">' +
-              logoImgCard(c) +
-              '<div>' +
-                '<div class="card-name">' + c.name + '</div>' +
-                '<div class="card-industry">' + c.industry + '</div>' +
-              '</div>' +
-            '</div>' +
-            '<div class="card-details">' +
-              '<span>📍 ' + 'Address: ' + c.address + '</span>' +
-              '<span>👤 ' + c.contact + ' : ' + c.phone + '</span>' +
-              '<span>✉️ ' + 'Email: ' + c.email + '</span>' +
-            '</div>' +
-            '<div class="card-footer">' +
-              
-             
-            '</div>' +
-            '<div class="card-actions">' +
-              '<a href="../CompanyFunctions/EditCompany.php?id=' + c.id + '" class="btn-sm btn-edit" style="text-decoration:none;">Edit</a>' +
-              '<a href="../CompanyFunctions/DeleteCompany.php?id=' + c.id + '" class="btn-sm btn-del" style="text-decoration:none;")">Delete</a>' +
-            '</div>' +
-          '</div>';
-      });
     }
 
     //for table data
@@ -211,8 +162,8 @@ if ($CompanyResult && $CompanyResult->num_rows > 0) {
           '<td>' + c.email + '</td>' +
          
           '<td><div class="action-btns">' +
-            '<a href="../CompanyFunctions/EditCompany.php?id=' + c.id + '" class="btn-sm btn-edit" style="text-decoration:none;">Edit</a>' +
-            '<a href="../CompanyFunctions/DeleteCompany.php?id=' + c.id + '" class="btn-sm btn-del" style="text-decoration:none;" onclick="return confirm(\'Are you sure you want to delete ' + safeName + '?\')">Delete</a>' +
+            '<a href="../CompanyFunctions/EditCompany.php?id=' + c.id + '" > <i class="fa-solid fa-pen-to-square"></i> Edit</a>' +
+            '<a href="../CompanyFunctions/DeleteCompany.php?id=' + c.id + '"> <i class="fa-solid fa-trash"></i> Delete</a>' +
           '</div></td>' +
           '</tr>';
       });
@@ -231,24 +182,7 @@ if ($CompanyResult && $CompanyResult->num_rows > 0) {
         return matchText && matchIndustry;
       });
 
-      renderCards(filtered);
       renderTable(filtered);
-    }
-
-    //change view table or grid
-    function setView(view) {
-      currentView = view;
-      if (view === 'grid') {
-        document.getElementById('cardGrid').style.display  = 'grid';
-        document.getElementById('tableView').style.display = 'none';
-        document.getElementById('gridBtn').classList.add('active');
-        document.getElementById('listBtn').classList.remove('active');
-      } else {
-        document.getElementById('cardGrid').style.display  = 'none';
-        document.getElementById('tableView').style.display = 'block';
-        document.getElementById('gridBtn').classList.remove('active');
-        document.getElementById('listBtn').classList.add('active');
-      }
     }
 
     // Initial render

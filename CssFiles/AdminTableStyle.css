@@ -6,6 +6,7 @@ table {
     border-radius: 15px;
     overflow: hidden; /* Ensures border-radius works on table */
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom:20px;
 }
 
 th, td {
@@ -21,7 +22,7 @@ tr{
 
 
 th {
-    background-color: #10253b;
+    background-color: #1e2957;
     color: #f8f9fa ;
     font-size: 14px;
     letter-spacing: 1px;
@@ -41,7 +42,7 @@ tbody tr:hover{
 
 tr a{ 
     text-decoration: none; 
-    color: #10253b; 
+    color: #1e2957; 
     font-weight: bold; 
     margin-right: 15px; 
     transition: color 0.3s; 
@@ -57,7 +58,7 @@ tr i {
 
 .action-links a { 
     text-decoration: none; 
-    color: #10253b; 
+    color: #1e2957; 
     font-weight: bold; 
     margin-right: 15px; 
     transition: color 0.3s; 

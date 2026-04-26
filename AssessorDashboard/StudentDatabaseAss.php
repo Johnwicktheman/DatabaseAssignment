@@ -243,12 +243,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ?>
             </tbody>
             <tbody id="tableBody">
-                    <tr id="noResultsRow" style="display: none;">
-                        <td colspan="10" style="text-align: center; padding: 20px; color: #777;">
-                            No records found matching your search.
-                        </td>
-                    </tr>
-                </tbody>
+                <tr id="noResultsRow" style="display: none;">
+                    <td colspan="10" style="text-align: center; padding: 20px; color: #777;">
+                        No records found matching your search.
+                    </td>
+                </tr>
+            </tbody>
         </table>
 
         <div id="modal">

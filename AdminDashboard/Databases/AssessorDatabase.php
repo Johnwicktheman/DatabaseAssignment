@@ -37,7 +37,7 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
         .back-link {
             display: inline-block;
             margin-bottom: 20px;
-            color: #154c4b;
+            color: #1e2957;
             text-decoration: none;
             font-weight: bold;
             transition: color 0.3s;
@@ -113,7 +113,11 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
             transition: background 0.2s;
         }
 
-        .btn-primary { background-color: #10253b; color: #fff; }
+        .btn-primary { 
+            background-color: #1e2957; 
+            color: #fff; 
+            text-decoration:none;
+        }
         .btn-primary:hover { background-color: #3179c0; }
 
 
