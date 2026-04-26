@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+
+body {
+    font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+    margin: 0px; background-color: #10253b;
+    background-image: linear-gradient(rgba(16, 37, 59, 0.8), rgba(16, 37, 59, 0.8)),url('Assets/NottImage2.png');
+    background-size: cover;
+    background-repeat: no-repeat; 
+    background-position: center center; 
+    min-height: 100vh ;
+
+}
+
+.login-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    padding: 40px 36px;
+    width: 100%;
+    max-width: 400px;
+    margin: 100px auto;
+
+
+}   
+
+
+.btn-login {
+    width: 100%;
+    padding: 11px;
+    background-color: #10253b;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;   
+    margin-top: 8px;
+}
+
+
+.login-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.login-header h1 {
+    font-size: 22px;
+    color: #1a1a2e;
+    margin-bottom: 6px;
+}
+
+
+.login-header p {
+    font-size: 14px;
+    color: #666;
+  } 
+
+  .login-logo{
+    width: 260px;
+    height: auto;
+    margin-bottom: 5px;
+}
+
+
+  .login-form {
+    margin-bottom: 18px;
+  }
+
+  .login-form label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+  }
+
+  .login-form input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #333;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .login-form input:focus {
+    border-color: #10253b;
+  }
+
+  .login-form select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .login-form select:focus {
+    border-color: #10253b;
+  }
+
+  .btn-login:hover {
+    background-color: #174a80;
+  }
+
+  .error-msg {
+    display: none;
+    color: #c0392b;
+    font-size: 13px;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .footer-note {
+    text-align: center;
+    margin-top: 22px;
+    font-size: 12px;
+    color: #999;
+  }
+
+  .HeaderBar{
+    background-color: rgb(255, 255, 255);
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+  .HeaderImage{
+      background-color: rgb(255, 255, 255);
+}
+
+  .HeaderTitle{
+      margin-right: 5%; margin-left: 40px;
+}
+
+  .HeaderTitle p{
+
+    font-size: 30px;
+    color: #1a1a2e;
+    margin-bottom: 6px;
+
+    font-family: 'Times New Roman', Times, serif, sans-serif;
+
+}

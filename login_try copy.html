@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="login_try.css">
+</head>
+<body>
+
+    <div class="HeaderBar">
+  
+        <div class="HeaderImage">
+            <img src="Assets/UniLogo.png" style="width:200px; height: auto; margin: 10px 40px;">
+        </div>
+        
+        <div class="HeaderTitle">
+            <p>Login Page</p>
+        </div>
+        
+    </div>
+
+
+
+    <div class="login-container">
+
+        <div class="login-header">
+
+
+            <img src="Assets/images-removebg-preview.png" class="login-logo">
+
+            <h1> Internship Assessment System</h1> 
+            <p> Please login to continue</p>
+
+        </div>
+
+        <form id="login-form">
+
+            <div class="login-form">
+
+                <label for="Username"> Username </label>
+                <input type="text" id="username" name="username" required placeholder="Enter your username">
+
+            </div>
+
+            <div class="login-form">
+
+                <label for="Password"> Password </label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
+
+            </div>
+
+            <div class="login-form">
+
+                <button type="submit" class="btn-login"> Login </button>
+
+            </div>
+
+            <p class="error-msg" id="errorMsg">Invalid username or password. Please try again.</p>
+
+
+        </form>
+
+        <!-- <div class="footer-note">
+            &copy; 2026 Internship Assessment System. All rights reserved.
+        </div> -->
+
+
+    </div>
+
+    <script src="try_login.js"> </script>
+
+</body>
+</html>

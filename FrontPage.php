@@ -72,14 +72,63 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="login_try.css">
 </head>
 <body>
-    <p>Hi<p>
-    
-    <form action="FrontPage.php" method ="post">
-        <input type="text" name="username"  placeholder="Enter Username... " required></br>
-        <input type="password"  name="password" placeholder="Enter Password... " required></br>
-        <input type="submit" value="Submit"></br>
-    </form>    
+
+    <div class="HeaderBar">
+  
+        <div class="HeaderImage">
+            <img src="Assets/UniLogo.png" style="width:200px; height: auto; margin: 10px 40px;">
+        </div>
+        
+        <div class="HeaderTitle">
+            <p>Login Page</p>
+        </div>
+        
+    </div>
+
+
+
+    <div class="login-container">
+        <div class="login-header">
+
+            <img src="Assets/NottLogo2.png" class="login-logo">
+            <h1> Internship Assessment System</h1> 
+            <p> Please login to continue</p>
+
+        </div>
+
+        <form id="login-form" action="FrontPage.php" method ="post">
+
+            <div class="login-form">
+
+                <label for="Username"> Username </label>
+                <input type="text" id="username" name="username" required placeholder="Enter your username">
+
+            </div>
+
+            <div class="login-form" action="FrontPage.php" method ="post">
+
+                <label for="Password"> Password </label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
+
+            </div>
+
+            <div class="login-form" action="FrontPage.php" method ="post">
+
+                <button type="submit" class="btn-login"> Login </button>
+
+            </div>
+
+            <p class="error-msg" id="errorMsg">Invalid username or password. Please try again.</p>
+
+
+        </form>
+
+    </div>
+
+    <!-- <script src="try_login.js"> </script> -->
+
 </body>
 </html>
