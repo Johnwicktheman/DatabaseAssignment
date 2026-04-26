@@ -74,8 +74,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Document</title>
     <link rel="stylesheet" href="CssFiles/FrontPage.css">
 </head>
-<body>    
+<body>
+     <div class="HeaderBar">
+  
+        <div class="HeaderImage">
+            <img src="Assets/UniLogo.png" style="width:200px; height: auto; margin: 10px 40px;">
+        </div>
+        
+        <div class="HeaderTitle">
+            <p>Login Page</p>
+        </div>
+        
+    </div>
     <div class="login-container">
+        
         <div class="login-header">
 
             <img src="Assets/NottLogo2.png" class="login-logo">
@@ -87,9 +99,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="login-form">
 
                 <label for="Username"> Username </label>
-                <input type="text"  id="username" name="username"  placeholder="Enter Username... " required></br>
+                <input type="text"  id="username" name="username"  placeholder="Enter Username... " required>
                 <label for="Password"> Password </label>
-                <input type="password" id="password" name="password" placeholder="Enter Password... " required></br>
+                <input type="password" id="password" name="password" placeholder="Enter Password... " required> <br>
                 <button type="submit" class="btn-login"> Login </button>
 
             </div>
