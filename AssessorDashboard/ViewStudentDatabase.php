@@ -159,8 +159,8 @@ if ($filtervalue !== '') {
                                 <td ><?= $FirstName; ?></td>
                                 <td ><?= $LastName; ?></td>
                                 <td><?= $YearOfStudy; ?></td>
-                                <td><?= $role; ?></td>
-                                <td><?= $company; ?></td>
+                                <td><?= $role ?? 'N/A'; ?></td>
+                                <td><?= $company ?? 'N/A'; ?></td>
                             </tr>
                         <?php endwhile; ?>
                    <tbody id="tableBody">
