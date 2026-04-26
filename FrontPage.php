@@ -74,9 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Document</title>
     <link rel="stylesheet" href="CssFiles/FrontPage.css">
 </head>
-<body>
-    <p>Hi<p>
-    
+<body>    
     <div class="login-container">
         <div class="login-header">
 

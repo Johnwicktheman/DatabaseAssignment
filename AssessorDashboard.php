@@ -148,7 +148,7 @@ $percentage = ($totalStudents > 0) ? round(($doneRecords / $totalStudents) * 100
             </div>
 
             <div class="box">
-                <i class="fa-solid fa-user"></i>
+                <i class="fa-solid fa-eye"></i>
                 <h1>
                     View Students Database
                 </h1>

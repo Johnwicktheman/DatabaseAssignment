@@ -124,8 +124,9 @@ header {
     box-shadow: 15px 25px 30px rgba(0,0,0,0.2);
 }
 
-.fa-user{
+.box i{
     font-size:50px;
+    color:#1e2957;
 }
 
 .box h1{

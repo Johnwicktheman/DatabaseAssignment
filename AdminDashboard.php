@@ -59,7 +59,7 @@ $role = $_SESSION['user_role'];
             </div>
 
             <div class="box">
-                <i class="fa-solid fa-user"></i>
+                <i class="fa-solid fa-chalkboard-user"></i>
                
                  <h1>
                     Manage Assessors
@@ -68,7 +68,7 @@ $role = $_SESSION['user_role'];
             </div>
 
              <div class="box">
-                <i class="fa-solid fa-user"></i>
+                <i class="fa-solid fa-building"></i>
                 <h1>
                     Manage Companies
                 </h1>
@@ -78,7 +78,7 @@ $role = $_SESSION['user_role'];
 
         <div class="container">
             <div class="box">
-                <i class="fa-solid fa-user"></i>
+                <i class="fa-solid fa-book"></i>
                 <h1>
                     Result Viewing
                 </h1>
