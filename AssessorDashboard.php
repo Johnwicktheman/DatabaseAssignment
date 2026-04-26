@@ -48,6 +48,9 @@ $percentage = ($totalStudents > 0) ? round(($doneRecords / $totalStudents) * 100
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
@@ -140,6 +143,7 @@ $percentage = ($totalStudents > 0) ? round(($doneRecords / $totalStudents) * 100
                 <h1>
                     Manage Students Records
                 </h1>
+                <p>Find students assigned to you here </p>
                 <button onclick="window.location.href='AssessorDashboard/StudentDatabaseAss.php'">Continue</button>
             </div>
 
@@ -148,6 +152,7 @@ $percentage = ($totalStudents > 0) ? round(($doneRecords / $totalStudents) * 100
                 <h1>
                     View Students Database
                 </h1>
+                <p>View all students in the system </p>
                 <button onclick="window.location.href='AssessorDashboard/ViewStudentDatabase.php'">Continue</button>
             </div>
         </div>
