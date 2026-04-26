@@ -128,7 +128,6 @@ if ($filtervalue !== '') {
                 <select id="jsSort" onchange="applyFilters()">
                     <option value="oldest">Oldest Added (Default)</option>
                     <option value="newest">Newest Added</option>
-                    <option value="no_record">No Assessment Record First</option>
                 </select>
             </div>
         </div>   
