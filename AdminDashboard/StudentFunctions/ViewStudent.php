@@ -196,7 +196,7 @@ $error = null;
             <div class="group-small-container">
                 <div class="small-container">
                     <header>Lecturer Score <br>
-                        <span style=" color: grey ">by <?php echo $studentData['LectName']. " ID: " . $studentData['LectID'] ?? 'N/A'; ?></span>
+                        <span style=" color: grey ">by <?php echo ($studentData['LectName'] ?? 'N/A'). " ID: " . ($studentData['LectID'] ?? 'N/A'); ?></span>
                     </header> 
                     <br>
                     <p>
@@ -211,7 +211,7 @@ $error = null;
                 </div>
                 <div class="small-container">
                     <header>Supervisor Score <br>
-                        <span style=" color: grey ">by <?php echo $studentData['SuperName']. " ID: " . $studentData['SuperID'] ?? 'N/A'; ?></span>
+                        <span style=" color: grey ">by <?php echo ($studentData['SuperName'] ?? 'N/A'). " ID: " . ($studentData['SuperID'] ?? 'N/A'); ?></span>
                     </header> <br>
                     <p>
                         <?php 

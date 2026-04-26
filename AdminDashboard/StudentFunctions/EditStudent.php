@@ -93,6 +93,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 executePreparedStatement($sqlIntern, [$companyID, $role, $duration, $description, $studentID]);
             }
 
+            $oldAssessor = executePreparedStatement("SELECT AssesorAccountIDLect, AssesorAccountIDSuper FROM studentprofile WHERE StudentAccountID = ?", [$studentID]);
+            $oldResult = $oldAssessor->fetch_assoc();
+
+            $oldLect = $oldResult['AssesorAccountIDLect'] ?? NULL;
+            $oldSuper = $oldResult['AssesorAccountIDSuper'] ?? NULL;
+
+            if($oldLect != $lectID){
+                $sqlDelete = "DELETE FROM assessmentrecords WHERE StudentID = ? AND AssesorType = 'Lecturer' ";
+                executePreparedStatement($sqlDelete, [$studentID]);
+            }
+
+            if($oldSuper != $superID){
+                $sqlDelete = "DELETE FROM assessmentrecords WHERE StudentID = ? AND AssesorType = 'Supervisor' ";
+                executePreparedStatement($sqlDelete, [$studentID]);
+            }
+
             //Update Student Profile
             $sqlProf = "UPDATE studentprofile SET 
                         FirstName = ?, LastName = ?, ProgrammeCode = ?, YearOfStudy = ?, 
