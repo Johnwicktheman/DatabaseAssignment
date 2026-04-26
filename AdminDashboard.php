@@ -55,6 +55,7 @@ $role = $_SESSION['user_role'];
                 <h1>
                     Manage <br>Students
                 </h1>
+                <p>View, update and delete students </p>
                 <button onclick="window.location.href='AdminDashboard/Databases/StudentDatabase.php'">Continue</button>
             </div>
 
@@ -62,8 +63,9 @@ $role = $_SESSION['user_role'];
                 <i class="fa-solid fa-chalkboard-user"></i>
                
                  <h1>
-                    Manage Assessors
+                    Manage <br>Assessors
                 </h1>
+                <p>View, update and delete assessors </p>
                 <button onclick="window.location.href='AdminDashboard/Databases/AssessorDatabase.php'">Continue</button>
             </div>
 
@@ -72,6 +74,7 @@ $role = $_SESSION['user_role'];
                 <h1>
                     Manage Companies
                 </h1>
+                <p>View, update and delete companies </p>
                 <button onclick="window.location.href='AdminDashboard/Databases/CompanyDatabase.php'">Continue</button>
             </div>
         </div>
@@ -80,8 +83,9 @@ $role = $_SESSION['user_role'];
             <div class="box">
                 <i class="fa-solid fa-book"></i>
                 <h1>
-                    Result Viewing
+                    Result <br>Viewing
                 </h1>
+                <p>View mark breakdown of students</p>
                 <button onclick="window.location.href='AdminDashboard/Databases/ResultsViewing.php'">Continue</button>
             </div>  
         </div>
