@@ -152,7 +152,7 @@ $studentResult = executePreparedStatement($studentList, []);
                 <select id="jsSort" onchange="applyFilters()">
                     <option value="oldest">Oldest Added (Default)</option>
                     <option value="newest">Newest Added</option>
-                    <option value="no_record">No Assessment Record First</option>
+
                 </select>
             </div>
         </div>
@@ -162,6 +162,7 @@ $studentResult = executePreparedStatement($studentList, []);
                     <tr>
                         <th> Student ID</th>
                         <th> Full Name</th>
+                        <th> Username</th>
                         <th> Admin ID</th>
                         <th> Role</th>
                         <th> Action</th>
@@ -170,15 +171,17 @@ $studentResult = executePreparedStatement($studentList, []);
                 <tbody>
                     <?php
                         while ($row = $studentResult->fetch_assoc()) {
-                             $id = $row['StudentAccountID'];
+                            $id = $row['StudentAccountID'];
                             $firstName = $row['FirstName'];
                             $lastName = $row['LastName'];
                             $user = "$firstName $lastName";
                             $adminID  = $row['AdminAccountID'];
+                            $accountname = $row['Username'];
 
                             echo "<tr class='search-row' data-id='$id' data-name='$user'>";
                             echo "<td>" . $id . "</td>";
                             echo "<td>" . $user . "</td>";
+                            echo "<td>" . $accountname . "</td>";
                             echo "<td>" . $adminID . "</td>";
                             //let id = current student row id
 

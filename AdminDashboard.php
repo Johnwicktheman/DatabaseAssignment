@@ -22,8 +22,7 @@ $role = $_SESSION['user_role'];
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <title>Document</title>
 </head>
@@ -49,42 +48,40 @@ $role = $_SESSION['user_role'];
         <div id="subtitle">You are logged in as <?php echo $role; ?>.</div>
 
         <div class ="container">
-
             <div class="box">
+
                 <i class="fa-solid fa-user"></i>
+
                 <h1>
-                    Manage Students
+                    Manage <br>Students
                 </h1>
-                <p>Add and delete students</p>
                 <button onclick="window.location.href='AdminDashboard/Databases/StudentDatabase.php'">Continue</button>
             </div>
 
             <div class="box">
-                <i class="fa-solid fa-chalkboard-user"></i>
-                <h1>
+                <i class="fa-solid fa-user"></i>
+               
+                 <h1>
                     Manage Assessors
                 </h1>
-                <p>Add and delete assessors</p>
                 <button onclick="window.location.href='AdminDashboard/Databases/AssessorDatabase.php'">Continue</button>
             </div>
 
              <div class="box">
-                <i class="fa-solid fa-building"></i>    
-                <h1 style="font-size:30px;">
+                <i class="fa-solid fa-user"></i>
+                <h1>
                     Manage Companies
                 </h1>
-                <p>Add and delete internship companies</p>
                 <button onclick="window.location.href='AdminDashboard/Databases/CompanyDatabase.php'">Continue</button>
             </div>
         </div>
 
         <div class="container">
             <div class="box">
-                <i class="fa-solid fa-book"></i>
+                <i class="fa-solid fa-user"></i>
                 <h1>
                     Result Viewing
                 </h1>
-                <p>View student results</p>
                 <button onclick="window.location.href='AdminDashboard/Databases/ResultsViewing.php'">Continue</button>
             </div>  
         </div>

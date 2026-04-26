@@ -41,7 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //check same username but different id
     $checkSql = "SELECT * FROM studentprofile WHERE AssesorAccountIDLect = ? OR AssesorAccountIDSuper = ?";
     $checkID = executePreparedStatement($checkSql, [$id, $id]);
-    echo "Found rows: " . $checkID->num_rows;
 
     if ($checkID->num_rows > 0) {
         while ($studentRow = $checkID->fetch_assoc()) {
@@ -99,19 +98,25 @@ if ($AssessorResult->num_rows > 0) {
     <title>Document</title>
 </head>
 <body>
-    <?php 
-        if ($error !=null){
-            echo $error;
-            echo "<ul>";
-            foreach ($assignedStudentNames as $student) {
-                echo "<li>" . $student . "</li>";
-            }
-            echo "</ul>";
-        }
-    ?>
     <div class="container">
         <h1 class="page-title">Delete Assessor</h1>
         <p class="subtitle">Review the details below before permanent removal.</p>
+        <?php 
+            if ($error !=null){
+                echo '<div style="color: red; font-weight: bold;">';
+                echo "ERROR Found rows: " . $checkID->num_rows;
+                echo '<br>';
+                echo $error;
+                echo "<ul>";
+                foreach ($assignedStudentNames as $student) {
+                    echo "<li>" . $student . "</li>";
+                }
+                echo "</ul>";
+                echo '</div>';
+                echo '<br>';
+
+            }
+        ?>
 
         <div class="form-card">
             <h2 class="section-title">Confirmation Required</h2>
@@ -147,7 +152,7 @@ if ($AssessorResult->num_rows > 0) {
                         <div class="button-group">
                             <input type="hidden" name="id" value="<?php echo $id; ?>">
                             <input type="submit" value="Delete" class="btn btn-secondary" style="background-color:#ff4d4d;">
-                            <a href="../Databases/StudentDatabase.php" class="btn btn-secondary">Cancel</a>
+                            <a href="../Databases/AssessorDatabase.php" class="btn btn-secondary">Cancel</a>
                         </div>
                     </form>
                 </div>

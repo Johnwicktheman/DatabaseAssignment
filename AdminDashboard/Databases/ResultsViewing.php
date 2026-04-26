@@ -164,7 +164,7 @@ foreach ($AllStuff as $row) {
         <div class="breakdown-header">
           <div>
             <h2 id="bStudentName">–</h2>
-            <p id="bStudentMeta">–</p>
+            
           </div>
           <div class="breakdown-total">
             <div class="label">Total Score</div>
@@ -304,7 +304,7 @@ foreach ($AllStuff as $row) {
       var notMarked = s.marks.every(function(m){ return m === 0; });
 
       document.getElementById('bStudentName').textContent = s.name;
-      document.getElementById('bStudentMeta').textContent = s.id + ' · ' + s.company;
+
 
       var scoreEl = document.getElementById('bTotalScore');
       if (s.markCount === 0) {

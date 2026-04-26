@@ -7,7 +7,7 @@ include 'connection.php';
 include 'ExecutePStatement.php';
 
 
-
+$error = "";
 //Because we have three tables need to check so need three if statements
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
@@ -72,24 +72,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="login_try.css">
+    <link rel="stylesheet" href="CssFiles/FrontPage.css">
 </head>
 <body>
-
-    <div class="HeaderBar">
-  
-        <div class="HeaderImage">
-            <img src="Assets/UniLogo.png" style="width:200px; height: auto; margin: 10px 40px;">
-        </div>
-        
-        <div class="HeaderTitle">
-            <p>Login Page</p>
-        </div>
-        
-    </div>
-
-
-
+    <p>Hi<p>
+    
     <div class="login-container">
         <div class="login-header">
 
@@ -98,35 +85,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p> Please login to continue</p>
 
         </div>
-
-        <form id="login-form" action="FrontPage.php" method ="post">
-
+        <form action="FrontPage.php" method ="post">
             <div class="login-form">
 
                 <label for="Username"> Username </label>
-                <input type="text" id="username" name="username" required placeholder="Enter your username">
-
-            </div>
-
-            <div class="login-form" action="FrontPage.php" method ="post">
-
+                <input type="text"  id="username" name="username"  placeholder="Enter Username... " required></br>
                 <label for="Password"> Password </label>
-                <input type="password" id="password" name="password" required placeholder="Enter your password">
-
-            </div>
-
-            <div class="login-form" action="FrontPage.php" method ="post">
-
+                <input type="password" id="password" name="password" placeholder="Enter Password... " required></br>
                 <button type="submit" class="btn-login"> Login </button>
 
             </div>
-
-            <p class="error-msg" id="errorMsg">Invalid username or password. Please try again.</p>
-
+            <?php if ($error): ?>
+                <p class="error-msg" id="errorMsg"><?php echo $error; ?></p>
+            <?php endif; ?>
 
         </form>
-
-    </div>
-
+    </div>    
 </body>
 </html>

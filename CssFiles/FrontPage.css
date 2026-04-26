@@ -7,7 +7,7 @@
 body {
     font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
     margin: 0px; background-color: #10253b;
-    background-image: linear-gradient(rgba(16, 37, 59, 0.8), rgba(16, 37, 59, 0.8)),url('Assets/NottImage2.png');
+    background-image: linear-gradient(rgba(16, 37, 59, 0.8), rgba(16, 37, 59, 0.8)),url('../Assets/NottImage2.png');
     background-size: cover;
     background-repeat: no-repeat; 
     background-position: center center; 
@@ -114,7 +114,6 @@ body {
   }
 
   .error-msg {
-    display: none;
     color: #c0392b;
     font-size: 13px;
     margin-top: 10px;

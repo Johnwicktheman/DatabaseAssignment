@@ -155,14 +155,13 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
         <div class="search-bar-container">
             <div>
                 <label for="jsSearch">Search:</label>
-                <input type="text" id="jsSearch" placeholder="Search by Student ID or Name..." onkeyup="applyFilters()">
+                <input type="text" id="jsSearch" placeholder="Search by Assessor ID or Username..." onkeyup="applyFilters()">
             </div>
             <div>
                 <label for="jsSort">Filter / Sort By:</label>
                 <select id="jsSort" onchange="applyFilters()">
                     <option value="oldest">Oldest Added (Default)</option>
                     <option value="newest">Newest Added</option>
-                    <option value="no_record">No Assessment Record First</option>
                 </select>
             </div>
         </div>
@@ -171,7 +170,7 @@ $AssessorResult = executePreparedStatement($AssessorList, []);
                 <thead>
                     <tr>
                         <th> Assessor ID</th>
-                        <th> Full Name</th>
+                        <th> Username</th>
 
                         <th> Role</th>
                         <th> Action</th>
